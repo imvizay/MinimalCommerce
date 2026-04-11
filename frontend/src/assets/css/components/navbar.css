@@ -1,0 +1,45 @@
+/* header */
+#header{
+    background-color: rgba(8, 18, 103, 0.674);
+    color: white;
+}
+
+.navContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 5rem;   
+}
+
+.navContainer .webLogo{
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: rgb(231, 231, 231);
+}
+
+.userInfo{
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-primary {
+  background: rgb(53, 51, 204);
+  border: 1px solid rgb(172, 172, 172);
+  color: rgb(236, 236, 236);
+  font-weight: 550;
+
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid rgb(159, 159, 159);
+  color: white;
+  font-weight: 550;
+}
