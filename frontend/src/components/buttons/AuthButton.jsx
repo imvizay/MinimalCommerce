@@ -1,7 +1,7 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom';
 function AuthButton({type}) {
-
+    const navigate = useNavigate()
     const config = {
         login:{
             label:"Login",
@@ -11,7 +11,7 @@ function AuthButton({type}) {
         signup:{
             label:'Sign Up',
             className:"btn btn-primary",
-            route:'/register'
+            route:'/signup'
         }
     }
 
@@ -19,9 +19,16 @@ function AuthButton({type}) {
 
     if(!button) return null;
 
+    const navigateTo = (route) => {
+        navigate(route)
+    }
+
   return (
-    <button className={button.className} >
-        {button.label}
+    <button 
+     onClick={ () => navigateTo(button.route)} 
+     className={button.className} 
+    >
+     {button.label}
     </button>
   )
 }

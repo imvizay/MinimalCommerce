@@ -1,0 +1,86 @@
+.authContainer {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f172a;
+}
+
+.authCard {
+  width: 380px;
+  padding: 30px 25px;
+  border-radius: 16px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.authTitle {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.inputGroup input {
+  flex: 1;
+  height: 1.6rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #f1f5f9;
+  font-size: 14px;
+}
+
+.inputIcon {
+  margin-right: 10px;
+  color: #94a3b8;
+}
+
+.toggleIcon {
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+.authButton {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.authButton:hover {
+  background: #2563eb;
+}
+
+.authFooter {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.authFooter span {
+  margin-left: 5px;
+  color: #3b82f6;
+  cursor: pointer;
+}
