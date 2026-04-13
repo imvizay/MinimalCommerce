@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const backendHost = `http://127.0.0.1:8000/api`
+const backendHost = `http://127.0.0.1:8000/api/`
 const api = axios.create({
     baseURL:`${backendHost}`,
 })
