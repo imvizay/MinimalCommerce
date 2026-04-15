@@ -29,11 +29,13 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
     path('api/products/',include(router.urls)),
+    path('api/',include('apps.orders.urls')),
     
   
 
     path('api/auth/',include('apps.jwt_auth.urls')),
     path('api/users/',include('apps.users.urls')),
+
   
   
 

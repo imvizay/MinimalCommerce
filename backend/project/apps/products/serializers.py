@@ -53,6 +53,8 @@ class ProductSerializer(ModelSerializer):
             for variant in variants_data
         ])
        
+       return product
+       
 
 
 class ProductsListSerializer(ModelSerializer):
