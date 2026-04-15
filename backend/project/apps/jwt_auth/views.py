@@ -30,6 +30,7 @@ class LoginView(APIView):
         
         try:
             data_and_tokens = login_user(email,password)
+            print(data_and_tokens)
 
             return Response({
                 'message':'Login successfull',
