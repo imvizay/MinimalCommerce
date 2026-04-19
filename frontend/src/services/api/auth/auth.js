@@ -1,18 +1,18 @@
 import { http } from "../../core/http"
 
 // Login Api backend endpoint
-export const loginUser = (url,data) => {
+export const loginUser = (data) => {
     return http.post(
-        '/auth/login',        // url
+        '/auth/login/',        
         data,                // data
         { skipAuth:true }   // config
     )
 }
 
 // Register Api backend endpoint
-export const registerUser = (url,data) => {
+export const registerUser = (data) => {
     return http.post(
-        '/auth/register',
+        '/users/register/',
         data,
         {skipAuth:true}
     )

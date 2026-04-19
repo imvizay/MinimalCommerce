@@ -1,19 +1,31 @@
-import '@assets/css/forms/login.css'
+import '@assets/css/forms/login.css';
 
 import { useState } from "react";
 
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+// login api 
+import { loginUser } from '../../services/api/auth/auth';
+
+// tanstack query
+import { useMutation } from '@tanstack/react-query';
+
+// user context
+import { useUserContext } from '../../contexts/UserContext';
+
 
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  });
+  })
 
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
+  
+  const { saveUser } = useUserContext()
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,13 +34,28 @@ function Login() {
     if(name == "password" && value == ""){
       setShowPassword(false)
     }
-  };
+  }
+
+  const {mutate,isPending,isError,error} = useMutation({
+    mutationFn:loginUser,
+    onSuccess: (data) => {
+      
+      console.log("login success:",data)
+      saveUser(data.user)
+      localStorage.setItem("mc-access",data.access)
+      localStorage.setItem("mc-refresh",data.refresh)
+      navigate('/')
+    },
+
+    onError:(err)=>{
+      console.log(err?.response?.data || err?.response.message || err)
+    }
+  })
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    // integrate API later
-    console.log(formData);
-  };
+    e.preventDefault()
+    mutate(formData)
+  }
 
   return (
     <div className="authContainer">
@@ -45,7 +72,6 @@ function Login() {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
-              required
             />
           </div>
 
@@ -59,7 +85,7 @@ function Login() {
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
-              required
+              
             />
 
             <span
@@ -78,8 +104,8 @@ function Login() {
             </span>
           </div>
 
-          <button type="submit" className="authButton">
-            Login
+          <button type="submit" disabled={isPending} className="authButton"> 
+            {isPending ? "Logging in..." : "Login"} 
           </button>
         </form>
 

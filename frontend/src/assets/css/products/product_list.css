@@ -1,0 +1,91 @@
+.displayLayout {
+  display: flex;
+  height: 100vh;
+  background: #f6f7fb;
+}
+
+/* 🔹 SIDEBAR */
+.filterSidebar {
+  width: 260px;
+  padding: 24px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+}
+
+.filterTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.filterSection {
+  margin-bottom: 30px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+/* Options */
+.filterOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterOption {
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.filterOption:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.filterOption.active {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+/* 🔹 RIGHT AREA */
+.productArea {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+/* Header */
+.productHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.productHeader h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.productCount {
+  font-size: 14px;
+  color: #777;
+}
+
+/* Grid */
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
