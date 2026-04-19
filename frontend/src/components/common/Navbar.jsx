@@ -4,7 +4,14 @@ import "@/assets/css/components/navbar.css";
 
 import AuthButton from "../buttons/AuthButton";
 
-function Navbar({ user, onLogout }) {
+// user context
+import { useUserContext } from "../../contexts/UserContext";
+
+function Navbar() {
+
+  const { user ,logoutUser } = useUserContext()
+
+
   return (
     <header id="header">
       <div className="navContainer">
@@ -21,11 +28,11 @@ function Navbar({ user, onLogout }) {
             </>
           ) : (
             <>
-              <span className="userName">{user.email}</span>
+              <span className="userName">{user.email.split('@')[0].toUpperCase()}</span>
               <div className="userAvatar">
                 {user.email?.charAt(0).toUpperCase()}
               </div>
-              <button onClick={onLogout} className="btn btn-secondary">
+              <button onClick={logoutUser} className="btn btn-secondary">
                 Logout
               </button>
             </>

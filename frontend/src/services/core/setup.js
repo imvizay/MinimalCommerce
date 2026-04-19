@@ -10,7 +10,7 @@ const api = axios.create({
 api.interceptors.request.use(
 
     (config) => {
-        const jwt_token  = localStorage.getItem("access_token")
+        const jwt_token  = localStorage.getItem("mc-access")
 
         if( config.url.includes('/login') || config.url.includes('/signup') ) {
             return config
@@ -24,3 +24,14 @@ api.interceptors.request.use(
 )
 
 export default api
+
+// Response interceptor
+
+api.interceptors.response.use(
+    (response) => {
+        return response.data
+    },
+    (error) => {
+        return Promise.reject(error)
+    }
+)

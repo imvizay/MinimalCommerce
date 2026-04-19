@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import "@assets/css/forms/signup.css";
+
+import { useState } from "react";
 import { Mail, Lock, Eye, EyeOff, Phone, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import "@assets/css/forms/signup.css";
+
+// Register API endpoint
+import { registerUser } from "../../services/api/auth/auth";
+
+// Tanstack Mutation
+import { useMutation } from "@tanstack/react-query";
+
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -9,7 +17,7 @@ function Signup() {
     contact: "",
     address: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -27,10 +35,25 @@ function Signup() {
     }
   }
 
+  const {mutate,isPending,isError,error} = useMutation({
+
+    mutationFn:registerUser,
+
+    onSuccess: (data) => {
+      console.log("Registration successfull:",data)
+    },
+
+    onError: (error)=>{
+      console.log(error?.response?.data || error?.response.message)
+    }
+
+  })
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // integrate API later
     console.log(formData);
+    mutate(formData)
   };
 
   return (
@@ -110,9 +133,9 @@ function Signup() {
             <Lock size={18} className="inputIcon" />
             <input
               type={showPassword ? "text" : "password"}
-              name="confirmPassword"
+              name="confirm_password"
               placeholder="Confirm password"
-              value={formData.confirmPassword}
+              value={formData.confirm_password}
               onChange={handleChange}
               required
             />
@@ -134,8 +157,8 @@ function Signup() {
             </span>
           </div>
 
-          <button type="submit" className="authButton">
-            Sign Up
+          <button type="submit" disabled={isPending} className="authButton">
+            {isPending ? "Creating Account..." : "Sign up"}
           </button>
         </form>
 
