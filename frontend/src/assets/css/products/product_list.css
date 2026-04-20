@@ -4,7 +4,7 @@
   background: #f6f7fb;
 }
 
-/* 🔹 SIDEBAR */
+/* SIDEBAR */
 .filterSidebar {
   width: 260px;
   padding: 24px;
@@ -45,20 +45,28 @@
   font-size: 13px;
   transition: all 0.2s ease;
 }
+.filterOption {
+  font-size: 10px;
+  font-weight: 550;
+  letter-spacing: 1.2px;
+  color: rgb(100, 100, 100);
+
+
+}
 
 .filterOption:hover {
-  background: #111;
+  background: #7794d2;
   color: #fff;
-  border-color: #111;
+  border-color: #7794d2;
 }
 
 .filterOption.active {
-  background: #111;
+  background: #173b8a;
   color: #fff;
   border-color: #111;
 }
 
-/* 🔹 RIGHT AREA */
+/* RIGHT AREA */
 .productArea {
   flex: 1;
   padding: 24px;
