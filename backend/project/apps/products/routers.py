@@ -3,6 +3,6 @@ from .views import ProductView,CategoryView,ListProducts
 router = DefaultRouter()
 
 router.register('admin',ProductView)
-router.register('users',ListProducts,basename='user-products')
+router.register('list',ListProducts,basename='user-products')
 
 router.register('category',CategoryView)
