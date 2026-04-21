@@ -1,21 +1,43 @@
-import React from 'react';
-import ProductCard from '../components/cards/ProductDisplayCard';
+import React,{ useState } from 'react';
 import "@assets/css/products/product_list.css";
 
+import ProductCard from '../components/cards/ProductDisplayCard';
 // tanstack
 import { useQuery } from '@tanstack/react-query';
-
 // Query Fn
 import { loadProducts } from '../services/api/products/products';
 
 function DisplayProducts() {
 
-    // Get Products From Database Default Shoes/Mens
+    const [activeCat,setActiveCat] = useState(5)
+    const [priceFilterCat,setPriceFilter] = useState(null)
+
+    // QUERY PARAMS
+
+    const filters = {
+      category:activeCat,
+      price:priceFilterCat ?? null
+    }
+
+    // LOAD PRODUCTS 
     const {data:products, isLoading,isError,err } = useQuery({
-        queryKey:['products'],
-        queryFn:loadProducts,
-        
+        queryKey:['products',filters],
+        queryFn: () => loadProducts(filters),
     })
+
+    // PRODUCTS CATEGORY 
+    const handleFilterCategory = (e) => {
+        console.log(e.target.dataset.category)
+        setActiveCat(e.target.dataset.category)
+    }
+
+    // PRICE FILTER OF CATEGORY 
+    const handlePriceFilter = (e) => {
+        console.log(e.target.dataset.price)
+        setPriceFilter(e.target.dataset.price)
+    }
+
+  
 
 
   return (
@@ -29,26 +51,36 @@ function DisplayProducts() {
         {/* Category */}
         <div className="filterSection">
           <h4 className="sectionTitle">Category</h4>
+            
+        {/* Filter Options  */}
+          <div onClick={ (e) => handleFilterCategory(e) } className="filterOptions">
 
-          <div className="filterOptions">
-            <button className="filterOption active">Shoes</button>
-            <button className="filterOption">Jackets</button>
-            <button className="filterOption">Jeans</button>
-            <button className="filterOption">Mens</button>
-            <button className="filterOption">Womens</button>
+            {["mens","womens",'jeans','jackets','trousers','shoes'].map((el,index)=>(
+                <button key={el || index} 
+                    data-category={el} 
+                    className={`filterOption ${activeCat == el ? "active":''}`}
+                >
+                        {el.toUpperCase()} 
+                </button>
+            ))}
+
           </div>
         </div>
 
         {/* Price */}
         <div className="filterSection">
           <h4 className="sectionTitle">Price</h4>
-
-          <div className="filterOptions">
-            <button className="filterOption">Low → High</button>
-            <button className="filterOption">High → Low</button>
-            <button className="filterOption">Above ₹5000</button>
-            <button className="filterOption">Above ₹10000</button>
-          </div>
+            {/* Price filter Options */}
+          <div onClick={ (e) => handlePriceFilter(e) } className="filterOptions">
+            {['low - high', 'high - low','above ₹5000','above ₹10000'].map((el,index)=>(
+                <button key={el || index} 
+                data-price={el}
+                className={`filterOption ${priceFilterCat == el ? 'active' : ''}`}
+                >
+                    {el.toLocaleUpperCase()}
+                </button>
+            ))}
+        </div>
         </div>
 
       </aside>
@@ -62,13 +94,7 @@ function DisplayProducts() {
           <span className="productCount">{products?.length || 0}</span>
         </div>
 
-        {/* Grid */}
-        {/* <div className="productGrid">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <ProductCard key={i} />
-          ))}
-        </div> */}
-
+    
         <div className="productGrid">
           {products?.map((product) => (
             <ProductCard key={product.id} product={product} />

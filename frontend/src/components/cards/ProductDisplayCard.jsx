@@ -1,23 +1,14 @@
 import React from "react";
 import "@assets/css/products/product_display_card.css"
-const product = {
-  id: 1,
-  name: "Nike Air Running Shoes",
-  image: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ2Why84pPVeImXKBCn88ksYLNjZXnTH3DVQ1yQ8hb8VY6fHzYJFLtt3RpmBuH-G9_TigBjatwCSq3R9LxqO5lsXlb2RRSCzB-JuAgj10S1SJxqoxsxmae2tCwetMJa3ojwEyfJXEKTtA&usqp=CAc",
-  price: 1499,
-  originalPrice: 2999,
-  
 
-  reviews: 120
-}
-
-function ProductCard() {
+function ProductCard({product}) {
+    
   return (
     <div className="productCard">
 
       {/* Image + badge */}
       <div className="productImageWrapper">
-        <img src={product.image || ""} alt={product.name} />
+        <img src={product.images[0].image|| ""} alt={product.pro_name} />
 
         {product.discount && (
           <span className="discountBadge">
@@ -29,11 +20,11 @@ function ProductCard() {
       {/* Info */}
       <div className="productInfo">
 
-        <h3 className="productTitle">{product.name}</h3>
+        <h3 className="productTitle">{product.pro_name}</h3>
 
         {/* Price */}
         <div className="productPrice">
-          <span className="currentPrice">₹{product.price}</span>
+          <span className="currentPrice">₹{product.pro_price}</span>
 
           {product.originalPrice && (
             <span className="oldPrice">₹{product.originalPrice}</span>
