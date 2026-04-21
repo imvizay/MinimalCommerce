@@ -8,7 +8,7 @@ function ProductCard({product}) {
 
       {/* Image + badge */}
       <div className="productImageWrapper">
-        <img src={product.images[0].image|| ""} alt={product.pro_name} />
+        <img src={product?.images[0]?.image|| ""} alt={product.pro_name} />
 
         {product.discount && (
           <span className="discountBadge">
