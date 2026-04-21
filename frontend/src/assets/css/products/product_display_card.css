@@ -13,7 +13,7 @@
   box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
 
-/* 🔥 Image */
+/* Image */
 .productImageWrapper {
   position: relative;
   height: 200px;
@@ -26,7 +26,7 @@
   object-fit: cover;
 }
 
-/* 🔴 Discount badge */
+/* Discount badge */
 .discountBadge {
   position: absolute;
   top: 10px;

@@ -7,9 +7,10 @@ from rest_framework.serializers import ModelSerializer
 
 
 class CategorySerializer(ModelSerializer):
+    slug = serializers.ReadOnlyField()
     class Meta:
         model = Category
-        fields = ["id","name"]
+        fields = ["id","name",'slug']
 
 class ProductImageSerializer(ModelSerializer):
     class Meta:
