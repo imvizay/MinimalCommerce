@@ -9,10 +9,6 @@ class MemberSerializer(ModelSerializer):
     confirm_password  = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        print("----------------------------------")
-        print(data)
-        print("----------------------------------")
-
         return validate_signup_data(data)
     
     class Meta:
