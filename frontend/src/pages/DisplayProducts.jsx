@@ -11,9 +11,6 @@ import { useSearchParams } from 'react-router-dom'
 
 function DisplayProducts() {
 
-    // const [activeCat,setActiveCat] = useState(5)
-    // const [priceFilterCat,setPriceFilter] = useState(null)
-
     const [searchParams,setSearchParams] = useSearchParams()
 
     const activeCat = searchParams.get('category') || 5
@@ -73,9 +70,7 @@ function DisplayProducts() {
 
       if(price.includes("₹")){
         const spilitedPrice = price.split('₹')
-        console.log("spilitedPrice",spilitedPrice)
         price = spilitedPrice.join('')
-        console.log('combined spilited price',price)
       }
 
       setSearchParams(prev => {
