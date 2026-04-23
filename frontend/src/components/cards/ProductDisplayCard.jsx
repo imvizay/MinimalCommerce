@@ -1,7 +1,15 @@
 import React from "react";
 import "@assets/css/products/product_display_card.css"
 
-function ProductCard({product}) {
+
+// useCart hook
+import { useCart } from "../../contexts/CartContext";
+
+function ProductCard({product}) { 
+
+  const {loadingId ,addToCart } = useCart()
+
+
     
   return (
     <div className="productCard">
@@ -32,8 +40,11 @@ function ProductCard({product}) {
         </div>
 
         {/* Button */}
-        <button className="addToCartBtn">
-          Add to Cart
+        <button className="addToCartBtn"
+          onClick={ () => addToCart(product) }
+          disabled={loadingId == product.id}
+        >
+           {loadingId == product.id ? "Adding..." : "Add to Cart"}
         </button>
 
       </div>
