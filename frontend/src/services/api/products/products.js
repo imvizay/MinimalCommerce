@@ -30,3 +30,5 @@ export const loadProducts = (filters) => {
 export const loadCategories = () => {
     return api.get('/products/categories/')
 }
+
+

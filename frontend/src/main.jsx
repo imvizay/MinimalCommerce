@@ -5,6 +5,7 @@ import App from './App.jsx'
 
 // user context
 import { UserProvider } from './contexts/UserContext.jsx'
+import { CartProvider } from './contexts/CartContext.jsx'
 
 // router context 
 import { BrowserRouter } from 'react-router-dom'
@@ -18,11 +19,16 @@ import {
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')).render(
-  <UserProvider>
-  <QueryClientProvider client={queryClient}>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+
+  <CartProvider> {/* Cart context */}
+  <UserProvider> {/* User context */}
+
+  <QueryClientProvider client={queryClient}>  {/* Query context */}
+    <BrowserRouter>                           {/* Browser Router context */}
+      <App />
+    </BrowserRouter>
   </QueryClientProvider>
-  </UserProvider>,
+
+  </UserProvider>
+  </CartProvider>,
 )
