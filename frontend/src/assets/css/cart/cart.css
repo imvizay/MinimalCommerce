@@ -1,0 +1,132 @@
+.cartWrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  padding: 30px;
+}
+
+/* LEFT */
+.cartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cartCard {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  align-items: center;
+}
+
+.cartCard img {
+  width: 100px;
+  border-radius: 10px;
+}
+
+.cartDetails h3 {
+  margin-bottom: 5px;
+}
+
+.price {
+  color: #0ea5e9;
+  font-weight: 600;
+}
+
+.cartActions {
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Quantity */
+.qtyControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qtyControl button {
+  padding: 5px 10px;
+  border: none;
+  background: #f1f5f9;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* Remove */
+.removeBtn {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+}
+
+/* Item total */
+.itemTotal {
+  font-weight: bold;
+}
+
+/* RIGHT */
+.cartSummary {
+  padding: 20px;
+  border-radius: 12px;
+  background: white;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.checkoutBtn {
+  width: 100%;
+  padding: 12px;
+  background: #0ea5e9;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* EMPTY */
+.cartEmpty {
+  text-align: center;
+  padding: 100px;
+}
+
+
+/* empty cart redirect button */
+.emptyCartRedir{
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+}
+.emptyCartRedir span{
+  display: inline-block;
+  color: blue;
+  text-decoration: underline;
+  width: fit-content;
+  padding: 2px;
+  text-transform: capitalize;
+}
