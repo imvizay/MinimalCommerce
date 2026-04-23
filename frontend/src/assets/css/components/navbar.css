@@ -1,45 +1,116 @@
-/* header */
-#header{
-    background-color: rgba(8, 18, 103, 0.674);
-    color: white;
-}
-
-.navContainer{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.1rem 5rem;   
-}
-
-.navContainer .webLogo{
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    color: rgb(231, 231, 231);
-}
-
-.userInfo{
-    display: flex;
-    gap: 1.5rem;
-}
-
-.btn {
-  padding: 8px 16px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.btn-primary {
-  background: rgb(53, 51, 204);
-  border: 1px solid rgb(172, 172, 172);
-  color: rgb(236, 236, 236);
-  font-weight: 550;
-
-}
-
-.btn-secondary {
-  background-color: transparent;
-  border: 1px solid rgb(159, 159, 159);
+#header {
+ background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(6, 5, 5, 0.217));
   color: white;
-  font-weight: 550;
+ 
+  padding: 15px 20px; 
+  margin-bottom: 0.4rem;
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navLeft .webLogo {
+  font-size: 22px;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+  letter-spacing: 1.2px;
+  font-size: 1.3rem;
+}
+
+.navCenter input {
+  width: 400px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid gray;
+  outline: none;
+
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navIcon {
+  position: relative;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: red;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+.userAvatar {
+  width: 35px;
+  height: 35px;
+  background: #38bdf8;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Dropdown */
+.dropdown {
+  z-index: 99;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: white;
+  color: black;
+  padding: 15px;
+  border-radius: 8px;
+  width: 180px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.dropdown a,
+.dropdown button {
+  display: block;
+  padding: 8px 0;
+  text-decoration: none;
+  color: black;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.username {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* auth buttons */
+.authBtns{
+  display: flex;
+  gap: 10px;
+}
+.authBtns .link{
+  text-decoration: none;
+  padding: 0.3rem 0.7rem;
+  font-weight: 530;
+  font-size: 16px;
+}
+
+.authBtns .link.login{
+  color: green;
+  border: 1px solid green;
+}
+.authBtns .link.signup{
+  color: blue;  
+  border: 1px solid blue;
 }

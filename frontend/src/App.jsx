@@ -11,6 +11,7 @@ import Login from './components/forms/Login'
 import Signup from './components/forms/Register'
 import Base from './layout/Base'
 import DisplayProducts from './pages/DisplayProducts'
+import Cart from './pages/Cart'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         {/* Child Routes  */}
         <Route path='login' element={<Login/>}/>
         <Route path='signup' element={<Signup/>}/>
+        <Route path='cart' element={<Cart/>}></Route>
       </Route>
 
     </Routes>

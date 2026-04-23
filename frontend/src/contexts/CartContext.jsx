@@ -7,18 +7,19 @@ export const CartContext = createContext()
 
 export const CartProvider = ({children}) => {
 
-    const [cart,setCart] = useState()
+    const [cart,setCart] = useState([])
     const [loadingId,setLoadingId] = useState(null)
 
     // load cart initially as guest 
     useEffect(()=>{
-        const storedCart = JSON.parse(localStorage.getItem('cart')) || []
-        setCart(storedCart)
+        const storedCart = JSON.parse(localStorage.getItem('cart')) ?? []
+        setCart(storedCart)        
     },[])
 
     // 
     useEffect(()=>{
         localStorage.setItem("cart",JSON.stringify(cart))
+        console.log("UPDATED CART:", cart)
     },[cart])
 
     // add to cart
@@ -29,6 +30,11 @@ export const CartProvider = ({children}) => {
 
         setCart( prev => {
             const existing  = prev.find( p => p.id == product.id)
+
+            if(existing?.quantity >=10 ){
+                return prev
+            }
+
             if(existing){
                 return prev.map( p => 
                     p.id == product.id ? 
@@ -43,15 +49,33 @@ export const CartProvider = ({children}) => {
         }, 300)
     }
 
-    // remove cart item
+    // Remove Cart Item
     const removeFromCart = (id) => {
-        setCart(prev => {
-            prev.filter(prev => prev.id !== id)
-        })
+        setCart(prev => prev.filter(item => item.id !== id))
     }
 
+    // UPDATE Cart Items Quantity
+    const updateQty = (productId, delta) => {
+
+        setCart(prev =>
+            prev.map(item =>
+                item.id === productId
+                    ? {
+                        ...item,
+                         quantity: Math.min(
+                                    10, // max limit
+                                    Math.max(1, item.quantity + delta) // min limit
+                                )
+                      }
+                    : item
+            )
+        )
+    }
+
+    const totalCartItems = cart?.length ?? 0 
+
     return (
-        <CartContext.Provider value={{cart, loadingId, addToCart, removeFromCart}} >
+        <CartContext.Provider value={{cart, loadingId,totalCartItems,updateQty ,addToCart, removeFromCart}} >
             {children}
         </CartContext.Provider>
     )
