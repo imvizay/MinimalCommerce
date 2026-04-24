@@ -1,28 +1,36 @@
+# Razorpay 
+import razorpay
+from django.conf import settings
+
+# Rest Framework views and serializers
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import CreateOrderInputSerializer,OrderSerializer
+from .serializers import CreateCartOrderInputSerializer
 
-# buisness logic
-from .services import create_order
+# Services
+from .services import create_order 
 
-# views...
+from django.shortcuts import render
 
-class CreateOrderView(APIView):
-    def post(self, request):
+# ....... VIEWS.......
+
+
+
+class CreateCartOrderView(APIView):
+    "Order creation for user cart items."
+    def post(self,request):
+        print(f"VIEWS : {request.data}")
         user = request.user
-        serializer = CreateOrderInputSerializer( data = request.data )
-
-        if serializer.is_valid():
-            items = serializer.validated_data['items']
-            order = create_order(user,items)
-            return Response(
-                OrderSerializer(order).data,
-                status = status.HTTP_201_CREATED
-                )
+        if not user:
+            return Response({'message':'invalid user'},status=400)
         
-        return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        serializer = CreateCartOrderInputSerializer(data=request.data)    
+        if not serializer.is_valid():
+            return Response(serializer.errors,status=400)
+    
+        validated_data = serializer.validated_data
+        order = create_order(user,validated_data) # create razorpay order id
+
+        return Response(order,status=201) 
         
