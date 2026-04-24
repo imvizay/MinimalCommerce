@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model 
-from apps.products.models import ProductVariant
+from apps.products.models import ProductVariant,Product
 # Create your models here.
 
 Member = get_user_model() 
@@ -34,14 +34,15 @@ class OrderItem(models.Model):
     """
 
     order = models.ForeignKey(Order,on_delete = models.CASCADE,related_name = 'order_items')
-    variant = models.ForeignKey(ProductVariant,on_delete = models.CASCADE,related_name = "variants")
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    variant = models.ForeignKey(ProductVariant,on_delete = models.CASCADE,related_name = "variants",null=True)
 
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits = 7,decimal_places = 2,blank = False,null = False)
 
     status = models.CharField(max_length = 100,
-                              choices = [('active','active'), 
+                              choices = [('pending','pending'), 
                                         ('cancelled','cancelled'), 
                                         ('confirmed','confirmed')],
-                                        default='active'
+                                        default='pending'
                             )
