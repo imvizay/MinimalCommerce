@@ -20,7 +20,7 @@ class PaymentStatus(models.TextChoices):
 
 class Payment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
+    
     user = models.ForeignKey(Member, on_delete=models.CASCADE)
 
     order = models.OneToOneField(

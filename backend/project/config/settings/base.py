@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -151,3 +153,8 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+
+# RAZORPAY KEYS
+RAZORPAY_PUBLIC_KEY=os.getenv("RAZORPAY_PUBLIC_KEY")
+RAZORPAY_SECRET_KEY=os.getenv("RAZORPAY_SECRET_KEY")

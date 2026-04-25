@@ -30,7 +30,7 @@ class CreateCartOrderView(APIView):
             return Response(serializer.errors,status=400)
     
         validated_data = serializer.validated_data
-        order = create_order(user,validated_data) # create razorpay order id
+        order = create_order(user,validated_data) # Create Razorpay Order
 
         return Response(order,status=201) 
         

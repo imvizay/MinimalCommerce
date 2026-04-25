@@ -13,7 +13,7 @@ function DisplayProducts() {
 
     const [searchParams,setSearchParams] = useSearchParams()
 
-    const activeCat = searchParams.get('category') || 5
+    const activeCat = searchParams.get('category') || 1
     const price = searchParams.get('price') || null 
     const order = searchParams.get('order') || '-id'
 
@@ -35,7 +35,7 @@ function DisplayProducts() {
 
     // QUERY PARAMS
     const filters = {
-      category:activeCat,
+      category:Number(activeCat),
       price:price ?? null
     }
 
