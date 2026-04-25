@@ -16,7 +16,7 @@ export const CartProvider = ({children}) => {
         setCart(storedCart)        
     },[])
 
-    // 
+    
     useEffect(()=>{
         localStorage.setItem("cart",JSON.stringify(cart))
         console.log("UPDATED CART:", cart)
@@ -75,7 +75,7 @@ export const CartProvider = ({children}) => {
     const totalCartItems = cart?.length ?? 0 
 
     return (
-        <CartContext.Provider value={{cart, loadingId,totalCartItems,updateQty ,addToCart, removeFromCart}} >
+        <CartContext.Provider value={{cart, setCart, loadingId,totalCartItems,updateQty ,addToCart, removeFromCart}} >
             {children}
         </CartContext.Provider>
     )

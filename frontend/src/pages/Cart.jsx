@@ -6,50 +6,142 @@ import { useUserContext } from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import LoginPromptModal from "../components/LoginPrompt";
 
+// razorpay script
+import { loadRazorPayScript } from "../utils/loadRazorpayScript";
+
+// tanstack query
+import { createOrder, verifyPayment } from "../services/api/payments/create_order";
+import { useMutation } from '@tanstack/react-query'
+
+// checkout session id
+import { getCheckoutId } from "../utils/checkoutId";
+
 function Cart () {
 
   const [showLoginPrompt,setShowLoginPrompt] = useState(false)
 
   const { user } = useUserContext()
   const navigate = useNavigate()
+  const checkoutId = getCheckoutId()
+
+
 
   const { 
     cart,
     updateQty, 
-    removeFromCart } = useCart()
+    removeFromCart,
+    setCart } = useCart()
  
   const total = cart.reduce((acc, item) => acc + item.pro_price * item.quantity, 0);
 
   console.log("CART",cart)
-  if (cart.length === 0) {
+ if (!cart || cart.length === 0) {
     return (
-      <div className="cartEmpty">
-        <h2>Your cart is empty</h2>
-        <p>Add items to get started</p>
+      <div className="cart-empty-container">
+        <div className="cart-empty-card">
+          <h2>Your Cart is Empty</h2>
+          <p>Looks like you haven’t added anything yet.</p>
 
-        <button className="emptyCartRedir">click here to <span onClick={()=> window.location.href="/" }>get started</span></button>
+          <button
+            className="cart-empty-btn"
+            onClick={() => (window.location.href = "/")}
+          >
+            Browse Products
+          </button>
+        </div>
       </div>
     )
   }
- 
-    // Checkout 
-    const handleCheckout = () => {
-        // user needs to be authenticated before proceeding further(checkout) for cart items
-        if(!user){
-           setShowLoginPrompt(true)
-        }
-
-
-    }   
-
-
-    const informLoginPrompt = () => {
-        <>
-        <div className="informContainer">
-
-        </div>
-        </>
+  const createOrderMutation = useMutation({
+    mutationFn:createOrder,
+    onSuccess: (data) => {
+      console.log("Order Created Successfully.")
+    },
+    onError: (err) => {
+      console.log("Order Creation Failed.")
     }
+  })
+ 
+  // Checkout 
+  const handleCheckout = async () => {
+
+    // authenticate user
+    if(!user){
+      setShowLoginPrompt(true)
+      return
+    }
+
+    // load razorpay sdk
+    const isLoaded = await loadRazorPayScript()
+    if(!isLoaded){
+      console.log("Razorpay SDK failed to load!")
+      return
+    }
+
+    console.log("RP-script loaded.",isLoaded)
+    console.log("RP-in window.",window.Razorpay)
+
+
+    // create order api call
+    const res = await createOrderMutation.mutateAsync({
+      checkout_id:checkoutId,
+      items : cart.map(item => ({
+        id :item.id,
+        quantity:item.quantity
+      }))
+   })
+
+    const order = res
+    console.log(`Order : ${JSON.stringify(order)}`)
+  const options = {
+
+    key:'rzp_test_Sh4FpWrz5ZqxWj',
+    order_id:order.razorpay_order_id,
+    amount:order.amount,
+    currency:order.currency,
+    name:"Minimal Commerce",
+    description:'Order Payment',
+
+    prefill:{
+      name:user?.email.split('@')[0],
+      contact:user?.contact
+    },
+
+    retry:{
+      enabled:true
+    },
+
+    readonly: {
+    email: true,
+    contact: true
+   },
+  handler: async function (response) {  
+      // verify payment
+      try{
+        console.log(`"RAZORPAY RESPONSE:" ${JSON.stringify(response)}`)
+        await verifyPayment(response)
+
+        // remove checkout id from localstorage once payment is done
+        localStorage.removeItem('mc-checkoutId')
+        localStorage.removeItem('cart')
+        setCart([])
+       
+        alert("Payment Successfull")
+      } catch(err){
+        console.error("Verification Failed.",err)
+      } 
+    },
+  }
+
+  const rz = new Razorpay(options)
+    rz.on('payment.failed',(response)=>{
+      console.error('"Payment Failed:',response)
+    })
+    rz.open()
+  }   
+
+
+    
 
   return (
     <div className="cartWrapper">

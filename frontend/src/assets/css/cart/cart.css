@@ -115,18 +115,48 @@
 
 
 /* empty cart redirect button */
-.emptyCartRedir{
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  background-color: transparent;
-  border: none;
-  font-size: 1rem;
+.cart-empty-container {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f8fa;
 }
-.emptyCartRedir span{
-  display: inline-block;
-  color: blue;
-  text-decoration: underline;
-  width: fit-content;
-  padding: 2px;
-  text-transform: capitalize;
+
+.cart-empty-card {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  width: 100%;
+}
+
+.cart-empty-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.cart-empty-card p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.cart-empty-btn {
+  background: linear-gradient(135deg, #ff6a00, #ff3d00);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cart-empty-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 61, 0, 0.3);
 }

@@ -15,6 +15,7 @@ class OrderItemInputSerializer(serializers.Serializer):
 
 class CreateCartOrderInputSerializer(serializers.Serializer):
     items = OrderItemInputSerializer(many=True)
+    checkout_id = serializers.UUIDField(required=True)
 
     def validate(self, data):
         print(f"SERIALIZER : {data}")

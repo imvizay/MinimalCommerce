@@ -22,6 +22,7 @@ class Order(models.Model):
                                     ('cancelled','cancelled'),],default="pending"
                                 )
     total = models.DecimalField(max_digits = 10, decimal_places = 2, default = 0)
+    checkout_id = models.UUIDField(db_index=True)
 
     def __str__(self):
         return f"Order created by {self.user.email.split('@')[:1]} - '{self.order_status}'"
