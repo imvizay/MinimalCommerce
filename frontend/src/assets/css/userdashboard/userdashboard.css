@@ -1,0 +1,212 @@
+
+/* dashboard container */
+.dashboardContainer {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: 70px 1fr;
+  height: 100vh;
+  background: #f6f7fb;
+}
+
+/* top navbar */
+.dash-nav {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem;
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+/* Menu icon */
+.dash-nav .nav-menu button{
+    border: none;
+    background: transparent;
+}
+
+/* location */
+.dash-nav .nav-menu p span{
+    font-size: 16px;
+    font-style: italic;
+    color: rgb(244, 100, 100);
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-logo {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* shopping bag icon */
+.nav-right button{
+    padding: 0.2rem;
+    position: relative;
+    border: none;
+    background-color: transparent;
+    color: rgb(0, 21, 255);
+}
+.nav-right button .item-count{
+    position: absolute;
+    z-index: 1;
+    font-size: 10px;
+    font-weight: 800;
+    border: 1px solid red;
+    height: 16px;
+    min-width: 16px;
+    max-width: fit-content;
+    padding: 0px 5px;
+    
+
+    color: red;
+}
+
+/* userdashboard sidebar left panel of body */
+
+.dash-left {
+  background: #ffffff;
+  border-right: 1px solid #eee;
+  padding: 20px;
+}
+
+.dash-links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ud-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: transparent;
+
+  border: none;
+  cursor: pointer;
+  color: #971d1db0;
+  transition: all 0.2s ease;
+}
+
+.ud-link:hover {
+  background: #b33636fb;
+  color: white;
+}
+
+.ud-link.active {
+  background: #ffece6;
+  color: #ff4d00;
+  font-weight: 500;
+}
+
+/* userdashboard right panel of the main body */
+.dash-right {
+  padding: 20px 30px;
+  overflow-y: auto;
+}
+
+
+/* breadcrumb  */
+.breadcrumb-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  padding: 10px 0;
+  color: #6b7280;
+}
+
+.breadcrumb-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: #6b7280;
+  transition: 0.2s;
+}
+
+.breadcrumb-link:hover {
+  color: #111827;
+}
+
+.home-link svg {
+  margin-bottom: 1px;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumb-active {
+  font-weight: 600;
+  color: #111827;
+  cursor: default;
+}
+
+/* Filter pills main section */
+.dash-right-center{
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    margin-top: 1rem;
+}
+
+/* pills */
+.opt-pills {
+  display: flex;
+  gap: 10px;
+}
+
+.opt-pills button {
+  padding: 6px 14px;
+  border-radius: 20px;
+  width: 6.5rem;
+  letter-spacing: 1.2px;
+  text-transform: capitalize;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.opt-pills button.active {
+  border-color: #ff4d00;
+  color: #ff4d00;
+  background: #fff4f0;
+}
+
+
+/* date filter */
+.filter-product-status button {
+  padding: 8px 12px;
+  border-radius: 6px;
+ 
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.dash-right-center .date-filter button{
+    font-size: 12px;
+    display: flex;
+    gap: 6px;
+}
+
+/* User Products List */
+.dash-prouducts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
