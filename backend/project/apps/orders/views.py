@@ -1,12 +1,14 @@
 # Razorpay 
 import razorpay
 from django.conf import settings
-
+from django.db.models import Prefetch
 # Rest Framework views and serializers
-from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import CreateCartOrderInputSerializer
+from .serializers import CreateCartOrderInputSerializer , OrderSerializer
+
+# models 
+from apps.orders.models import Order ,OrderItem
 
 # Services
 from .services import create_order 
@@ -34,3 +36,39 @@ class CreateCartOrderView(APIView):
 
         return Response(order,status=201) 
         
+
+
+# =========================
+#  Userdashboard endpoints 
+# =========================
+
+class GetUserProducts(APIView):
+
+    def get(self,request):
+        user = request.user
+        qs = Order.objects.filter(user=user)
+
+        query = request.query_params.get("status")
+
+        if query != "all":
+            qs = qs.filter(order_status=query)
+        
+        qs = qs.prefetch_related(
+                Prefetch(
+                        'order_items',
+                         queryset = OrderItem.objects.select_related('product','variant').prefetch_related(
+                                                                                "product__images",)
+                        )
+                )
+        
+        serializer = OrderSerializer(qs,many=True)
+
+        print("SERIALIZER DATA:",serializer.data)
+
+        return Response(serializer.data,status=200)
+        
+
+
+
+        
+
