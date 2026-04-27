@@ -13,5 +13,8 @@ urlpatterns = [
     path('api/',include('apps.orders.urls')),
     path('api/auth/',include('apps.jwt_auth.urls')),
     path('api/users/',include('apps.users.urls')),
-    path('api/payments/',include('apps.payments.urls'))
+    path('api/payments/',include('apps.payments.urls')),
+
+    # users
+    path('api/userdashboard/',include('apps.orders.urls'))
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

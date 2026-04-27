@@ -2,7 +2,7 @@
 from .models import Order,OrderItem
 
 from rest_framework import serializers
-
+from apps.products.serializers import ProductsListSerializer
 from .validators import order_validation
 
 # INPUT Serializer
@@ -25,9 +25,10 @@ class CreateCartOrderInputSerializer(serializers.Serializer):
 
 # OUTPUT Serializer
 class OrderItemSerializer(serializers.ModelSerializer):
+    product = ProductsListSerializer()
     class Meta:
         model = OrderItem
-        fields = ['id', 'variant', 'quantity', 'price', 'status']
+        fields = ['id',"product" ,'variant', 'quantity', 'price', 'status']
 
 class OrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True, read_only=True)

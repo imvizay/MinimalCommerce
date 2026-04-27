@@ -6,12 +6,39 @@ import { ArrowDownNarrowWideIcon ,Home, ChevronRight } from "lucide-react";
 
 // react router
 import { Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom';
+
+// tanstack query
+import { useQuery } from '@tanstack/react-query'
+import { fetchMyProducts } from '../../../services/api/products/products';
 
 const productsStatusPills = [
     'all','pending','confirmed','shipped','delivered','cancelled'
 ]
 
 function UserdashboardHome() {
+
+    const [searchParams,setSearchParams] = useSearchParams()
+
+    let status = searchParams.get("status") || 'all' 
+
+
+    const {data:products,isLoading,isError} = useQuery({
+        queryKey:['products',status],
+        queryFn: () => fetchMyProducts(status)
+    }) 
+
+    
+
+
+    // HANDLE FILTER TYPE 
+    const handleOrderFilterList = (e) => {
+        // console.log("E:",e)
+        const type = e.target.dataset.status
+        setSearchParams({
+            status:type
+        })
+    }
 
 
   return (
@@ -21,9 +48,15 @@ function UserdashboardHome() {
         </div>
         {/* Product Status Filter Pills  */}
         <div className='dash-right-center filter-product-status'>
-            <div className='opt-pills'>
+            <div onClick = { handleOrderFilterList } className='opt-pills'>
                 {productsStatusPills.map((element,key) => (
-                    <button key={key}>{element}</button>
+                    <button 
+                        data-status = {element} 
+                        key = {key}
+                        className={ status == element ? "activeStatusType" : ""}
+                        > 
+                        {element} 
+                        </button>
                 ))}
             </div>
             

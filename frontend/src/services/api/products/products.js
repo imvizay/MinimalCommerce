@@ -32,3 +32,8 @@ export const loadCategories = () => {
 }
 
 
+// UserDashboard Product Services
+/* fetch products on basis of product status */
+export const fetchMyProducts = (status) => {
+    return api.get(`/userdashboard/my-orders/?status=${status}`)
+}

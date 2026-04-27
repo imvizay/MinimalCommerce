@@ -12,7 +12,7 @@ api.interceptors.request.use(
     (config) => {
         const jwt_token  = localStorage.getItem("mc-access")
 
-        if( config.url.includes('/login') || config.url.includes('/signup') ) {
+        if( config.url.includes('/login') || config.url.includes('/register') ) {
             return config
         }  
         if(jwt_token){

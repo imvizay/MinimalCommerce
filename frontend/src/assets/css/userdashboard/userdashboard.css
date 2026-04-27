@@ -180,7 +180,7 @@
   cursor: pointer;
 }
 
-.opt-pills button.active {
+.opt-pills button.activeStatusType {
   border-color: #ff4d00;
   color: #ff4d00;
   background: #fff4f0;
