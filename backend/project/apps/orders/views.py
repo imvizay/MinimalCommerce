@@ -61,7 +61,7 @@ class GetUserProducts(APIView):
                         )
                 )
         
-        serializer = OrderSerializer(qs,many=True)
+        serializer = OrderSerializer(qs,many=True,context={"request":request})
 
         print("SERIALIZER DATA:",serializer.data)
 
@@ -69,6 +69,4 @@ class GetUserProducts(APIView):
         
 
 
-
-        
 
