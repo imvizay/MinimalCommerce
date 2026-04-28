@@ -37,3 +37,8 @@ export const loadCategories = () => {
 export const fetchMyProducts = (status) => {
     return api.get(`/userdashboard/my-orders/?status=${status}`)
 }
+
+// pending order payments
+export const loadPendingPayments = () => {
+    return api.get(`/userdashboard/pending-payments/`)
+}
