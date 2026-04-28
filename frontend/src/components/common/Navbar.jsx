@@ -68,7 +68,7 @@ function Navbar() {
                     {user.email.split("@")[0]}
                   </p>
 
-                  <Link to="/my-profile">Profile</Link>
+                  <Link to="/userdashboard">Profile</Link>
                   <Link to="/my-orders">Orders</Link>
                   <Link to="/cart">Cart </Link>
                   <Link to="/notifications">Notifications</Link>

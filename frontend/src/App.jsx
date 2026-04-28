@@ -16,6 +16,7 @@ import Cart from './pages/Cart'
 // user dashboard
 import Userdashboard from './pages/MyProfile'
 import UserdashboardHome from './components/common/userdashboard/UserdashBasePage'
+import PendingPayments from './pages/userdashboard_pages/PendingPayments'
 
 
 function App() {
@@ -33,10 +34,12 @@ function App() {
 
 
       {/* Userdashboard Routes  */}
-      <Route path="my-profile" element={<Userdashboard />}>
+      <Route path="userdashboard" element={<Userdashboard />}>
         <Route index element={<UserdashboardHome />} />
-        {/* <Route path="my-orders" element={<UserOrders />} />
+
         <Route path="pending-payments" element={<PendingPayments />} />
+        {/* <Route path="my-orders" element={<UserOrders />} />
+        
         <Route path="order-history" element={<OrderHistory />} />
         <Route path="customer-care" element={<CustomerCare />} /> */}
       </Route>

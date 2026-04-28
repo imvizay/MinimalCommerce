@@ -3,8 +3,12 @@ from rest_framework.views import APIView
 from django.conf import settings
 import razorpay
 
+from .serializers import LoadingPendingOrderPaymentSerializer
+
 from .services import verify_and_update_payment
 
+from apps.orders.models import Order
+from .models import Payment ,PaymentStatus
 
 class VerifyCartPayment(APIView):
     def post(self, request):
@@ -43,3 +47,26 @@ class VerifyCartPayment(APIView):
                 "message": str(e),
                 "status": "error"
             }, status=500)
+        
+
+
+
+class LoadingPendingOrderPayments(APIView):
+
+    """
+    fetch all orders of the current user whose payment status is still pending.
+    """
+    def get(self,request):
+        qs = Payment.objects.filter(user=request.user,status=PaymentStatus.PENDING).select_related("order")
+        print("PENDING",qs)
+
+        serializer = LoadingPendingOrderPaymentSerializer(qs,many=True, context={'request': request})
+
+        return Response(serializer.data,status=200)
+
+
+        pass
+
+    
+
+        

@@ -1,7 +1,7 @@
 import '@assets/css/userdashboard/userdashboard.css'
 
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet,useNavigate } from 'react-router-dom'
 
 // components
 import { Menu,MapPin,CircleUser, ShoppingBag } from 'lucide-react'
@@ -9,14 +9,15 @@ import Breadcrumb from '../components/common/breadcrumb/Breadcrumb'
 
 const userDashboardNavLinks = [
   { id: 1, name: 'My Profile', to: "" },              // index route
-  { id: 2, name: 'My Orders', to: "my-orders" },
-  { id: 3, name: 'Pending Payments', to: "pending-payments" },
-  { id: 4, name: 'Order History', to: "order-history" },
-  { id: 5, name: 'Customer Care', to: "customer-care" },
+  { id: 2, name: 'My Orders', to: "/userdashboard/my-orders" },
+  { id: 3, name: 'Pending Payments', to: "/userdashboard/pending-payments" },
+  { id: 4, name: 'Order History', to: "/userdashboard/order-history" },
+  { id: 5, name: 'Customer Care', to: "/userdashboard/customer-care" },
 ]
 
 
 function Userdashboard() {
+    const navigate = useNavigate()
   return (
     <>
     <div className='dashboardContainer'>
@@ -28,7 +29,7 @@ function Userdashboard() {
                 <p><MapPin color='red' size={13}/> <span>Bagoniya,Bhopal</span></p>
             </div>
             <div className='nav-center nav-logo'>
-                <span></span>
+                <span onClick={()=>navigate('/')}>Minimal Commerce</span>
             </div>     
 
             <div className='nav-right nav-user-info'>
@@ -47,7 +48,7 @@ function Userdashboard() {
                 <button 
                     className='ud-link'
                     key={el.id}
-                    to={el.to}
+                    onClick={()=>navigate(el.to)}
                     >
                         {/* <span>{<el.icon/>}</span> */}
                         {el.name}

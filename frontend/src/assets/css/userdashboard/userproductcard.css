@@ -1,40 +1,42 @@
-
-
-/* Product Card Main */
-
 .ud-pc-container {
-  background: #ffffff;
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
   border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 16px 18px;
-  transition: all 0.2s ease;
-  user-select: none;
+  transition: 0.2s ease;
 }
 
 .ud-pc-container:hover {
- background-color: #b6b6d8bb;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
-/* status and date row */
 .pc-status-and-date {
+  font-size: 13px;
+  margin-bottom: 10px;
   display: flex;
+  gap: 10px;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  margin-bottom: 12px;
 }
 
-/* Status badge */
 .pc-status {
-  background: #fff4e5;
-  color: #ff9800;
   padding: 4px 10px;
   border-radius: 20px;
+  font-size: 12px;
   text-transform: capitalize;
-  font-weight: 500;
+  background: #f5f5f5;
 }
 
-/* card content information */
+.pc-status.pending {
+  color: #ff8a00;
+  background: #fff3e6;
+}
+
+.pc-status.delivered {
+  color: #2e7d32;
+  background: #e8f5e9;
+}
+
 .pc-information {
   display: flex;
   justify-content: space-between;
@@ -43,52 +45,40 @@
 
 .pc-information-left {
   display: flex;
-  align-items: center;
   gap: 14px;
 }
 
-/* card product img */
 .pc-image img {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
+  width: 70px;
+  height: 70px;
   object-fit: cover;
-  background: #f2f2f2;
+  border-radius: 10px;
 }
 
-/* card product meta info */
-.pc-meta h1 {
+.pc-meta h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.pc-title {
   font-size: 14px;
-  margin-bottom: 4px;
+  color: #555;
 }
 
-.pc-meta p {
-  font-size: 13px;
-  color: #666;
+.pc-extra {
+  font-size: 12px;
+  color: #888;
 }
 
 .pc-price {
   font-weight: 600;
-  margin-top: 4px;
-  display: inline-block;
+  font-size: 15px;
 }
 
-
-/* right arrow button */
 .pc-information-right button {
-  background: #fff;
-  height: 40px;
-  text-align: center;
-  width: 40px;
-  border: 1px solid #eee;
+  background: #f5f5f5;
+  border: none;
+  padding: 10px;
   border-radius: 50%;
-  padding: 5px;
-  transform: rotate(180deg);
   cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.pc-information-right button:hover {
-  background: #ff4d00;
-  color: white;
 }

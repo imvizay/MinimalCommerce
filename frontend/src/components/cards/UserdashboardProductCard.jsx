@@ -1,38 +1,77 @@
 import '@assets/css/userdashboard/userproductcard.css'
-
-import { ArrowLeftIcon } from 'lucide-react'
+import { ArrowRightIcon } from 'lucide-react'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
+function UserProductCard({ order }) {
 
-function UserProductCard() {
+  const navigate = useNavigate()
+
+  const {
+    id,
+    order_status,
+    total,
+    preview_item,
+    total_item
+  } = order
+
   return (
     <div className='ud-pc-container'>
-        <div className='pc-status-and-date'>
-            <span className='pc-status'>
-                in progress
+
+      {/* TOP STATUS */}
+      <div className='pc-status-and-date'>
+        <span className={`pc-status ${order_status}`}>
+          {order_status}
+        </span>
+        <span>|</span>
+        <span className='pc-date'>
+          {/* replace later with created_at */}
+          Recent Order
+        </span>
+      </div>
+
+      {/* MAIN CONTENT */}
+      <div className='pc-information'>
+
+        {/* LEFT */}
+        <div className='pc-information-left'>
+
+          {/* IMAGE */}
+          <div className='pc-image'>
+            <img 
+              src={preview_item?.image} 
+              alt={preview_item?.name} 
+            />
+          </div>
+
+          {/* META */}
+          <div className='pc-meta'>
+            <h3 className='pc-identity'>
+              Order #{id}
+            </h3>
+
+            <p className='pc-title'>
+              {preview_item?.name}
+            </p>
+
+            <p className='pc-extra'>
+              {total_item} item{total_item > 1 ? 's' : ''}
+            </p>
+
+            <span className='pc-price'>
+              ₹ {total}
             </span>
-            <span>|</span>
-            <span className='pc-date'>10 May 2025</span>
+          </div>
         </div>
 
-        <div className='pc-information'>
-           <div className='pc-information-left'>
-                <div className='pc-image'>
-                    <img alt="" />
-                </div>
-                <div className='pc-meta'>
-                    <h1 pc-identity>Order Id- ABC-6457321</h1>
-                    <p pc-title>Mens Blue leather Jacket </p>
-                    <span className='pc-price'>12,000</span>
-                </div>
-           </div>
-
-           <div className='pc-information-right'>
-            <button>
-                <ArrowLeftIcon/>
-            </button>
-           </div>
+        {/* RIGHT */}
+        <div className='pc-information-right'>
+          <button onClick={() => navigate(`/order/${id}`)}>
+            <ArrowRightIcon size={18} />
+          </button>
         </div>
+
+      </div>
     </div>
   )
 }

@@ -15,6 +15,8 @@ urlpatterns = [
     path('api/users/',include('apps.users.urls')),
     path('api/payments/',include('apps.payments.urls')),
 
-    # users
-    path('api/userdashboard/',include('apps.orders.urls'))
+    # usersdashboard
+    path('api/userdashboard/',include('apps.orders.urls')),
+    path('api/userdashboard/',include('apps.payments.urls'))
+
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

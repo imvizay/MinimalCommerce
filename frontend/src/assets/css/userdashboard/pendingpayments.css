@@ -1,0 +1,42 @@
+.pending-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: white;
+}
+
+.left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.right{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.left img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.status {
+  color: #ff4d4f;
+  font-size: 13px;
+}
+
+.retryButton {
+  margin-top: 5px;
+  padding: 6px 10px;
+  background: #000000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

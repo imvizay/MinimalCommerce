@@ -28,6 +28,9 @@ function UserdashboardHome() {
         queryFn: () => fetchMyProducts(status)
     }) 
 
+    useEffect(()=>{
+        console.log("PRODUCTS",products)
+    },[products])
     
 
 
@@ -66,7 +69,9 @@ function UserdashboardHome() {
             </div>
         </div>
         <div className='dash-right-bottom dash-prouducts-list'>
-                <UserProductCard/>
+                {products?.map((order) => (
+                  <UserProductCard key={order.id} order={order} />
+                ))}
         </div>
     </>
   )
