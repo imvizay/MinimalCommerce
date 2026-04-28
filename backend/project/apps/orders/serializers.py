@@ -30,8 +30,31 @@ class OrderItemSerializer(serializers.ModelSerializer):
         model = OrderItem
         fields = ['id',"product" ,'variant', 'quantity', 'price', 'status']
 
+
+
+
 class OrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True, read_only=True)
+    total_item = serializers.SerializerMethodField()
+    preview_item = serializers.SerializerMethodField()
+
     class Meta:
         model = Order
-        fields = ['id', 'user', 'order_status', 'total', 'order_items']
+        fields = ['id', 'user', 'order_status', 'total', 'order_items',"total_item","preview_item"]
+
+    def get_total_item(self,obj):
+        return obj.order_items.count()
+    
+    def get_preview_item(self,obj):
+        request = self.context.get('request')
+        item = obj.order_items.first()
+        if item and item.product.images.exists():
+            image = item.product.images.first().image
+            return {
+                "name":item.product.pro_name,
+                "image": request.build_absolute_uri(image.url) if request else image.url
+            }
+        
+        return None
+    
+
