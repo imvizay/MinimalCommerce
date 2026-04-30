@@ -1,0 +1,126 @@
+.admin-layout {
+  display: flex;
+
+}
+
+.admin-main {
+  flex: 1;
+  background: #f8fafc;
+}
+
+.admin-content {
+  padding: 20px;
+}
+
+
+/* admin dash cards */
+.admin-home {
+  padding: 20px;
+}
+
+.section-title {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* GRID */
+.adminDash {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.admin-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-3px);
+}
+
+.admin-card.warning {
+  border-left: 4px solid orange;
+}
+
+/* HEADER */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* PRIMARY */
+.card-primary h1 {
+  font-size: 26px;
+  margin: 10px 0 5px;
+}
+
+/* STATS */
+.card-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.stat-box {
+  font-size: 12px;
+}
+
+/* BUTTON */
+.action-btn {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border: none;
+  background: black;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* TABLE */
+.orders-table {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.status.pending {
+  color: orange;
+}
+
+.status.confirmed {
+  color: green;
+}
+
+/* BUTTONS */
+.btn {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: none;
+  background: #eee;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn.success {
+  background: green;
+  color: white;
+}
+
+.btn.danger {
+  background: red;
+  color: white;
+}
