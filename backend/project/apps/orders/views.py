@@ -3,9 +3,13 @@ import razorpay
 from django.conf import settings
 from django.db.models import Prefetch
 # Rest Framework views and serializers
+from rest_framework.generics import ListAPIView 
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import CreateCartOrderInputSerializer , OrderSerializer
+
+# admin serializer
+from .serializers import AdminOrderSerializer
 
 # models 
 from apps.orders.models import Order ,OrderItem
@@ -69,4 +73,10 @@ class GetUserProducts(APIView):
         
 
 
+# ===========
+# ADMIN VIEWS
+# ===========
+class OrdersList(ListAPIView):
+        queryset  = Order.objects.all()
+        serializer_class = AdminOrderSerializer 
 

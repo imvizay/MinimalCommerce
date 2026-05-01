@@ -1,6 +1,6 @@
 
 import api from "../../core/setup"
-export const loadProducts = (filters) => {
+export const loadProducts = (filters = {category:1}) => {
     const params = {}
 
     // category

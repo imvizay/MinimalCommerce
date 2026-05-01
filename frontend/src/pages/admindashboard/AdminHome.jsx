@@ -1,5 +1,8 @@
-import React from "react";
+import React,{useEffect} from "react";
+
 import { Users, ShoppingCart, DollarSign, AlertTriangle } from "lucide-react";
+
+import { formatDateTime } from "../../utils/date";
 
 const dashStats = [
   {
@@ -43,14 +46,14 @@ const recentOrders = [
 
 // query fn
 
-import {useQuery} from '@tanstack/react-query'
-import { adminLoadProducts } from "../../services/api/admin/dashboard";
+import { useQuery } from '@tanstack/react-query'
+import { adminloadOrders } from "../../services/api/admin/dashboard";
 
 function AdminHome() {
 
-    const {data:dashboardStats,isLoading,isError} = useQuery({
+    const {data:orderList,isLoading,isError} = useQuery({
         queryKey:['dashboard-stats'],
-        queryFn: () => adminLoadProducts(),
+        queryFn: () => adminloadOrders(),
     }) 
 
     if(isLoading) return <div>
@@ -60,6 +63,8 @@ function AdminHome() {
     if(isError)return <div>
         <p>Something went wrong,please try after some time.</p>
     </div>
+
+    
 
 
 
@@ -137,31 +142,37 @@ function AdminHome() {
                 <th>Total</th>
                 <th>Status</th>
                 <th>Date</th>
+                <th>Time</th>
                 <th>Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              {recentOrders.map(order => (
-                <tr key={order.id}>
-                  <td>{order.id}</td>
-                  <td>₹ {order.total}</td>
+              { orderList.map(order => {
+                const { date,time } = formatDateTime(order.created_at)
+              
+                return (
+                      <tr key={order.id}>
+                        <td>{order.id}</td>
+                        <td>₹ {order.total}</td>
 
-                  <td>
-                    <span className={`status ${order.status}`}>
-                      {order.status}
-                    </span>
-                  </td>
+                        <td>
+                          <span className= {`status ${order.status}`}>
+                            {order.order_status.toUpperCase()}
+                          </span>
+                        </td>
 
-                  <td>{order.date}</td>
+                        <td>{date}</td>
+                        <td>{time}</td>
 
-                  <td>
-                    <button className="btn success">Confirm</button>
-                    <button className="btn danger">Cancel</button>
-                    <button className="btn">View</button>
-                  </td>
-                </tr>
-              ))}
+                        <td>
+                          <button className="btn success">Confirm</button>
+                          <button className="btn danger">Cancel</button>
+                          <button className="btn">View</button>
+                        </td>
+                      </tr>
+                    )})}
+
             </tbody>
           </table>
 
