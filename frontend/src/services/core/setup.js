@@ -23,7 +23,7 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 )
 
-export default api
+
 
 // Response interceptor
 
@@ -35,3 +35,5 @@ api.interceptors.response.use(
         return Promise.reject(error)
     }
 )
+
+export default api

@@ -30,7 +30,8 @@ def login_user(email,password):
             "id":user.id,
             "email":user.email,
             "contact":user.contact,
-            "address":user.address
+            "address":user.address,
+            "is_superuser":user.is_superuser
         },
         "access": str(refresh.access_token),
         "refresh": str(refresh),

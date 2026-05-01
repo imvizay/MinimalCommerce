@@ -82,3 +82,14 @@ class OrderPendingPaymentSerializer(serializers.ModelSerializer):
             "image": request.build_absolute_uri(image_obj.image.url) if request else image_obj.image.url
         }
         return None
+
+
+
+# ADMIN ENDPOINTS SERIALIZER
+
+class AdminOrderSerializer(serializers.ModelSerializer):
+    order_items = OrderItemSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = "__all__"

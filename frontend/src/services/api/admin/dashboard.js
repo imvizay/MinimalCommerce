@@ -8,6 +8,6 @@ export const adminLoadProducts = loadProducts
 
 // load orders
 export const adminloadOrders = () => {
-    api.get('admin/orders/')
+    return api.get('/admin/orders/')
 }
 
