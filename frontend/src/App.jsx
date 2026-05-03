@@ -22,6 +22,7 @@ import PendingPayments from '@pages/userdashboard_pages/PendingPayments'
 import Admindashboard from './layout/Admindashboard'
 import AdminRoute from '@components/admin_route_config/AdminRoute'
 import AdminHome from '@pages/admindashboard/AdminHome'
+import OrderDetail from './pages/admindashboard/OrderDetail'
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
             <Route index element={<AdminHome/>}/>
             {/* <Route path='users'/>
             <Route path='orders'/> */}
+            <Route path='/admindashboard/order-detail/:id' element={<OrderDetail/>}/>
         </Route>
       </Route>
 

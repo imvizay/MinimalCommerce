@@ -13,13 +13,9 @@ function Admindasboard() {
       </div>
 
       <div className="admin-main">
-
-        <AdminTopbar />
-
         <div className="admin-content">
           <Outlet />
         </div>
-
       </div>
 
     </div>

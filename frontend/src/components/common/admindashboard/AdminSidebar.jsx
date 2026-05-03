@@ -15,6 +15,9 @@ function AdminSidebar() {
         <NavLink to="/admindashboard/payments">Payments</NavLink>
       </nav>
 
+      <div className="admin-logout">
+        <button>Logout</button>
+      </div>
     </div>
   )
 }

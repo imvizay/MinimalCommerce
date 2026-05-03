@@ -4,6 +4,9 @@
   background: #0f172a;
   color: white;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .admin-sidebar .logo {
@@ -27,4 +30,17 @@
 .admin-sidebar a.active {
   background: #1e293b;
   color: white;
+}
+
+.admin-logout button{
+  padding: 10px 20px;
+  width: 100%;
+  background-color: blue;
+  color: white;
+  border: transparent;
+  cursor: pointer;
+  transition: transform 0.3s ease-in;
+}
+.admin-logout button:hover{
+ transform: scale(0.9);
 }
