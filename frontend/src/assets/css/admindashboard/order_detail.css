@@ -1,0 +1,116 @@
+.order-detail-container {
+  padding: 20px;
+  background: #f9fafb;
+  min-height: 100vh;
+}
+
+.order-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.order-summary {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.order-table th,
+.order-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.order-table thead {
+  background: #f1f5f9;
+}
+
+.order-table tbody tr {
+  border-top: 1px solid #e5e7eb;
+}
+
+.order-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Status Colors */
+.status-success {
+  color: green;
+  font-weight: 600;
+}
+
+.status-danger {
+  color: red;
+  font-weight: 600;
+}
+
+.status-warning {
+  color: orange;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: gray;
+}
+
+/* Buttons */
+.order-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-confirm {
+  background: green;
+  color: white;
+}
+
+.btn-confirm:hover {
+  background: darkgreen;
+}
+
+.btn-cancel {
+  background: red;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background: darkred;
+}
+
+
+.item-actions .btn{
+    background-color: transparent;
+    display: flex;
+    gap: 20px;
+}
+.item-actions .btn button{
+    padding: 5px 10px;
+    border: transparent;
+    cursor: pointer;
+}
+
+/* Fallback */
+.no-data {
+  padding: 20px;
+  text-align: center;
+}

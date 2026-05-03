@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{ useState , useEffect} from "react";
 
 import { Users, ShoppingCart, DollarSign, AlertTriangle } from "lucide-react";
 
@@ -47,14 +47,34 @@ const recentOrders = [
 // query fn
 
 import { useQuery } from '@tanstack/react-query'
-import { adminloadOrders } from "../../services/api/admin/dashboard";
+import { adminloadOrders } from "@services/api/admin/dashboard";
+import { useNavigate } from "react-router-dom";
+import { finalizeOrderAPI } from "@services/api/admin/dashboard";
+import { useMutation } from "@tanstack/react-query";
 
 function AdminHome() {
 
+    const [page,setPage] = useState(1)
+    const navigate = useNavigate()
+
     const {data:orderList,isLoading,isError} = useQuery({
-        queryKey:['dashboard-stats'],
-        queryFn: () => adminloadOrders(),
+        queryKey:['admin-recent-order',page],
+        queryFn: () => adminloadOrders(page),
+        keepPreviousData: true,
     }) 
+
+    const finalizeOrder = useMutation({
+      mutationFn: ({order,status})=>{
+        const payload = {
+          order_id:order.id,
+          items:order.order_items.map((item)=>({
+            id:item.id,
+            status:status
+          }))
+        }
+        finalizeOrderAPI(payload)
+      }
+    })
 
     if(isLoading) return <div>
         <p>Loading... </p>
@@ -63,6 +83,8 @@ function AdminHome() {
     if(isError)return <div>
         <p>Something went wrong,please try after some time.</p>
     </div>
+
+    console.log("console.log",orderList)
 
     
 
@@ -148,7 +170,7 @@ function AdminHome() {
             </thead>
 
             <tbody>
-              { orderList.map(order => {
+              { orderList.results.map(order => {
                 const { date,time } = formatDateTime(order.created_at)
               
                 return (
@@ -166,15 +188,43 @@ function AdminHome() {
                         <td>{time}</td>
 
                         <td>
-                          <button className="btn success">Confirm</button>
-                          <button className="btn danger">Cancel</button>
-                          <button className="btn">View</button>
+                          {['pending'].includes(order.order_status) && (
+                              <>
+                                <button 
+                                  disabled={finalizeOrder.isPending}
+                                  onClick={ () => finalizeOrder.mutate({order,status:"confirmed"})} 
+                                  className="btn success">Confirm</button>
+
+                                  <button 
+                                  disabled={finalizeOrder.isPending}
+                                  onClick={ () => finalizeOrder.mutate({order,status:'cancelled'})}
+                                  className="btn danger">Cancel</button>
+                              </>
+                            )}
+                          <button className="btn" onClick={()=>navigate(`order-detail/${order.id}`,{state:order})}>View</button>
                         </td>
                       </tr>
                     )})}
-
             </tbody>
           </table>
+
+          <div className="pagination">
+            <button 
+              disabled={page === 1}
+              onClick={() => setPage(prev => prev - 1)}
+            >
+              Prev
+            </button>
+
+            <span>Page {page}</span>
+
+            <button 
+              disabled={!orderList.next} // DRF gives next URL
+              onClick={() => setPage(prev => prev + 1)}
+            >
+              Next
+            </button>
+          </div>
 
         </div>
       </section>
