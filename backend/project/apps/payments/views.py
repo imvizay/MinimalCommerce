@@ -1,13 +1,13 @@
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.views import APIView 
+from rest_framework.generics import ListAPIView
 from django.conf import settings
 import razorpay
 
-from .serializers import LoadingPendingOrderPaymentSerializer
+from .serializers import LoadingPendingOrderPaymentSerializer , PaymentSerializer
 
 from .services import verify_and_update_payment
 
-from apps.orders.models import Order
 from .models import Payment ,PaymentStatus
 
 class VerifyCartPayment(APIView):
@@ -65,7 +65,14 @@ class LoadingPendingOrderPayments(APIView):
         return Response(serializer.data,status=200)
 
 
-        pass
+# admin
+from .paginations import PaymentsPagination
+
+class ViewAllPayments(ListAPIView):
+    queryset = Payment.objects.all().order_by('-id')
+    serializer_class = PaymentSerializer 
+    pagination_class = PaymentsPagination
+    
 
     
 

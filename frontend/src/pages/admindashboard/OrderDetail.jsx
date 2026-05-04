@@ -4,7 +4,7 @@ import "@assets/css/admindashboard/order_detail.css"
 
 import { useMutation } from "@tanstack/react-query"
 
-import { finalizeOrderAPI } from '@services/api/admin/dashboard.js'
+import { finalizeOrderAPI } from '@services/api/admin/admin.js'
 
 const OrderDetail = () => {
   const { state: order } = useLocation()

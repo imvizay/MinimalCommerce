@@ -23,6 +23,9 @@ import Admindashboard from './layout/Admindashboard'
 import AdminRoute from '@components/admin_route_config/AdminRoute'
 import AdminHome from '@pages/admindashboard/AdminHome'
 import OrderDetail from './pages/admindashboard/OrderDetail'
+import UsersList from './pages/admindashboard/UsersList'
+import AdminProducts from './pages/admindashboard/Products'
+import Payments from './pages/admindashboard/Payments'
 
 
 function App() {
@@ -51,12 +54,14 @@ function App() {
 
       {/* Admindashboard Routes */}
       <Route element={<AdminRoute/>}>
-        <Route path='admindashboard' element={<Admindashboard/>}>
+        <Route path='/admindashboard' element={<Admindashboard/>}>
 
             <Route index element={<AdminHome/>}/>
-            {/* <Route path='users'/>
-            <Route path='orders'/> */}
-            <Route path='/admindashboard/order-detail/:id' element={<OrderDetail/>}/>
+             <Route path='users' element={<UsersList/>} />
+            <Route path='products' element={<AdminProducts/>}/>
+            <Route path='order-detail/:id' element={<OrderDetail/>}/>
+            <Route path='payments' element={<Payments/>}/>
+            
         </Route>
       </Route>
 

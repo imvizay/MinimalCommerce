@@ -1,6 +1,6 @@
 import '@assets/css/userdashboard/userdashboard.css'
 
-import React from 'react'
+import React,{useState} from 'react'
 import { Outlet,useNavigate } from 'react-router-dom'
 
 // components
@@ -17,15 +17,18 @@ const userDashboardNavLinks = [
 
 
 function Userdashboard() {
+    const [open, setOpen] = useState(false)
     const navigate = useNavigate()
   return (
     <>
     <div className='dashboardContainer'>
+
+        
         
         {/* Userdashboard top bar */}
         <div className='dash-nav'>
             <div className='nav-left nav-menu'>
-                <button><Menu/></button>
+                <button onClick={() => setOpen(true)}><Menu/></button>
                 <p><MapPin color='red' size={13}/> <span>Bagoniya,Bhopal</span></p>
             </div>
             <div className='nav-center nav-logo'>
@@ -41,14 +44,17 @@ function Userdashboard() {
         </div>
 
         {/* USER DASHBOARD NAVLINKS SIDEBAR */}
-        <div className='dash-left'>
+        <div className={`dash-left ${open ? "open" : ""}`}>
             <div className='dash-links-container'>
             
             {userDashboardNavLinks.map(el => (
                 <button 
                     className='ud-link'
                     key={el.id}
-                    onClick={()=>navigate(el.to)}
+                    onClick={()=>{
+                        navigate(el.to)
+                        setOpen(prev=>!prev)
+                    }}
                     >
                         {/* <span>{<el.icon/>}</span> */}
                         {el.name}
