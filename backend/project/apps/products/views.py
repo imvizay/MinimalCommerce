@@ -2,6 +2,8 @@
 
 from rest_framework.viewsets import ModelViewSet,ReadOnlyModelViewSet
 
+from .paginations import ProductsPagination
+
 # products apps serializers models
 from .serializers import (
                     ProductSerializer ,
@@ -18,8 +20,9 @@ class CategoryView(ModelViewSet):
 
 # Crud view for amdin to manage products 
 class ProductView(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by('-id')
     serializer_class = ProductSerializer
+    pagination_class = ProductsPagination
 
 
 # Read only products for users.

@@ -47,9 +47,9 @@ const recentOrders = [
 // query fn
 
 import { useQuery } from '@tanstack/react-query'
-import { adminloadOrders } from "@services/api/admin/dashboard";
+import { adminloadOrders } from "@services/api/admin/admin.js";
 import { useNavigate } from "react-router-dom";
-import { finalizeOrderAPI } from "@services/api/admin/dashboard";
+import { finalizeOrderAPI } from "@services/api/admin/admin.js";
 import { useMutation } from "@tanstack/react-query";
 
 function AdminHome() {
@@ -92,62 +92,6 @@ function AdminHome() {
 
   return (
     <div className="admin-home">
-
-      {/* ===================== */}
-      {/* DASHBOARD OVERVIEW */}
-      {/* ===================== */}
-      <section>
-        <h2 className="section-title">Dashboard Overview</h2>
-
-        <div className="adminDash">
-
-          {dashStats.map((stat, index) => (
-            <div key={index} className="admin-card">
-
-              {/* Header */}
-              <div className="card-header">
-                <div className="card-icon">{stat.icon}</div>
-                <h4>{stat.name}</h4>
-              </div>
-
-              {/* Primary */}
-              <div className="card-primary">
-                <h1>{stat.primary.toLocaleString()}</h1>
-                <p>{stat.primaryLabel}</p>
-              </div>
-
-              {/* Secondary */}
-              <div className="card-stats">
-                {Object.entries(stat.data).map(([key, value]) => (
-                  <div key={key} className="stat-box">
-                    <span>{key}</span>
-                    <strong>{value.toLocaleString()}</strong>
-                  </div>
-                ))}
-              </div>
-
-            </div>
-          ))}
-
-          {/* LOW STOCK ALERT CARD */}
-          <div className="admin-card warning">
-            <div className="card-header">
-              <AlertTriangle size={20} />
-              <h4>Low Stock Alert</h4>
-            </div>
-
-            <div className="card-primary">
-              <h1>5</h1>
-              <p>Products Running Low</p>
-            </div>
-
-            <button className="action-btn">
-              View Products
-            </button>
-          </div>
-
-        </div>
-      </section>
 
       {/* ===================== */}
       {/* RECENT ORDERS */}
@@ -208,6 +152,8 @@ function AdminHome() {
             </tbody>
           </table>
 
+          </div>
+
           <div className="pagination">
             <button 
               disabled={page === 1}
@@ -226,7 +172,7 @@ function AdminHome() {
             </button>
           </div>
 
-        </div>
+        
       </section>
 
     </div>

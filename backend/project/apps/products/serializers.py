@@ -26,15 +26,18 @@ class ProductVariantSerializer(ModelSerializer):
 # Amdin Product Serializer For Performing Crud
 class ProductSerializer(ModelSerializer):
 
-    image = ProductImageSerializer(many=True,write_only=True)
-    variants = ProductVariantSerializer(many=True,write_only=True)
+    image = ProductImageSerializer(source="images",many=True)
+    variants = ProductVariantSerializer(many=True)
 
     def validate(self, data):
         return super().validate(data)
 
     class Meta:
         model = Product
-        fields = ['category','pro_name','pro_price','pro_description','image','variants']
+        fields = ['id','category','pro_name','pro_price','pro_description','image','variants']
+        extra_kwargs = {
+            'id':{'read_only':True}
+        }
 
     def create(self, validated_data):
 
