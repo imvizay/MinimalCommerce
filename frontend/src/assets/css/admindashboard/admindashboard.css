@@ -1,15 +1,12 @@
 .admin-layout {
   display: flex;
-
+  height: 100vh;
 }
 
 .admin-main {
   flex: 1;
-  background: #f8fafc;
-}
-
-.admin-content {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -123,4 +120,96 @@
 .btn.danger {
   background: red;
   color: white;
+}
+
+
+
+
+@media (max-width: 480px) {
+
+  .admin-home {
+    padding: 10px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .card-primary h1 {
+    font-size: 20px;
+  }
+
+  .card-stats {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .stat-box {
+    font-size: 11px;
+  }
+
+  /* tighter table */
+  .orders-table {
+    min-width: 600px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 6px;
+    font-size: 11px;
+  }
+
+  /* stack action buttons */
+  .orders-table td:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+}
+
+
+@media (max-width: 360px) {
+
+  .admin-home {
+    padding: 8px;
+  }
+  .admin-content{
+    padding: 0px;
+  }
+
+  .recent-order-wrapper{
+    width: 360px;
+    overflow-x: scroll;
+  }
+
+  .section-title {
+    font-size: 14px;
+  }
+
+  .card-primary h1 {
+    font-size: 18px;
+  }
+
+  /* reduce card padding */
+  .admin-card {
+    padding: 12px;
+  }
+
+  /* hide less important table columns */
+  .orders-table th:nth-child(5),
+  .orders-table td:nth-child(5) {
+    display: none; /* hide time */
+  }
+
+  .orders-table th:nth-child(4),
+  .orders-table td:nth-child(4) {
+    display: none; /* hide date */
+  }
+
+  .btn {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+
 }

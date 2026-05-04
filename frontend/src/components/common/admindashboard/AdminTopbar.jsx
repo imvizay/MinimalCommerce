@@ -1,22 +1,12 @@
-import '@assets/css/admindashboard/admin_topbar.css'
-import { useUserContext } from '@contexts/UserContext' 
-
-function AdminTopbar() {
-  const { isLoading,user,logoutUser } = useUserContext()
-
-  
-
+function AdminTopbar({ setOpen }) {
   return (
     <div className="admin-topbar">
 
-      <div className="left">
-       
-      </div>
+      <button className="menu-btn" onClick={() => setOpen(true)}>
+        ☰
+      </button>
 
-      <div className="right">
-        <span>{isLoading ? "..." : user?.email.split('@')[0].toUpperCase() }</span>
-        <button onClick={ () => logoutUser() }>Logout</button>
-      </div>
+      <h2>Minimal-Commerce</h2>
 
     </div>
   )

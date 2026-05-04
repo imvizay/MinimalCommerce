@@ -210,3 +210,91 @@
   gap: 16px;
 }
 
+
+@media (max-width: 768px) {
+
+  .dashboardContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP NAV */
+  .dash-nav {
+    padding: 0 16px;
+  }
+
+  .nav-menu p span {
+    display: none; /* hide location text */
+  }
+
+  .nav-logo {
+    font-size: 16px;
+  }
+
+  /* SIDEBAR becomes hidden */
+  .dash-left {
+    position: fixed;
+    top: 70px;
+    left: -100%;
+    width: 220px;
+    height: calc(100vh - 70px);
+    z-index: 1000;
+    background: white;
+    transition: 0.3s ease;
+  }
+
+  /* show sidebar when active */
+  .dash-left.open {
+    left: 0;
+  }
+
+  .dash-right {
+    padding: 16px;
+  }
+
+}
+
+
+@media (max-width: 360px) {
+  .dash-nav{
+    padding: 0;
+  }
+  .item-count{
+    right: 25px;
+  }
+  .nav-logo {
+    font-size: 12px;
+  }
+
+  .nav-right {
+    gap: 6px;
+  }
+
+  .nav-right button {
+    font-size: 12px;
+  }
+
+  .nav-right .user {
+    display: none;
+  }
+
+  /* pills smaller */
+  .opt-pills button {
+    font-size: 10px;
+    padding: 5px 10px;
+    width: auto;
+  }
+
+  .dash-right {
+    padding: 10px;
+  }
+  .dash-right-center{
+    width: 100%;
+    padding: 10px;
+    overflow-x: scroll;
+  }
+  .dash-right-center .date-filter{
+    display: none;
+  }
+
+}

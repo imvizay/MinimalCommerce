@@ -1,0 +1,229 @@
+/* ================= CONTAINER ================= */
+
+.users-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f4f6f9;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.user-table-head {
+  margin-bottom: 10px;
+}
+
+.user-table-head h2 {
+  font-weight: 600;
+}
+
+/* ================= SCROLL AREA ================= */
+
+.users-content {
+  flex: 1;
+  overflow: auto;
+}
+
+/* scrollbar */
+.users-content::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.users-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* ================= TABLE ================= */
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 900px; /* 👈 important for horizontal scroll */
+}
+
+.users-table thead {
+  background: #f1f3f5;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.users-table th {
+  font-weight: 600;
+}
+
+.users-table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: 0.2s;
+}
+
+.users-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* ================= STATUS ================= */
+
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.status.active {
+  background: #e6f9f0;
+  color: #1a7f5a;
+}
+
+.status.inactive {
+  background: #fdecec;
+  color: #b42318;
+}
+
+/* ================= ACTION ================= */
+
+.btn-check {
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  background: #e0e7ff;
+  color: #3730a3;
+  cursor: pointer;
+}
+
+/* ================= PAGINATION ================= */
+
+.pagination {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  font-size: 13px;
+  border: none;
+  background: #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background: #d1d5db;
+}
+
+.active-page {
+  background: #4f46e5 !important;
+  color: #fff;
+}
+
+
+@media (max-width: 480px) {
+
+  .users-container {
+    padding: 8px;
+  }
+
+  .user-table-head h2 {
+    font-size: 16px;
+  }
+
+  .users-table {
+    font-size: 11px;
+    min-width: 700px; /* reduce horizontal scroll width */
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 6px;
+  }
+
+  /* reduce spacing */
+  .status {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .btn-check {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+
+  /* pagination tighter */
+  .pagination {
+    gap: 4px;
+  }
+
+  .pagination button {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .admin-content{
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .users-container {
+    padding: 6px;
+  }
+
+  .user-table-head h2 {
+    font-size: 14px;
+  }
+
+  .users-table {
+    font-size: 10px;
+    min-width: 600px; /* tighter scroll */
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 5px;
+  }
+
+  /* hide less important columns (BIG UX improvement) */
+  .users-table th:nth-child(5),
+  .users-table td:nth-child(5) {
+    display: none; /* hide address */
+  }
+
+  .users-table th:nth-child(4),
+  .users-table td:nth-child(4) {
+    display: none; /* hide contact */
+  }
+
+  /* keep only essential info visible */
+
+  .status {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .btn-check {
+    font-size: 9px;
+    padding: 2px 5px;
+  }
+
+  .pagination button {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+}
