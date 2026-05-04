@@ -114,3 +114,105 @@
   color: blue;  
   border: 1px solid blue;
 }
+
+@media (max-width: 480px) {
+
+  #header {
+    padding: 10px 12px;
+  }
+
+  .navContainer {
+    gap: 10px;
+  }
+
+  .navLeft .webLogo {
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  .navRight {
+    gap: 12px;
+  }
+
+  .navIcon {
+    font-size: 18px;
+  }
+
+  .badge {
+    font-size: 9px;
+    padding: 2px 5px;
+    top: -5px;
+    right: -8px;
+  }
+
+  .userAvatar {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  /* auth buttons smaller */
+  .authBtns .link {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  /* dropdown tighter */
+  .dropdown {
+    width: 160px;
+    right: 10px;
+    padding: 12px;
+  }
+
+}
+
+@media (max-width: 360px) {
+
+  #header {
+    padding: 8px 10px;
+  }
+
+  .navLeft .webLogo {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .navRight {
+    gap: 8px;
+  }
+
+  .navIcon {
+    font-size: 16px;
+  }
+
+  .badge {
+    font-size: 8px;
+    padding: 1px 4px;
+    top: -4px;
+    right: -6px;
+  }
+
+  .userAvatar {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+  }
+
+  /* 🔥 IMPORTANT: stack auth buttons */
+  .authBtns {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .authBtns .link {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  /* dropdown compact */
+  .dropdown {
+    width: 140px;
+    padding: 10px;
+  }
+
+}

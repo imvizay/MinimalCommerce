@@ -1,9 +1,89 @@
-.admin-topbar {
-  height: 60px;
-  background: white;
-  border-bottom: 1px solid #eee;
+/* ================= LAYOUT ================= */
+
+.admin-layout {
   display: flex;
+  height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.admin-sidebar {
+  width: 240px;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  padding: 0 20px;
+  transition: 0.3s ease;
+}
+
+/* ================= MAIN ================= */
+
+.admin-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= TOPBAR ================= */
+
+.admin-topbar {
+  height: 55px;
+  background: #0f172a;
+  color: white;
+
+  display: none;
   align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+}
+
+.menu-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+}
+
+/* ================= CONTENT ================= */
+
+.admin-content {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  /* hide sidebar by default */
+  .admin-sidebar {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    height: 100%;
+    z-index: 1000;
+  }
+
+  .admin-sidebar.open {
+    left: 0;
+  }
+
+  /* show topbar */
+  .admin-topbar {
+    display: flex;
+  }
+
+  /* overlay */
+  .overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    top: 0;
+    left: 0;
+    z-index: 900;
+  }
 }
