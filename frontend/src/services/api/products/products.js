@@ -42,3 +42,8 @@ export const fetchMyProducts = (status) => {
 export const loadPendingPayments = () => {
     return api.get(`/userdashboard/pending-payments/`)
 }
+
+// loading my order items 
+export const loadMyOrderItems = (order_id) => {
+    return api.get(`/userdashboard/my-orders/${order_id}/`)
+}

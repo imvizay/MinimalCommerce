@@ -1,54 +1,11 @@
 import React,{ useState , useEffect} from "react";
-
 import { Users, ShoppingCart, DollarSign, AlertTriangle } from "lucide-react";
-
 import { formatDateTime } from "../../utils/date";
-
-const dashStats = [
-  {
-    name: "Users",
-    icon: <Users size={20} />,
-    primary: 1300,
-    primaryLabel: "Total Users",
-    data: {
-      Active: 800,
-      Inactive: 500,
-      Blocked: 100,
-    },
-  },
-  {
-    name: "Orders",
-    icon: <ShoppingCart size={20} />,
-    primary: 1900,
-    primaryLabel: "Total Orders",
-    data: {
-      Pending: 145,
-      Confirmed: 2000,
-      Cancelled: 86,
-      Shipped: 49,
-    },
-  },
-//   {
-//     name: "Revenue",
-//     icon: <DollarSign size={20} />,
-//     primary: 88000,
-//     primaryLabel: "Monthly Revenue",
-//     data: {
-//       Quarterly: 1000000,
-//     },
-//   },
-];
-
-const recentOrders = [
-  { id: "#ORD123", total: 2200, status: "pending", date: "Today" },
-  { id: "#ORD124", total: 1400, status: "confirmed", date: "Yesterday" },
-];
+import { useNavigate } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query'
 
 // query fn
-
-import { useQuery } from '@tanstack/react-query'
 import { adminloadOrders } from "@services/api/admin/admin.js";
-import { useNavigate } from "react-router-dom";
 import { finalizeOrderAPI } from "@services/api/admin/admin.js";
 import { useMutation } from "@tanstack/react-query";
 

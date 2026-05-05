@@ -1,15 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
-import { Home, ChevronRight } from "lucide-react";
+import { Link, useLocation } from "react-router-dom"
+import { Home, ChevronRight } from "lucide-react"
 
 function Breadcrumb() {
-  const location = useLocation();
+  const location = useLocation()
 
-  const pathnames = location.pathname.split("/").filter(Boolean);
+  const pathnames = location.pathname.split("/").filter(Boolean)
 
   const formatName = (name) =>
     name
       .replace("-", " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase());
+      .replace(/\b\w/g, (c) => c.toUpperCase())
 
   return (
     <div className="breadcrumb-container">
@@ -21,14 +21,17 @@ function Breadcrumb() {
       </Link>
 
       {pathnames.map((name, index) => {
-        const routeTo = "/" + pathnames.slice(0, index + 1).join("/");
-        const isLast = index === pathnames.length - 1;
+        const routeTo = "/" + pathnames.slice(0, index + 1).join("/")
+        const isLast = index === pathnames.length - 1
+
+        // no route exists
+        const isInvalidRoute = name === "my-order-items" && !isLast
 
         return (
           <div key={index} className="breadcrumb-item">
             <ChevronRight size={16} />
-
-            {isLast ? (
+        
+            {isLast || isInvalidRoute ? (
               <span className="breadcrumb-active">
                 {formatName(name)}
               </span>
@@ -38,10 +41,10 @@ function Breadcrumb() {
               </Link>
             )}
           </div>
-        );
+        )
       })}
     </div>
-  );
+  )
 }
 
-export default Breadcrumb;
+export default Breadcrumb

@@ -66,7 +66,7 @@ function UserProductCard({ order }) {
 
         {/* RIGHT */}
         <div className='pc-information-right'>
-          <button onClick={() => navigate(`/order/${id}`)}>
+          <button onClick={() => navigate(`/userdashboard/my-order-items/${order.id}`)}>
             <ArrowRightIcon size={18} />
           </button>
         </div>

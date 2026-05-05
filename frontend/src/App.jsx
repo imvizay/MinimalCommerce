@@ -14,18 +14,19 @@ import DisplayProducts from '@pages/DisplayProducts'
 import Cart from '@pages/Cart'
 
 // user dashboard
-import Userdashboard from '@pages/MyProfile'
-import UserdashboardHome from '@components/common/userdashboard/UserdashBasePage'
-import PendingPayments from '@pages/userdashboard_pages/PendingPayments'
+import Userdashboard from './layout/Userdashboard'
+import Ud_IndexComponent from '@components/common/ud_index_compo/Ud_IndexComponent'
+import PendingPayments from '@pages/ud_pages/PendingPayments'
+import UserOrderDetails from './pages/ud_pages/UserOrderDetails'
 
 // admindashboard
 import Admindashboard from './layout/Admindashboard'
 import AdminRoute from '@components/admin_route_config/AdminRoute'
-import AdminHome from '@pages/admindashboard/AdminHome'
-import OrderDetail from './pages/admindashboard/OrderDetail'
-import UsersList from './pages/admindashboard/UsersList'
-import AdminProducts from './pages/admindashboard/Products'
-import Payments from './pages/admindashboard/Payments'
+import AdminHome from '@pages/admin_pages/AdminHome'
+import UsersList from './pages/admin_pages/UsersList'
+import AdminProducts from './pages/admin_pages/Products'
+import Payments from './pages/admin_pages/Payments'
+import AdminOrderDetail from './pages/admin_pages/AdminOrderDetail'
 
 
 function App() {
@@ -44,12 +45,15 @@ function App() {
 
       {/* Userdashboard Routes  */}
       <Route path="/userdashboard" element={<Userdashboard />}>
-        <Route index element={<UserdashboardHome />} />
+        <Route index element={<Ud_IndexComponent />} />
 
         <Route path="pending-payments" element={<PendingPayments />} />
-        {/* <Route path="my-orders" element={<UserOrders />} />
-        <Route path="order-history" element={<OrderHistory />} />
-        <Route path="customer-care" element={<CustomerCare />} /> */}
+        
+        <Route path="my-order-items/:id" element={<UserOrderDetails />} />
+        <Route path="my-cart" element={<Cart />} />
+
+        {/* <Route path="order-history" element={<OrderHistory />} /> */}
+        {/* <Route path="customer-care" element={<CustomerCare />} /> */}
       </Route>
 
       {/* Admindashboard Routes */}
@@ -59,7 +63,7 @@ function App() {
             <Route index element={<AdminHome/>}/>
              <Route path='users' element={<UsersList/>} />
             <Route path='products' element={<AdminProducts/>}/>
-            <Route path='order-detail/:id' element={<OrderDetail/>}/>
+            <Route path='order-detail/:id' element={<AdminOrderDetail/>}/>
             <Route path='payments' element={<Payments/>}/>
             
         </Route>
