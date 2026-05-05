@@ -1,0 +1,93 @@
+.order-details {
+  padding: 16px;
+}
+
+/* HEADER */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.order-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* ORDER STATUS COLORS */
+.order-status.confirmed {
+  background: #e6f9f0;
+  color: green;
+}
+
+.order-status.cancelled {
+  background: #fdecec;
+  color: red;
+}
+
+.order-status.partially_confirmed {
+  background: #fff3e6;
+  color: orange;
+}
+
+/* ITEMS */
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* CARD */
+.order-item-card {
+  display: flex;
+  gap: 12px;
+  background: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  align-items: center;
+}
+
+/* IMAGE */
+.item-img img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* INFO */
+.item-info h3 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.meta {
+  font-size: 12px;
+  color: #666;
+}
+
+/* ITEM STATUS */
+.item-status {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* COLORS */
+.item-status.confirmed {
+  background: #e6f9f0;
+  color: green;
+}
+
+.item-status.cancelled {
+  background: #fdecec;
+  color: red;
+}
+
+.item-status.pending {
+  background: #fff3e6;
+  color: orange;
+}

@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query"
 
 import { finalizeOrderAPI } from '@services/api/admin/admin.js'
 
-const OrderDetail = () => {
+const AdminOrderDetail = () => {
   const { state: order } = useLocation()
 
   const [updatedItems, setUpdatedItems] = useState({})
@@ -139,4 +139,4 @@ const OrderDetail = () => {
   )
 }
 
-export default OrderDetail
+export default AdminOrderDetail

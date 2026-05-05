@@ -22,6 +22,8 @@
 /* Menu icon */
 .dash-nav .nav-menu button{
     border: none;
+    display: none;
+    /* opacity: 0; */
     background: transparent;
 }
 
@@ -42,6 +44,16 @@
 .nav-logo {
   font-weight: 600;
   font-size: 18px;
+}
+
+/* user info */
+.nav-user-info .user span{
+  display: inline-block;
+}
+.nav-user-info .user{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* shopping bag icon */
@@ -73,6 +85,18 @@
   background: #ffffff;
   border-right: 1px solid #eee;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dash-left-user-actions button{
+  padding: 8px 10px;
+  background-color: blue;
+  width: 180px;
+  border: transparent;
+  color: white;
 }
 
 .dash-links-container {
@@ -222,7 +246,10 @@
   .dash-nav {
     padding: 0 16px;
   }
-
+  .dash-nav .nav-menu button{
+    /* opacity: 1; */
+    display: block;
+  }
   .nav-menu p span {
     display: none; /* hide location text */
   }
@@ -258,6 +285,10 @@
 @media (max-width: 360px) {
   .dash-nav{
     padding: 0;
+  }
+  .dash-nav .nav-menu button{
+    /* opacity: 1; */
+    display: block;
   }
   .item-count{
     right: 25px;

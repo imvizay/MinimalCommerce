@@ -44,7 +44,13 @@ function Login() {
       saveUser(data.user)
       localStorage.setItem("mc-access",data.access)
       localStorage.setItem("mc-refresh",data.refresh)
-      navigate('/')
+      
+      // redirect user to the products catalog  
+      if(!data.user.is_superuser) return navigate('/')
+      
+      // direct admin to the admindashboard if user logged in is super_user 
+      navigate('/admindashboard')
+      
     },
 
     onError:(err)=>{

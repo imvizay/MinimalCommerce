@@ -24,7 +24,6 @@ export const CartProvider = ({children}) => {
 
     // add to cart
     const addToCart = (product) => {
-
         if(loadingId == product.id) return
         setLoadingId(product.id)
 
@@ -56,7 +55,6 @@ export const CartProvider = ({children}) => {
 
     // UPDATE Cart Items Quantity
     const updateQty = (productId, delta) => {
-
         setCart(prev =>
             prev.map(item =>
                 item.id === productId

@@ -16,7 +16,7 @@ const productsStatusPills = [
     'all','pending','confirmed','shipped','delivered','cancelled'
 ]
 
-function UserdashboardHome() {
+function Ud_IndexComponent() {
 
     const [searchParams,setSearchParams] = useSearchParams()
 
@@ -46,9 +46,7 @@ function UserdashboardHome() {
 
   return (
     <>
-        <div className='dash-right-top breadcrumb-bar'>
-               
-        </div>
+        
         {/* Product Status Filter Pills  */}
         <div className='dash-right-center filter-product-status'>
             <div onClick = { handleOrderFilterList } className='opt-pills'>
@@ -64,9 +62,9 @@ function UserdashboardHome() {
             </div>
             
             {/* Date based filter */}
-            <div className='date-filter'>
+            {/* <div className='date-filter'>
                 <button>Select date range <ArrowDownNarrowWideIcon size={13}/></button>
-            </div>
+            </div> */}
         </div>
         <div className='dash-right-bottom dash-prouducts-list'>
                 {products?.map((order) => (
@@ -77,4 +75,4 @@ function UserdashboardHome() {
   )
 }
 
-export default UserdashboardHome
+export default Ud_IndexComponent
