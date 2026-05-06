@@ -83,5 +83,33 @@ class UserCartView(ModelViewSet):
             "item_id": item.id,
             "quantity": item.quantity
         }, status=201)
+    
+
+    @action(detail=True,methods=['delete'])
+    def remove_item(self,request,pk=None):
+        print(pk) # id
+        item = CartItem.objects.get(id=pk)
+        item.delete()
+
+        return Response({'message':f'item removed form cart - {pk}'},status=200)
+        
+    @action(detail=True,methods=['patch'])
+    def update_cart(self,request,pk=None):
+        qty = request.data.get('quantity',1)
+
+        print("PK:",pk)
+        print("QUANTITY:",qty)
+        item = CartItem.objects.get(id=pk)
+
+        if item:
+            item.quantity = qty
+            item.save()
+
+        print("ITEM QUANITY ",item.quantity)
+
+        return Response({'message':f'quantity updated for item id - {item.id}'},status=200)
+
+    
+
 
 

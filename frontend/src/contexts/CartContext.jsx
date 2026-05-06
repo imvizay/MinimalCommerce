@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect,useRef } from "react"
 import { useUserContext } from "./UserContext"
-import { useQuery } from "@tanstack/react-query"
-import { loadCartFromDb, saveCartIntoDb } from "../services/api/users/cart"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { loadCartFromDb, saveCartIntoDb,removeCartItemFromDb,updateCartItemQuantity } from "../services/api/users/cart"
 
 export const CartContext = createContext()
 
@@ -9,16 +9,34 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([])
   const [loadingId, setLoadingId] = useState(null)
   const [loading,setLoading] = useState(true)
+  const debounceRef = useRef({})
 
   const { user } = useUserContext()
     
+  // Load cart from db
   const { data, isPending } = useQuery({
     queryKey: ["cart", user?.id],
     queryFn: loadCartFromDb,
     enabled: !!user, // only run when user exists
   })
 
-  // Set cart from DB correctly
+  // ======== REMOVE CART ITEM DB ==============
+  const cartMutation = useMutation({
+    mutationFn:(id)=>removeCartItemFromDb(id),
+    onSuccess:() => console.log("remove item from cart"),
+    onError:(err)=> console.log("failed to remove cart item",err)
+  })
+
+  // ========= UPDATE CART QTY DB =============
+  const cartQtyMutation = useMutation({
+    mutationFn: ({id,quantity}) => updateCartItemQuantity(id,quantity),
+    onSuccess: () => console.log('updated quantity.'),
+    onError: (err) => console.log('something went wrong',err)
+
+  })
+
+
+  // ====== FETCH/SET DB CART ==========
   useEffect(() => {
     if (user && data) {
       setCart(data?.cart_items || [])
@@ -27,7 +45,7 @@ export const CartProvider = ({ children }) => {
     console.log("Context cart:",cart)
   }, [data, user])
 
-  // Merge guest cart --> DB 
+  // ======= MERGE GUEST CART INTO DB ========= 
   useEffect(() => {
     const mergeCart = async () => {
       try {
@@ -66,10 +84,11 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     if (!user) {
       localStorage.setItem("cart", JSON.stringify(cart))
+      setLoading(false)
     }
   }, [user, cart])
 
-  // Add to cart 
+  //============== ADD TO CART ================
   const addToCart = async (product) => {
     if (loadingId === product.id) return
     setLoadingId(product.id)
@@ -110,26 +129,72 @@ export const CartProvider = ({ children }) => {
     setTimeout(() => setLoadingId(null), 300)
   }
 
-  // Remove item
+  // ============ REMOVE CART ITEM =================
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id))
+    if(!user){
+      setCart((prev) => prev.filter((item) => item.id !== id))
+    }
+    cartMutation.mutate(id)
   }
 
-  // Update quantity
+  // =========== UPDATE CART =====================
+  /* implement rollback for cart item quantity where ui shows updated quantity but api failed and that leads data mismatch between frontend and backend  */
   const updateQty = (productId, delta) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === productId
-          ? {
+
+      console.log("DELTA",delta)
+
+      let updatedQuantity = 1;
+      let previousQuantity = 1; 
+
+      // OPTIMISTIC UI INSTANT UPDATE
+      setCart( prev => 
+        prev.map( item => {
+
+          if(item.id == productId){
+            previousQuantity = item.quantity
+            updatedQuantity = Math.min(10,Math.max(1,item.quantity + delta))
+            return {
               ...item,
-              quantity: Math.min(
-                10,
-                Math.max(1, item.quantity + delta)
-              ),
+              quantity:updatedQuantity
             }
-          : item
+          }
+          return item
+        })
       )
-    )
+      
+      // upto this point return as user is a guest
+      if(!user) return 
+
+      // clear existing timeout for this cart item
+      if(debounceRef.current[productId]){
+        clearTimeout(debounceRef.current[productId])
+      }
+
+      // UPDATE QUANTITY INTO DB
+      debounceRef.current[productId] = setTimeout(() => {
+        cartQtyMutation.mutate(
+          {
+           id: productId,
+           quantity: updatedQuantity,
+          },
+          {
+            onError: () => {
+              // ROLLBACK OPTIMISTIC CHANGES
+              setCart(prev => 
+                prev.map(item => {
+                  if(item.id == productId){
+                    return{
+                      ...item,
+                      quantity:previousQuantity
+                    }
+                  }
+                  return item
+                })
+              )
+            }
+          }
+      )
+      }, 500)
   }
 
   const totalCartItems = cart?.length ?? 0
