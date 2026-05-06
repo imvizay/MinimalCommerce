@@ -19,16 +19,17 @@ import {
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')).render(
-
-  <CartProvider> {/* Cart context */}
+  <QueryClientProvider client={queryClient}>
   <UserProvider> {/* User context */}
-
-  <QueryClientProvider client={queryClient}>  {/* Query context */}
+  <CartProvider> {/* Cart context */}
+ 
+    {/* Query context */}
     <BrowserRouter>                           {/* Browser Router context */}
       <App />
     </BrowserRouter>
-  </QueryClientProvider>
 
+
+  </CartProvider>
   </UserProvider>
-  </CartProvider>,
+  </QueryClientProvider>,
 )

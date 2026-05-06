@@ -14,32 +14,8 @@ import { saveCartIntoDb } from "@services/api/users/cart";
 
 function ProductCard({ product }) {
   const { user } = useUserContext()
-  const { loadingId, addToCart } = useCart()
-
-
-  const cartMutation = useMutation({
-    mutationKey:['addtocart',user?.id],
-    mutationFn: () => saveCartIntoDb(product)
-  })
-
-  // HANDLE SAVING CART ITEM INTO SESSION/DATABASE.
-  const manageCart = (product) => {
-    
-    /* client not logged in save into session storage */
-    if(!user) return addToCart(product)
-  
-    /* client logged in save into database storage */
-    else{
-      
-      cartMutation.mutate()
-      if(cartMutation.isError){
-        console.log('something went wrong')
-      }
-      console.log('saved cart successfully.')
-      return
-    }
-    // () => addToCart(product)
-  }
+  const{loadingId, addToCart } = useCart()
+ 
 
   return (
     <div className="productCard">
@@ -68,7 +44,7 @@ function ProductCard({ product }) {
 
         <button
           className="addToCartBtn"
-          onClick={()=>manageCart(product)}
+          onClick={ () => addToCart(product)}
           disabled={loadingId == product.id}
         >
           {loadingId == product.id ? "Adding..." : "Add to Cart"}

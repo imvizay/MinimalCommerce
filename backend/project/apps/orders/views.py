@@ -5,13 +5,13 @@ import razorpay
 from django.conf import settings
 from django.db.models import Prefetch
 # Rest Framework views and serializers
-from rest_framework.generics import ListAPIView 
+from rest_framework.generics import ListAPIView , RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import CreateCartOrderInputSerializer , OrderSerializer
+from .serializers import CreateCartOrderInputSerializer , OrderSerializer , OrderDetailSerializer
 
 # admin serializer
-from .serializers import AdminOrderSerializer
+from .serializers import AdminOrderSerializer 
 
 # models 
 from apps.orders.models import Order ,OrderItem
@@ -21,27 +21,27 @@ from .services import create_order
 
 from django.shortcuts import render
 
-
-
 # ....... VIEWS.......
 
-class CreateCartOrderView(APIView):
-    "Order creation for user cart items."
-    def post(self,request):
-        print(f"VIEWS : {request.data}")
-        user = request.user
-        if not user:
-            return Response({'message':'invalid user'},status=400)
-        
-        serializer = CreateCartOrderInputSerializer(data=request.data)    
-        if not serializer.is_valid():
-            return Response(serializer.errors,status=400)
-    
-        validated_data = serializer.validated_data
-        order = create_order(user,validated_data) # Create Razorpay Order
 
-        return Response(order,status=201) 
-        
+class CreateCartOrderView(APIView):
+    def post(self, request):
+
+        user = request.user
+        if not user.is_authenticated:
+            return Response({'message': 'invalid user'}, status=400)
+
+        serializer = CreateCartOrderInputSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            print("VALIDATION ERRORS:", serializer.errors)
+            return Response(serializer.errors, status=400)
+
+        validated_data = serializer.validated_data
+
+        order = create_order(user, validated_data)
+
+        return Response(order, status=201)
 
 
 # =========================
@@ -49,7 +49,6 @@ class CreateCartOrderView(APIView):
 # =========================
 
 class GetUserProducts(APIView):
-
     def get(self,request):
         user = request.user
         qs = Order.objects.filter(user=user)
@@ -73,6 +72,14 @@ class GetUserProducts(APIView):
 
         return Response(serializer.data,status=200)
         
+class GetOrderDetails(RetrieveAPIView):
+    serializer_class = OrderDetailSerializer
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user).prefetch_related(
+            "order_items__product__images"
+        )
+
+        
 
 
 # ===========
@@ -94,10 +101,9 @@ class FinalizeOrder(APIView):
     """
     def post(self, request):
         order = request.data.get('order_id')
-        print("REQ DATA: ",request.data)
         try:
             with transaction.atomic():
-                
+
                 # lock order
                 order = Order.objects.select_for_update().get(id=order)
 

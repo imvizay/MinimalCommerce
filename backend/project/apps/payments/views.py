@@ -8,6 +8,7 @@ from .serializers import LoadingPendingOrderPaymentSerializer , PaymentSerialize
 
 from .services import verify_and_update_payment
 
+from apps.cart.models import Cart
 from .models import Payment ,PaymentStatus
 
 class VerifyCartPayment(APIView):
@@ -33,6 +34,10 @@ class VerifyCartPayment(APIView):
                 razorpay_order_id,
                 razorpay_payment_id
             )
+
+            cart = Cart.objects.get(user=request.user)
+            deleted_count, _ = cart.user_cart.all().delete()
+            print(f"Deleted {deleted_count} cart items")
 
             return Response(result, status=200)
 
