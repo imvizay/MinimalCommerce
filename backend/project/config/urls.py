@@ -5,16 +5,20 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # products routers 
-from apps.products.routers import router
+from apps.products.routers import router as product_router
+from apps.cart.routers import router as cart_router
+
+# cart view
+from apps.cart.views import UserCartView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # admin dashboard api
-    # path('api/admin/dashboard/dash-stats/',AdminDashoardStats.as_view()),
+    
+    # cart 
+    path('api/cart/',include(cart_router.urls)),
 
     # user routes
-    path('api/products/',include(router.urls)),
+    path('api/products/',include(product_router.urls)),
     path('api/',include('apps.orders.urls')),
     path('api/auth/',include('apps.jwt_auth.urls')),
     path('api/users/',include('apps.users.urls')),

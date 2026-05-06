@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     # project apps
     'apps.products',
     'apps.users',
-    'apps.inventory',
+    'apps.cart',
     'apps.payments',
     'apps.orders',
     'apps.jwt_auth'

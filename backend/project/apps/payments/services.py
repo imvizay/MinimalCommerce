@@ -6,7 +6,6 @@ from django.utils import timezone
 def create_payment(**data):
      return Payment.objects.create(**data)
 
-
 def verify_and_update_payment(order_id, pay_id):
 
     payment = Payment.objects.get(provider_order_id=order_id)

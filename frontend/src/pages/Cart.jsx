@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import "@/assets/css/cart/cart.css"; 
 
 import { useCart } from "../contexts/CartContext";
@@ -16,133 +16,155 @@ import { useMutation } from '@tanstack/react-query'
 // checkout session id
 import { getCheckoutId } from "../utils/checkoutId";
 
-function Cart () {
-
-  const [showLoginPrompt,setShowLoginPrompt] = useState(false)
+function Cart() {
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false)
 
   const { user } = useUserContext()
   const navigate = useNavigate()
   const checkoutId = getCheckoutId()
 
-
-
   const { 
+    cartLoading,
+    loading,
     cart,
     updateQty, 
     removeFromCart,
-    setCart } = useCart()
- 
-  const total = cart.reduce((acc, item) => acc + item.pro_price * item.quantity, 0);
+    setCart 
+  } = useCart()
+
+  const createOrderMutation = useMutation({
+    mutationFn: createOrder,
+    onSuccess: () => console.log("Order Created Successfully."),
+    onError: (err) => console.log("Order Creation Failed.",err.response.data)
+  })
+
+
+  const total = cart.reduce((acc, item) => acc + item.pro_price * item.quantity, 0)
+
+  if (cartLoading) return <div>Cart loading...</div>
 
   console.log("CART",cart)
- if (!cart || cart.length === 0) {
-    return (
-      <div className="cart-empty-container">
-        <div className="cart-empty-card">
-          <h2>Your Cart is Empty</h2>
-          <p>Looks like you haven’t added anything yet.</p>
-
-          <button
-            className="cart-empty-btn"
-            onClick={() => (window.location.href = "/")}
-          >
-            Browse Products
-          </button>
-        </div>
-      </div>
-    )
+  if (!cart || cart.length === 0) {
+    return <div>Empty Cart</div>
   }
-  const createOrderMutation = useMutation({
-    mutationFn:createOrder,
-    onSuccess: (data) => {
-      console.log("Order Created Successfully.")
-    },
-    onError: (err) => {
-      console.log("Order Creation Failed.")
-    }
-  })
+
+  if (!cart || cart.length === 0) {
+     return (
+       <div className="cart-empty-container">
+         <div className="cart-empty-card">
+           <h2>Your Cart is Empty</h2>
+           <p>Looks like you haven't added anything yet.</p>
+ 
+           <button
+             className="cart-empty-btn"
+             onClick={() => (window.location.href = "/")}
+           >
+             Browse Products
+           </button>
+         </div>
+       </div>
+     )
+   }
+   
  
   // Checkout 
   const handleCheckout = async () => {
 
-    // authenticate user
-    if(!user){
-      setShowLoginPrompt(true)
-      return
+    try {
+      // Ensure user is logged in
+      if (!user) {
+        setShowLoginPrompt(true)
+        return
+      }
+
+      // Load Razorpay SDK dynamically
+      const isLoaded = await loadRazorPayScript()
+
+      if (!isLoaded) {
+        console.error("Razorpay SDK failed to load")
+        alert("Payment service unavailable. Try again later.")
+        return
+      }
+
+      // Create order from backend
+      const order = await createOrderMutation.mutateAsync({
+        checkout_id: checkoutId
+      })
+
+      // Critical safety check
+      if (!order?.razorpay_order_id) {
+        console.error("Invalid order response:", order)
+        alert("Order creation failed. Please try again.")
+        return
+      }
+
+      console.log("Backend Order:", order)
+
+      // Configure Razorpay
+      const options = {
+        key: 'rzp_test_Sh4FpWrz5ZqxWj',
+        order_id: order.razorpay_order_id,
+        amount: order.amount,
+        currency: order.currency,
+
+        name: "Minimal Commerce",
+        description: "Order Payment",
+
+        // Prefill user details
+        prefill: {
+          name: user?.email?.split('@')[0] || "User",
+          contact: user?.contact || ""
+        },
+
+        retry: { enabled: true },
+
+        readonly: {
+          email: true,
+          contact: true
+        },
+
+        /**
+         * Payment success handler
+         * Called when user completes payment
+        */
+        handler: async function (response) {
+          try {
+            console.log("Razorpay Response:", response)
+
+            await verifyPayment(response)
+
+            // Clean up client state after success
+            localStorage.removeItem('mc-checkoutId')
+            localStorage.removeItem('cart')
+
+            setCart([])
+
+            alert("Payment Successful")
+
+          } catch (err) {
+            console.error("Payment verification failed:", err)
+            alert("Payment verification failed. Contact support.")
+          }
+        }
+      }
+
+      // Open Razorpay UI
+      const rz = new window.Razorpay(options)
+
+      // Payment failure handler
+      rz.on('payment.failed', (response) => {
+        console.error("Payment Failed:", response)
+        alert("Payment failed. Please try again.")
+      })
+
+      rz.open()
+
+    } catch (err) {
+      console.error("Checkout error:", err)
+      alert("Something went wrong during checkout.")
     }
-
-    // load razorpay sdk
-    const isLoaded = await loadRazorPayScript()
-    if(!isLoaded){
-      console.log("Razorpay SDK failed to load!")
-      return
-    }
-
-    console.log("RP-script loaded.",isLoaded)
-    console.log("RP-in window.",window.Razorpay)
-
-
-    // create order api call
-    const res = await createOrderMutation.mutateAsync({
-      checkout_id:checkoutId,
-      items : cart.map(item => ({
-        id :item.id,
-        quantity:item.quantity
-      }))
-   })
-
-    const order = res
-    console.log(`Order : ${JSON.stringify(order)}`)
-  const options = {
-
-    key:'rzp_test_Sh4FpWrz5ZqxWj',
-    order_id:order.razorpay_order_id,
-    amount:order.amount,
-    currency:order.currency,
-    name:"Minimal Commerce",
-    description:'Order Payment',
-
-    prefill:{
-      name:user?.email.split('@')[0],
-      contact:user?.contact
-    },
-
-    retry:{
-      enabled:true
-    },
-
-    readonly: {
-    email: true,
-    contact: true
-   },
-  handler: async function (response) {  
-      // verify payment
-      try{
-        console.log(`"RAZORPAY RESPONSE:" ${JSON.stringify(response)}`)
-        await verifyPayment(response)
-
-        // remove checkout id from localstorage once payment is done
-        localStorage.removeItem('mc-checkoutId')
-        localStorage.removeItem('cart')
-        setCart([])
-       
-        alert("Payment Successfull")
-      } catch(err){
-        console.error("Verification Failed.",err)
-      } 
-    },
   }
-
-  const rz = new Razorpay(options)
-    rz.on('payment.failed',(response)=>{
-      console.error('"Payment Failed:',response)
-    })
-    rz.open()
-  }   
-
-
     
-
   return (
     <div className="cartWrapper">
 
@@ -155,10 +177,10 @@ function Cart () {
         {cart.map(item => (
           <div key={item.id} className="cartCard">
 
-            <img src={item.images[0].image} alt={item.pro_name} />
+            <img src={item.preview_image || item.images?.[0]?.image} />
 
             <div className="cartDetails">
-              <h3>{item.pro_name}</h3>
+              <h3>{item.product_name || item.pro_name}</h3>
               <p className="price">₹{item.pro_price}</p>
 
               <div className="cartActions">
