@@ -5,6 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import { loadCategories, loadProducts } from '../services/api/products/products';
 import { useSearchParams } from 'react-router-dom'
 
+// category icon handler
+import { getCategoryData } from "../utils/categoryfilters";
+
 function DisplayProducts() {
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -28,10 +31,10 @@ function DisplayProducts() {
     queryFn: () => loadProducts(filters)
   })
 
-  const handleFilterCategory = (e) => {
-    const cat = e.target.dataset.category
+  const handleFilterCategory = (id) => {
+   
     setSearchParams(prev => {
-      prev.set("category", cat)
+      prev.set("category", id)
       return prev
     })
   }
@@ -46,65 +49,88 @@ function DisplayProducts() {
     })
   }
 
+  
+
   return (
       <div className="displayLayout">
+
+        <div className="heroSection">
+          <img src="public/minimalcommerce_icon2.jpg" alt="" />
+
+          <div className="heroSectionMetaData">
+
+            <div className="heroSectionSlogan">
+                <span className="look-better">Look Better.</span>
+                <span className="live">
+                  Live <span className="better">Better.</span>
+                </span>
+            </div>
+          </div>
+        </div>
       
         {/* FILTER SECTION */}
-        <aside className="filterSidebar">
-
-          <h2 className="filterTitle">Filters</h2>
-
+        <aside className="filters">
+      
           {/* Category */}
-          <div className="filterSection">
-            <h4 className="sectionTitle">Category</h4>
-
-            <div onClick={handleFilterCategory} className="filterOptions">
-              {categoryList?.map((el) => (
-                <button
-                  key={el.id}
-                  data-category={el.id}
-                  className={`filterOption ${activeCat == el.id ? "active" : ""}`}
-                >
-                  {el.name}
+          <div className="filter">
+            <h4>Categories:-</h4>
+            <div  className="fil-options">
+              {categoryList?.map((el) =>{
+                const categoryData = getCategoryData(el.slug)
+                return (
+               <div 
+                key={el.id}
+                onClick={()=>handleFilterCategory(el.id)}
+                className="fil-box" 
+              >
+                  <div className="fil-icon">
+                    <span className={`${activeCat == el.id ? "fil-active" : ""}`}>{<categoryData.icon/>}</span>
+                  </div>
+                 <button>
+                  {el.slug}
                 </button>
-              ))}
+               </div>
+              )
+            })}
             </div>
           </div>
             
           {/* Price */}
-          <div className="filterSection">
-            <h4 className="sectionTitle">Price</h4>
-            
-            <div onClick={handlePriceFilter} className="filterOptions">
+          <div className="filters">
+          
+            <div className="filter" onClick={handlePriceFilter} >
+              <h4>Price:-</h4>
+              <div className="fil-options">
               {['low - high', 'high - low','above ₹5000','above ₹10000'].map((el,index)=>(
                 <button
                   key={index}
                   data-price={el}
-                  className={`filterOption ${price == el ? 'active' : ''}`}
+                  className={`fil-price-btn ${price == el ? 'fil-active' : ''}`}
                 >
                   {el}
                 </button>
               ))}
+              </div>
             </div>
           </div>
             
         </aside>
             
         {/* PRODUCTS */}
-        <main className="productArea">
-            
-          <div className="productHeader">
+        <section className="products">
+      
+          <div className="p-header">
             <h2>All Products</h2>
-            <span className="productCount">{productList?.length || 0}</span>
+            <span className="p-count">{productList?.length || 0}</span>
           </div>
             
-          <div className="productGrid">
+          <div className="products-list">
             {productList?.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
           
-        </main>
+        </section>
           
       </div>
     )

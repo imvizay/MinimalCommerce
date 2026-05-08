@@ -33,6 +33,7 @@
 .navRight {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -97,7 +98,7 @@
 /* auth buttons */
 .authBtns{
   display: flex;
-  gap: 10px;
+  gap: 5px;
 }
 .authBtns .link{
   text-decoration: none;
@@ -107,13 +108,9 @@
 }
 
 .authBtns .link.login{
-  color: green;
-  border: 1px solid green;
+  color: black;
 }
-.authBtns .link.signup{
-  color: blue;  
-  border: 1px solid blue;
-}
+
 
 @media (max-width: 480px) {
 
@@ -198,7 +195,6 @@
     font-size: 12px;
   }
 
-  /* 🔥 IMPORTANT: stack auth buttons */
   .authBtns {
     flex-direction: column;
     gap: 4px;
@@ -207,6 +203,7 @@
   .authBtns .link {
     font-size: 11px;
     padding: 3px 6px;
+    font-size: 16px;
   }
 
   /* dropdown compact */

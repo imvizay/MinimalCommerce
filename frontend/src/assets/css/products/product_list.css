@@ -1,97 +1,236 @@
 
 .displayLayout {
   display: flex;
-  height: 100vh;
+  flex-direction: column;
+  min-height: 100vh;
   overflow: hidden;
 }
 
-.filterSidebar {
-  width: 260px;
+/* hero section */
+.heroSection{
+  height: 60vh;
+  width: 100%;
+  position: relative;
+
+}
+.heroSectionMetaData {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  top: 0;
+}
+
+/* hero image */
+  .heroSection img{
+    position: absolute;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+.heroSectionSlogan span{
+  display: inline-block;
+}
+
+.heroSectionSlogan{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+ 
+}
+.heroSectionSlogan .look-better{
+  font-family: 'Playfair Display', serif;
+  font-size: 25px;
+
+}
+
+.heroSectionSlogan .live{
+  font-family: 'Allura', cursive;
+  font-style: italic;
+  font-size: 25px;
+  color: rgb(150, 150, 79);
+}
+
+.heroSectionSlogan .better{
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 25px;
+}
+
+/* =================
+ Filters - Price And Category
+===================*/
+.filters{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   padding: 16px;
+  gap: 10px;
   border-right: 1px solid #e5e7eb;
   overflow-y: auto;
   background: #fff;
 }
 
-.productArea {
-  flex: 1;
-  padding: 16px;
-  overflow-y: auto;
-}
-
-.productGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 16px;
-}
-
-
-.filterOptions {
+.filter{
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
 }
 
-.filterOption {
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  font-size: 13px;
-  cursor: pointer;
+.fil-options{
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
-.filterOption.active {
-  background: #4f46e5;
+/* ==================
+ Category Option Design
+==================== */
+.fil-options .fil-box{
+  display: flex;
+  min-width: 70px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* category icon div */
+.fil-options .fil-box .fil-icon{
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  justify-content: center;
+  border: 2px solid black;
+  border-radius: 50%;
+  padding: 1px;
+}
+
+.fil-options .fil-box .fil-icon span{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%; 
+  border-radius: 50%;
+}
+
+/* category label button */
+.fil-options .fil-box button{
+  background-color: transparent;
+  border: transparent;
+  text-transform: capitalize;
+  font-weight: 550;
+}
+
+/* active button styling */
+.fil-active{
+  background-color: black;
   color: white;
 }
 
 
-@media (max-width: 480px) {
-
-  .displayLayout {
-    flex-direction: column; 
-  }
-
-  .filterSidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #eee;
-  }
-
-  .filterOptions {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .filterOption {
-    font-size: 11px;
-    padding: 6px 8px;
-    border-radius: 20px;
-  }
-
-  .productGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
+/* =============
+Price Filter
+===============*/
+.filters .filter .fil-options .fil-price-btn{
+  background-color: white;
+  color: black;
+  border: 1px solid gray;
+  width: 120px;
+  height: 40px;
+  font-family: sans-serif;
+  text-transform: capitalize;
+}
+.fil-price-btn.fil-active{
+  background-color: black !important;
+  color: white !important;
 }
 
-@media (max-width: 360px) {
+/* ================================== 
+        PRODUCTS 
+================================== */
+.products{
+  display: flex;
+  flex-direction: column;
+}
+.p-header{
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  justify-content: space-between;
+}
 
-  .productGrid {
-    grid-template-columns: 1fr; 
+/* products grid list */
+.products-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,4fr));
+  gap: 10px;
+  width: 95%;
+  min-height: 50vh;
+  margin: 0 auto;
+  padding: 10px;
+  
+}
+
+
+
+/* MEDIA QUERY */
+@media (max-width: 360px){
+  .filters{
+    padding: 16px 5px ;
   }
-  .filterSection{
-    margin-bottom: 0.5rem;
+  .filter{
+    gap: 0;
   }
-  .filterTitle{
+  .heroSectionMetaData{
+    top: 10%;
+  }
+  .filter h4{
     display: none;
   }
-  .filterOption {
-    font-size: 10px;
-    padding: 5px 7px;
+  .fil-options{
+    justify-content: flex-start;
+    flex-shrink: 0;
+    overflow-x: scroll;
+    gap: 5px;
+  }
+  .fil-options .fil-box .fil-icon{
+    width: 40px;
+    height: 40px;
   }
 
-  .productHeader h2 {
-    font-size: 16px;
+  /* scrollbar design */
+  .fil-options::-webkit-scrollbar{
+    scroll-behavior: smooth;
   }
+
+  /* price filter */
+  .filters .filter .fil-options .fil-price-btn{
+    font-size: 10px;
+    color: gray;
+    font-weight: 550;
+  }
+
+  /*============
+  PRODUCTS
+  =============*/
+  .products-list{
+    grid-template-columns: repeat(auto-fit,minmax(200px,2fr));
+  }
+  
+  
+  
+  
+
 }
