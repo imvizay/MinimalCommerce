@@ -1,20 +1,20 @@
 import React,{useEffect, useState} from "react";
 import "@/assets/css/cart/cart.css"; 
 
-import { useCart } from "../contexts/CartContext";
-import { useUserContext } from "../contexts/UserContext";
+import { useCart } from "@contexts/CartContext";
+import { useUserContext } from "@contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import LoginPromptModal from "../components/LoginPrompt";
+import LoginPromptModal from "@components/LoginPrompt";
 
 // razorpay script
-import { loadRazorPayScript } from "../utils/loadRazorpayScript";
+import { loadRazorPayScript } from "@utils/loadRazorpayScript";
 
 // tanstack query
-import { createOrder, verifyPayment } from "../services/api/payments/create_order";
+import { createOrder, verifyPayment } from "@services/api/payments/create_order";
 import { useMutation } from '@tanstack/react-query'
 
 // checkout session id
-import { getCheckoutId } from "../utils/checkoutId";
+import { getCheckoutId } from "@utils/checkoutId";
 
 import {LucideShoppingBag, ShoppingBag} from 'lucide-react'
 

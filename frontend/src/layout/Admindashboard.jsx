@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom"
 import { useState } from "react"
 import '@assets/css/admindashboard/admindashboard.css'
-import AdminSidebar from "../components/common/admindashboard/AdminSidebar"
-import AdminTopbar from "../components/common/admindashboard/AdminTopbar"
+import AdminSidebar from "@components/common/admindashboard/AdminSidebar"
+import AdminTopbar from "@components/common/admindashboard/AdminTopbar"
 
 function Admindasboard() {
 

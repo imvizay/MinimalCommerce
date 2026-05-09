@@ -1,7 +1,7 @@
 import '@assets/css/userdashboard/pendingpayments.css'
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { loadPendingPayments } from '../../services/api/products/products'
+import { loadPendingPayments } from '@services/api/products/products'
 import { RefreshCw } from 'lucide-react'
 
 function PendingPayments() {

@@ -5,7 +5,7 @@ import { Mail, Lock, Eye, EyeOff, Phone, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 // Register API endpoint
-import { registerUser } from "../../services/api/auth/auth";
+import { registerUser } from "@services/api/auth/auth";
 
 // Tanstack Mutation
 import { useMutation } from "@tanstack/react-query";

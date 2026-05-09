@@ -2,7 +2,7 @@ import '@assets/css/userdashboard/userdashboard.css'
 
 import React,{useState} from 'react'
 import { Outlet,useNavigate } from 'react-router-dom'
-import { useUserContext } from '../contexts/UserContext'
+import { useUserContext } from '@contexts/UserContext'
 import { useCart } from '@contexts/CartContext'
 
 // components

@@ -4,8 +4,8 @@ import './index.css'
 import App from './App.jsx'
 
 // user context
-import { UserProvider } from './contexts/UserContext.jsx'
-import { CartProvider } from './contexts/CartContext.jsx'
+import { UserProvider } from '@contexts/UserContext.jsx'
+import { CartProvider } from '@contexts/CartContext.jsx'
 
 // router context 
 import { BrowserRouter } from 'react-router-dom'
