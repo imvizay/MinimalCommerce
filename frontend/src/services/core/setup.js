@@ -3,8 +3,9 @@
 import axios from 'axios';
 
 const backendHost = `http://127.0.0.1:8000/api`
+const liveHost = `https://minimalcommerce.onrender.com/api`
 const api = axios.create({
-    baseURL:`${backendHost}`,
+    baseURL:`${liveHost}`,
 })
 
 api.interceptors.request.use(
