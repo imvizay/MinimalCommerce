@@ -52,8 +52,6 @@ INSTALLED_APPS = [
     'apps.payments',
     'apps.orders',
     'apps.jwt_auth'
-    
-    
 ]
 
 MIDDLEWARE = [
