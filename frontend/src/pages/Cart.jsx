@@ -171,7 +171,6 @@ function Cart() {
     {/* If User Not Logged in overlay this  */}
        {showLoginPrompt &&  <LoginPromptModal onClose={setShowLoginPrompt}/>}
 
-
       {/* LEFT - ITEMS */}
       <div className="cartItems">
         {cart.map(item => (

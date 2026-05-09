@@ -65,7 +65,7 @@ function Login() {
 
   return (
     <div className="authContainer">
-      <div className="authCard">
+      <div className="authCard loginCard">
         <h2 className="authTitle">Login</h2>
 
         <form onSubmit={handleSubmit} className="authForm">

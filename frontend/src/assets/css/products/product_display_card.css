@@ -179,7 +179,8 @@
 
   .productCard{
       height: 360px;
-      border-radius: 22px;
+      border-radius: 22px 22px 0px 0px;
+
   }
   .productTitle{
       font-size: 20px;
@@ -196,9 +197,6 @@
 
 @media (max-width: 480px){
 
-  .productCard{
-      height: 300px;
-  }
   .productMeta{
       padding: 14px;
   }
@@ -213,7 +211,7 @@
       width: 38px;
   }
   .addToCartBtn{
-    width: 50%;
+    width: 100%;
     height: 40px;
     font-size: 14px;
   }
