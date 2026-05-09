@@ -1,0 +1,222 @@
+/* =========================
+   FOOTER
+========================= */
+
+#footer{
+    position: relative;
+
+    overflow: hidden;
+
+    /* margin-top: 50px; */
+
+    padding:
+    80px 8% 24px;
+
+    background:
+    linear-gradient(
+        to bottom,
+        #050505,
+        #0d0d0d
+    );
+
+    border-top:
+    1px solid rgba(255,255,255,0.06);
+}
+
+/* =========================
+   GLOW
+========================= */
+
+.footerGlow{
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    top: -180px;
+    right: -120px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(59,130,246,0.10),
+        transparent 70%
+    );
+
+    filter: blur(100px);
+
+    pointer-events: none;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.footerGrid{
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 80px;
+
+    align-items: flex-start;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.footerBrand{
+    max-width: 500px;
+}
+
+.footerBrand h2{
+    font-size: 42px;
+
+    color: white;
+
+    font-family:
+    'Playfair Display',
+    serif;
+
+    margin-bottom: 18px;
+}
+
+.footerBrand p{
+    color: #8b8b8b;
+
+    font-size: 15px;
+
+    line-height: 1.9;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.footerLinks{
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.footerLinks h4{
+    color: white;
+
+    font-size: 22px;
+
+    margin-bottom: 10px;
+
+    font-family:
+    'Playfair Display',
+    serif;
+}
+
+.footerLinks a{
+    color: #8b8b8b;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    transition: all 0.3s ease;
+}
+
+/* HOVER */
+.footerLinks a:hover{
+    color: white;
+
+    transform: translateX(4px);
+}
+
+/* =========================
+   BOTTOM
+========================= */
+
+.footerBottom{
+    margin-top: 60px;
+
+    padding-top: 22px;
+
+    border-top:
+    1px solid rgba(255,255,255,0.08);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+}
+
+/* CONTACT */
+.businessContact,
+.businessEmail{
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+.businessContact span,
+.businessEmail span{
+    color: #9ca3af;
+}
+
+/* LINKS */
+.businessContact a,
+.businessEmail a{
+    color: white;
+
+    text-decoration: none;
+
+    transition: 0.3s ease;
+}
+
+/* HOVER */
+.businessContact a:hover,
+.businessEmail a:hover{
+    color: #60a5fa;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+    #footer{
+        padding:
+        60px 24px 24px;
+    }
+
+    .footerGrid{
+        flex-direction: column;
+
+        gap: 40px;
+    }
+
+    .footerBrand h2{
+        font-size: 34px;
+    }
+
+    .footerBottom{
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+}

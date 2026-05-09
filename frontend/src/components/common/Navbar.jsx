@@ -1,14 +1,12 @@
-
-// import AuthButton from "../buttons/AuthButton";
-// user context
-import { useUserContext } from "../../contexts/UserContext";
+import "@/assets/css/components/navbar.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "@/assets/css/components/navbar.css";
+// user context
+import { useCart } from "@contexts/CartContext";
+import { useUserContext } from "../../contexts/UserContext";
 
+// icons
 import {Bell,ShoppingBag, User2} from 'lucide-react'
-
-import { useCart } from "../../contexts/CartContext";
 
 
 function Navbar() {
@@ -36,20 +34,20 @@ function Navbar() {
 
           {/* Cart */}
           <Link to="/cart" className="navIcon">
-            <ShoppingBag size={16}/>
+            <ShoppingBag />
             <span className="badge">{totalCartItems}</span>
           </Link>
 
           {/* Notifications */}
           <div className="navIcon">
-            <Bell size={16}/>
+            <Bell/>
             <span className="badge">{0}</span>
           </div>
 
           {/* USER */}
           {!user ? (
             <div className="authBtns">
-              <Link className="link login" to="/login"><User2 size={16}/></Link>
+              <Link className="link login" to="/login"><User2 /></Link>
             </div>
           ) : (
             <div className="userSection">

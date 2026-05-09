@@ -58,7 +58,7 @@ function Signup() {
 
   return (
     <div className="authContainer">
-      <div className="authCard">
+      <div className="authCard signupCard">
         <h2 className="authTitle">Sign Up</h2>
 
         <form onSubmit={handleSubmit} className="authForm">

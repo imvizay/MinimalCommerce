@@ -324,6 +324,9 @@
     padding: 10px;
     overflow-x: scroll;
   }
+  .dash-right-center::-webkit-scrollbar{
+    scroll-behavior: smooth;
+  }
   .dash-right-center .date-filter{
     display: none;
   }

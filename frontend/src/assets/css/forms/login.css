@@ -83,3 +83,11 @@
   color: #3b82f6;
   cursor: pointer;
 }
+
+
+@media (max-width:480px){
+  .authCard.loginCard{
+    width:340px ;
+    
+  }
+}

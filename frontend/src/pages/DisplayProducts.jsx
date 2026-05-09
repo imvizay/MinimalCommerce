@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router-dom'
 
 // category icon handler
 import { getCategoryData } from "../utils/categoryfilters";
+import { ShoppingBag } from "lucide-react";
 
 function DisplayProducts() {
 
@@ -73,7 +74,7 @@ function DisplayProducts() {
       
           {/* Category */}
           <div className="filter">
-            <h4>Categories:-</h4>
+            {/* <h4>Categories:-</h4> */}
             <div  className="fil-options">
               {categoryList?.map((el) =>{
                 const categoryData = getCategoryData(el.slug)
@@ -99,7 +100,7 @@ function DisplayProducts() {
           <div className="filters">
           
             <div className="filter" onClick={handlePriceFilter} >
-              <h4>Price:-</h4>
+              {/* <h4>Price:-</h4> */}
               <div className="fil-options">
               {['low - high', 'high - low','above ₹5000','above ₹10000'].map((el,index)=>(
                 <button
@@ -117,21 +118,36 @@ function DisplayProducts() {
         </aside>
             
         {/* PRODUCTS */}
-        <section className="products">
+        <section id="products" className="products">
       
           <div className="p-header">
-            <h2>All Products</h2>
+            <h2>All Products </h2>
             <span className="p-count">{productList?.length || 0}</span>
           </div>
             
-          <div className="products-list">
-            {productList?.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          <div className={`products-list ${productList?.length == 0 ? 'emptyStateActive' : ''}`}>
+            
+            {productList?.length > 0 ? (
+              productList.map(product => (  
+                  <ProductCard  key={product.id}  product={product} /> 
+                )) 
+             ) : (
+               <div className="emptyState">
+
+                 <span><ShoppingBag/></span>
+
+                 <h3>No Products Found</h3>
+
+                 <p>
+                    Try changing filters or explore
+                    another category.
+                 </p>
+
+              </div>
+           )}
           </div>
           
         </section>
-          
       </div>
     )
 }
