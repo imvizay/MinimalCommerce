@@ -3,7 +3,7 @@ from config.settings.base import *
 DEBUG = False
 
 CORS_ALLOWED_ORIGINS = [
-    'https://minimalcommerce.vercel.app/'
+    'https://minimalcommerce.vercel.app'
 ]
 
 ALLOWED_HOSTS = [
