@@ -1,12 +1,12 @@
 import "@assets/css/products/product_list.css";
 import { useState } from 'react';
-import ProductCard from '../components/cards/ProductDisplayCard';
+import ProductCard from '@components/cards/ProductDisplayCard';
 import { useQuery } from '@tanstack/react-query';
-import { loadCategories, loadProducts } from '../services/api/products/products';
+import { loadCategories, loadProducts } from '@services/api/products/products';
 import { useSearchParams } from 'react-router-dom'
 
 // category icon handler
-import { getCategoryData } from "../utils/categoryfilters";
+import { getCategoryData } from "@utils/categoryfilters";
 import { ShoppingBag } from "lucide-react";
 
 function DisplayProducts() {
@@ -56,7 +56,7 @@ function DisplayProducts() {
       <div className="displayLayout">
 
         <div className="heroSection">
-          <img src="public/minimalcommerce_icon2.jpg" alt="" />
+          <img src="@public/minimalcommerce_icon2.jpg" alt="" />
 
           <div className="heroSectionMetaData">
 

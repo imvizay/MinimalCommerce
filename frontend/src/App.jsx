@@ -9,24 +9,24 @@ import Navbar from '@components/common/Navbar'
 // forms
 import Login from '@components/forms/Login'
 import Signup from '@components/forms/Register'
-import Base from './layout/Base'
+import Base from '@layout/Base'
 import DisplayProducts from '@pages/DisplayProducts'
 import Cart from '@pages/Cart'
 
 // user dashboard
-import Userdashboard from './layout/Userdashboard'
+import Userdashboard from '@layout/Userdashboard'
 import Ud_IndexComponent from '@components/common/ud_index_compo/Ud_IndexComponent'
 import PendingPayments from '@pages/ud_pages/PendingPayments'
-import UserOrderDetails from './pages/ud_pages/UserOrderDetails'
+import UserOrderDetails from '@pages/ud_pages/UserOrderDetails'
 
 // admindashboard
-import Admindashboard from './layout/Admindashboard'
+import Admindashboard from '@layout/Admindashboard'
 import AdminRoute from '@components/admin_route_config/AdminRoute'
 import AdminHome from '@pages/admin_pages/AdminHome'
-import UsersList from './pages/admin_pages/UsersList'
-import AdminProducts from './pages/admin_pages/Products'
-import Payments from './pages/admin_pages/Payments'
-import AdminOrderDetail from './pages/admin_pages/AdminOrderDetail'
+import UsersList from '@pages/admin_pages/UsersList'
+import AdminProducts from '@pages/admin_pages/Products'
+import Payments from '@pages/admin_pages/Payments'
+import AdminOrderDetail from '@pages/admin_pages/AdminOrderDetail'
 
 
 function App() {

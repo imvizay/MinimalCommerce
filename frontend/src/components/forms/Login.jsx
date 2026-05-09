@@ -6,13 +6,13 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 // login api 
-import { loginUser } from '../../services/api/auth/auth';
+import { loginUser } from '@services/api/auth/auth';
 
 // tanstack query
 import { useMutation } from '@tanstack/react-query';
 
 // user context
-import { useUserContext } from '../../contexts/UserContext';
+import { useUserContext } from '@contexts/UserContext';
 
 
 function Login() {

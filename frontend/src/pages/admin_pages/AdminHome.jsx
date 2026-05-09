@@ -1,6 +1,6 @@
 import React,{ useState , useEffect} from "react";
 import { Users, ShoppingCart, DollarSign, AlertTriangle } from "lucide-react";
-import { formatDateTime } from "../../utils/date";
+import { formatDateTime } from "@utils/date";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query'
 
