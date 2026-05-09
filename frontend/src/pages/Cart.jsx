@@ -16,6 +16,8 @@ import { useMutation } from '@tanstack/react-query'
 // checkout session id
 import { getCheckoutId } from "../utils/checkoutId";
 
+import {LucideShoppingBag, ShoppingBag} from 'lucide-react'
+
 function Cart() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false)
 
@@ -44,21 +46,17 @@ function Cart() {
   if (cartLoading) return <div>Cart loading...</div>
 
   console.log("CART",cart)
-  if (!cart || cart.length === 0) {
-    return <div>Empty Cart</div>
-  }
-
+  
   if (!cart || cart.length === 0) {
      return (
        <div className="cart-empty-container">
+         
          <div className="cart-empty-card">
+           <span><LucideShoppingBag/></span>
            <h2>Your Cart is Empty</h2>
            <p>Looks like you haven't added anything yet.</p>
  
-           <button
-             className="cart-empty-btn"
-             onClick={() => (window.location.href = "/")}
-           >
+           <button className="cart-empty-btn" onClick={() => (window.location.href = "/")}  >
              Browse Products
            </button>
          </div>

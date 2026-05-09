@@ -85,9 +85,10 @@ class OrderPendingPaymentSerializer(serializers.ModelSerializer):
 
 
 # ADMIN ENDPOINTS SERIALIZER
-
+from apps.users.serializers import ProductMemberSerializer
 class AdminOrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True)
+    user = ProductMemberSerializer()
 
     class Meta:
         model = Order

@@ -25,4 +25,8 @@ class MemberSerializer(ModelSerializer):
         return Member.objects.create_user(**validated_data)
 
 
-        
+class ProductMemberSerializer(ModelSerializer):
+    
+    class Meta:
+        model = Member
+        fields = ['id','email']        
