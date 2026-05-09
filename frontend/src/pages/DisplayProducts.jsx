@@ -56,7 +56,7 @@ function DisplayProducts() {
       <div className="displayLayout">
 
         <div className="heroSection">
-          <img src="@public/minimalcommerce_icon2.jpg" alt="" />
+          <img src="/minimalcommerce_icon2.jpg" alt="" />
 
           <div className="heroSectionMetaData">
 
