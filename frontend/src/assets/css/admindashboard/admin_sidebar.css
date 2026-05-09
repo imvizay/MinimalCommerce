@@ -2,7 +2,7 @@
 
 .admin-sidebar {
   width: 240px;
-  background: #0f172a;
+  background: #203b7ab2;
   color: white;
   padding: 20px;
   display: flex;
@@ -15,20 +15,28 @@
   width: fit-content;
   font-size: 22px;
   text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .admin-sidebar nav{
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 10px;
 }
 .admin-sidebar nav .link{
   color: white;
-  border: 1px solid gray;
+  border: 1px solid rgb(255, 255, 255);
   padding: 8px;
+  border-radius: 20px;
   font-size: 13px;
   text-align: center;
   text-decoration: none;
+ transition: transform 0.3s ease-in;
+}
+.admin-sidebar nav .link:hover{
+  transform: 
+  translateX(10px) 
+  scale(1.01);
 }
 
 /* 
@@ -93,17 +101,14 @@ Mobile TOPBAR
   padding: 8px 10px;
   border: transparent;
   cursor: pointer;
+  transition: 0.3s ease-in;
+}
+.admin-sidebar .logout-btn:hover{
+  background-color: #2563eb;
+  transform: translateY(-5px);
 }
 
-/* 
- CONTENT
-*/
 
-.admin-content {
-  flex: 1;
-  overflow: auto;
-  padding: 16px;
-}
 
 /* 
 MEDIA QUERY

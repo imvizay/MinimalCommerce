@@ -61,11 +61,10 @@ function AdminHome() {
           <table className="orders-table">
             <thead>
               <tr>
-                <th>Order ID</th>
+                <th>User</th>
                 <th>Total</th>
                 <th>Status</th>
-                <th>Date</th>
-                <th>Time</th>
+                <th>Date & Time</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -76,42 +75,93 @@ function AdminHome() {
               
                 return (
                       <tr key={order.id}>
-                        <td>{order.id}</td>
-                        <td>₹ {order.total}</td>
 
-                        <td>
-                          <span className= {`status ${order.status}`}>
-                            {order.order_status.toUpperCase()}
-                          </span>
-                        </td>
+                        {/* USER */}
+                        <td>                        
+                          <div className="user-data-info">                        
+                            <div className="user-avatar"> {order.user.email[0].toUpperCase()} </div>  
+                            <div className="user-details">                        
+                              <h4> {order.user.email.split("@")[0]} </h4>                       
+                              <span> {order.user.email} </span>                       
+                              <span className="order-id"> #MC-{order.id} </span>                       
+                            </div>                        
+                          </div>                        
+                        </td>      
 
-                        <td>{date}</td>
-                        <td>{time}</td>
+                        {/* VALUE */}
+                        <td>                        
+                          <div className="order-total">                       
+                            <h3> ₹ {order.total} </h3>                       
+                            <span> {order.order_items.length} items </span>                       
+                          </div>                        
+                        </td>  
 
-                        <td>
-                          {['pending'].includes(order.order_status) && (
+                        {/* STATUS */}
+                        <td>                        
+                          <span className={`status ${order.order_status}`}>{order.order_status} </span>                       
+                        </td>      
+
+                        {/* DATE */}
+                        <td>                        
+                          <div className="order-date">                        
+                            <h4>{date}</h4>                       
+                            <span>{time}</span>                       
+                          </div>                        
+                        </td>    
+
+                        {/* ACTIONS */}
+                        <td>                        
+                          <div className="table-actions">                       
+                            {["pending"].includes(order.order_status) && (
                               <>
-                                <button 
+                                <button
                                   disabled={finalizeOrder.isPending}
-                                  onClick={ () => finalizeOrder.mutate({order,status:"confirmed"})} 
-                                  className="btn success">Confirm</button>
-
-                                  <button 
+                                  onClick={() =>
+                                    finalizeOrder.mutate({
+                                      order,
+                                      status: "confirmed",
+                                    })
+                                  }
+                                  className="btn success"
+                                >
+                                  Confirm
+                                </button>                       
+                                <button
                                   disabled={finalizeOrder.isPending}
-                                  onClick={ () => finalizeOrder.mutate({order,status:'cancelled'})}
-                                  className="btn danger">Cancel</button>
+                                  onClick={() =>
+                                    finalizeOrder.mutate({
+                                      order,
+                                      status: "cancelled",
+                                    })
+                                  }
+                                  className="btn danger"
+                                >
+                                  Cancel
+                                </button>
                               </>
-                            )}
-                          <button className="btn" onClick={()=>navigate(`order-detail/${order.id}`,{state:order})}>View</button>
-                        </td>
-                      </tr>
+                            )}      
+
+                            <button
+                              className="btn view"
+                              onClick={() =>
+                                navigate(
+                                  `order-detail/${order.id}`,
+                                  { state: order }
+                                )
+                              }
+                            >
+                              View
+                            </button>                       
+                          </div>                        
+                        </td>                       
+                        </tr>
                     )})}
             </tbody>
           </table>
 
           </div>
 
-          <div className="pagination">
+          <div className="rec-order-pagination">
             <button 
               disabled={page === 1}
               onClick={() => setPage(prev => prev - 1)}
@@ -133,7 +183,7 @@ function AdminHome() {
       </section>
 
     </div>
-  );
+  )
 }
 
 export default AdminHome;
