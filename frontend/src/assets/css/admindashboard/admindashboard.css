@@ -1,215 +1,400 @@
-.admin-layout {
+/* =========================
+   ADMIN HOME
+========================= */
+.admin-main{
+  flex: 1;
+  min-width: 0;
+}
+.admin-layout{
   display: flex;
   height: 100vh;
+  
 }
 
-.admin-main {
-  flex: 1;
+.admin-content{
+  height: 100vh;
+  overflow: auto;
+}
+.admin-content::-webkit-scrollbar{
+  scroll-behavior: smooth;
+}
+.admin-home{
+  min-height: 100vh;
+  padding: 14px;
+  background:
+  linear-gradient(
+      to bottom,
+      #f8fafc,
+      #eef2f7
+  );
+}
+
+/* .hero-section{
+  margin-bottom: 36px;
+}
+
+.products-analytics{
+  min-height: 220px;
+  border-radius: 32px;
+  background:
+  linear-gradient(
+      135deg,
+      #ffffff,
+      #f8fafc
+  );
+  border:
+  1px solid #e2e8f0;
+  box-shadow:0 10px 30px rgba(15,23,42,0.06);
+} */
+
+.section-title{
+  font-size: 34px;
+  font-family:
+  'Playfair Display',
+  serif;
+  color: #0f172a;
+  margin-bottom: 26px;
+}
+
+.recent-order-wrapper{
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+.recent-order-wrapper::-webkit-scrollbar{
+  scroll-behavior: smooth;
+}
+.orders-table{
+  width: 850px;
+  min-width: 850px;
+  border-collapse: separate;
+  border-spacing: 0 18px;
+}
+/* =========================
+   TABLE HEAD
+========================= */
+.orders-table thead th{
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #64748b;
+  padding-inline: 24px;
+  padding-bottom: 6px;
+}
+
+/* =========================
+   TABLE BODY ROW
+========================= */
+.orders-table tbody tr{
+  background: white;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow:
+  0 8px 24px rgba(202, 108, 108, 0.05);
+  transition: 0.35s ease;
+}
+
+/* HOVER */
+.orders-table tbody tr:hover{
+  /* transform: translateY(-3px); */
+  background-color: rgba(253, 217, 223, 0.687);
+}
+
+/* TABLE CELLS */
+.orders-table td{
+  padding: 24px;
+  vertical-align: middle;
+}
+
+/* FIRST CELL */
+.orders-table tbody tr td:first-child{
+  border-top-left-radius: 22px;
+  border-bottom-left-radius: 22px;
+}
+
+/* LAST CELL */
+.orders-table tbody tr td:last-child{
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+}
+
+/* =========================
+   USER INFO
+========================= */
+
+.user-data-info{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* USER AVATAR */
+.user-avatar{
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background:
+  linear-gradient(
+      135deg,
+      #dbeafe,
+      #bfdbfe
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #2563eb;
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* USER DETAILS */
+.user-details{
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 
-
-/* admin dash cards */
-.admin-home {
-  padding: 20px;
+/* USER NAME */
+.user-details h4{
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.section-title {
-  margin-bottom: 15px;
-  font-size: 20px;
+/* EMAIL */
+.user-details span{
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* ORDER ID */
+.order-id{
+  color: #2563eb !important;  
   font-weight: 600;
 }
 
-/* GRID */
-.adminDash {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+/* =========================
+   VALUE COLUMN
+========================= */
+
+.order-total{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-/* CARD */
-.admin-card {
-  background: white;
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: 0.2s ease;
+.order-total h3{
+  font-size: 20px;
+  color: #0f172a;
+  font-weight: 700;
 }
 
-.admin-card:hover {
-  transform: translateY(-3px);
+.order-total span{
+  color: #64748b;
+  font-size: 13px;
 }
 
-.admin-card.warning {
-  border-left: 4px solid orange;
+/* =========================
+   STATUS BADGE
+========================= */
+
+.status{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  height: 38px;
+  padding-inline: 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
-/* HEADER */
-.card-header {
+/* PENDING */
+.status.pending{
+  background:
+  rgba(245,158,11,0.12);
+  color: #d97706;
+  border:
+  1px solid rgba(245,158,11,0.15);
+}
+
+/* CONFIRMED */
+.status.confirmed{
+  background:
+  rgba(34,197,94,0.10);
+  color: #16a34a;
+  border:
+  1px solid rgba(34,197,94,0.15);
+}
+
+/* CANCELLED */
+.status.cancelled{
+  background:
+  rgba(239,68,68,0.10);
+  color: #dc2626;
+  border:
+  1px solid rgba(239,68,68,0.15);
+}
+
+/* =========================
+   DATE
+========================= */
+.order-date{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.order-date h4{
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.order-date span{
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.table-actions{
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* PRIMARY */
-.card-primary h1 {
-  font-size: 26px;
-  margin: 10px 0 5px;
-}
-
-/* STATS */
-.card-stats {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.stat-box {
-  font-size: 12px;
-}
-
 /* BUTTON */
-.action-btn {
-  margin-top: 10px;
-  padding: 6px 10px;
+.btn{
+  height: 40px;
+  padding-inline: 16px;
   border: none;
-  background: black;
-  color: white;
-  border-radius: 6px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
-/* TABLE */
-.orders-table {
+/* VIEW */
+.btn.view{
+  background:#eff6ff;
+  color: #2563eb;
+}
+
+/* SUCCESS */
+.btn.success{
+  background:#dcfce7;
+  color: #15803d;
+}
+
+/* DANGER */
+.btn.danger{
+  background:#fee2e2;
+  color: #dc2626;
+}
+
+/* HOVER */
+.btn:hover{
+    transform: translateY(-2px);
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+
+.rec-order-pagination{
   width: 100%;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 
-.orders-table th,
-.orders-table td {
-  padding: 12px;
-  text-align: left;
-}
-
-.status.pending {
-  color: orange;
-}
-
-.status.confirmed {
-  color: green;
-}
-
-/* BUTTONS */
-.btn {
-  margin-right: 5px;
-  padding: 5px 10px;
+/* PAGINATION BUTTON */
+.rec-order-pagination button{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
   border: none;
-  background: #eee;
-  border-radius: 6px;
+  background: white;
+  color: #0f172a;
   cursor: pointer;
+  box-shadow:0 6px 20px rgba(15,23,42,0.06);
+  transition: 0.3s ease;
 }
 
-.btn.success {
-  background: green;
+.rec-order-pagination button:hover{
+  background: #2563eb;
   color: white;
 }
 
-.btn.danger {
-  background: red;
-  color: white;
+/* PAGE */
+.rec-order-pagination span{
+  color: #0f172a;
+  font-weight: 600;
 }
 
 
 
+/* =========================
+   RESPONSIVE
+========================= */
 
-@media (max-width: 480px) {
+@media (max-width:480px){
 
-  .admin-home {
-    padding: 10px;
-  }
+    .admin-home{
+        min-height: fit-content;
+        padding: 14px 5px;
+    }
+    .admin-topbar{
+      padding: 0;
+    }
 
-  .section-title {
-    font-size: 16px;
-  }
+    .section-title{
+        font-size: 24px;
+    }
 
-  .card-primary h1 {
-    font-size: 20px;
-  }
+    .recent-order-wrapper{
+        width: 100%;
 
-  .card-stats {
-    flex-direction: column;
-    gap: 6px;
-  }
+        overflow-x: auto;
 
-  .stat-box {
-    font-size: 11px;
-  }
+        -webkit-overflow-scrolling: touch;
+    }
 
-  /* tighter table */
-  .orders-table {
-    min-width: 600px;
-  }
+    .orders-table{
+        min-width: 850px;
+    }
 
-  .orders-table th,
-  .orders-table td {
-    padding: 6px;
-    font-size: 11px;
-  }
+    .orders-table td{
+        padding: 18px 14px;
+    }
 
-  /* stack action buttons */
-  .orders-table td:last-child {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+    .user-avatar{
+        width: 48px;
+        height: 48px;
+    }
 
-}
+    .btn{
+        height: 36px;
 
+        padding-inline: 12px;
 
-@media (max-width: 360px) {
+        font-size: 12px;
+    }
 
-  .admin-home {
-    padding: 8px;
-  }
-  .admin-content{
-    padding: 0px;
-  }
-
-  .recent-order-wrapper{
-    width: 360px;
-    overflow-x: scroll;
-  }
-
-  .section-title {
-    font-size: 14px;
-  }
-
-  .card-primary h1 {
-    font-size: 18px;
-  }
-
-  /* reduce card padding */
-  .admin-card {
-    padding: 12px;
-  }
-
-  /* hide less important table columns */
-  .orders-table th:nth-child(5),
-  .orders-table td:nth-child(5) {
-    display: none; /* hide time */
-  }
-
-  .orders-table th:nth-child(4),
-  .orders-table td:nth-child(4) {
-    display: none; /* hide date */
-  }
-
-  .btn {
-    font-size: 10px;
-    padding: 3px 6px;
-  }
-
+    .rec-order-pagination{
+        justify-content: center;
+    }
 }

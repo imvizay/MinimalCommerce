@@ -46,14 +46,6 @@
   font-size: 20px;
 }
 
-/* ================= CONTENT ================= */
-
-.admin-content {
-  flex: 1;
-  overflow: auto;
-  padding: 16px;
-}
-
 /* ================= MOBILE ================= */
 
 @media (max-width: 768px) {

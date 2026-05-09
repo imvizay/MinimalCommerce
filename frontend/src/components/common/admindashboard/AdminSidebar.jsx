@@ -23,10 +23,10 @@ export default function AdminSidebar({ open, setOpen }) {
           <NavLink  to="/admindashboard/users"  
             className={({ isActive }) => isActive ? "link active" : "link"}     
             onClick={()  =>setOpen(false)}>  Users</NavLink>
-
+{/* 
           <NavLink  to="/admindashboard/products"  
             className={({ isActive }) => isActive ? "link active" : "link"}  
-            onClick=  {()=>setOpen(false)}>  Products</NavLink>
+            onClick=  {()=>setOpen(false)}>  Products</NavLink> */}
 
           <NavLink  to="/admindashboard/orders"  
             className={({ isActive }) => isActive ? "link active" : "link"}  

@@ -1,229 +1,329 @@
-/* ================= CONTAINER ================= */
+/* =========================
+   USERS PAGE
+========================= */
 
-.users-container {
-  height: 100vh;
+.users-container{
+  min-height: 100vh;
+  padding: 24px;
+  background:
+  linear-gradient(
+      to bottom,
+      #f8fafc,
+      #eef2f7
+  );
   display: flex;
   flex-direction: column;
-  background: #f4f6f9;
-  padding: 16px;
-  overflow: hidden;
+  gap: 22px;
 }
 
-.user-table-head {
-  margin-bottom: 10px;
+/* =========================
+   HEADER
+========================= */
+
+.user-table-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
 }
 
-.user-table-head h2 {
-  font-weight: 600;
+.user-table-head h2{
+  font-size: 34px;
+  font-family:'Playfair Display',serif;
+  color: #0f172a;
+  font-weight: 700;
 }
 
-/* ================= SCROLL AREA ================= */
+/* =========================
+   TABLE WRAPPER
+========================= */
 
-.users-content {
-  flex: 1;
-  overflow: auto;
-}
-
-/* scrollbar */
-.users-content::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
-}
-.users-content::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
-}
-
-/* ================= TABLE ================= */
-
-.users-table {
+.users-content{
   width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  min-width: 900px; /* 👈 important for horizontal scroll */
-}
-
-.users-table thead {
-  background: #f1f3f5;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-
-.users-table th,
-.users-table td {
+  overflow-x: auto;
+  border-radius: 28px;
+  background:rgba(255,255,255,0.75);
+  backdrop-filter: blur(16px);
+  border:1px solid rgba(255,255,255,0.6);
+  box-shadow:0 10px 30px rgba(15,23,42,0.05);
   padding: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* SCROLLBAR */
+.users-content::-webkit-scrollbar{
+  height: 6px;
+}
+
+.users-content::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+.users-content::-webkit-scrollbar-thumb{
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.users-table{
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: separate;
+  border-spacing: 0 14px;
+}
+
+/* =========================
+   TABLE HEAD
+========================= */
+
+.users-table thead th{
+  padding:0 24px 14px;
   text-align: left;
-  font-size: 13px;
-}
-
-.users-table th {
-  font-weight: 600;
-}
-
-.users-table tbody tr {
-  border-bottom: 1px solid #eee;
-  transition: 0.2s;
-}
-
-.users-table tbody tr:hover {
-  background: #f9fafb;
-}
-
-/* ================= STATUS ================= */
-
-.status {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-}
-
-.status.active {
-  background: #e6f9f0;
-  color: #1a7f5a;
-}
-
-.status.inactive {
-  background: #fdecec;
-  color: #b42318;
-}
-
-/* ================= ACTION ================= */
-
-.btn-check {
-  padding: 4px 8px;
-  border: none;
-  border-radius: 6px;
+  color: #64748b;
   font-size: 12px;
-  background: #e0e7ff;
-  color: #3730a3;
-  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* ================= PAGINATION ================= */
+/* =========================
+   TABLE ROW
+========================= */
 
-.pagination {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #ddd;
+.users-table tbody tr{
+  background: white;
+  transition: 0.35s ease;
+  box-shadow:0 6px 18px rgba(15,23,42,0.04);
+}
 
+/* HOVER */
+.users-table tbody tr:hover{
+  transform: translateY(-3px);
+  box-shadow:0 14px 28px rgba(15,23,42,0.08);
+}
+
+/* CELLS */
+.users-table td{
+  padding: 22px 24px;
+  vertical-align: middle;
+}
+
+/* ROUNDED EDGES */
+.users-table tbody tr td:first-child{
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+}
+
+.users-table tbody tr td:last-child{
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+/* =========================
+   USER CELL
+========================= */
+
+.user-info{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* AVATAR */
+.user-avatar{
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  background:
+  linear-gradient(
+      135deg,
+      #dbeafe,
+      #bfdbfe
+  );
   display: flex;
   justify-content: center;
-  gap: 6px;
+  align-items: center;
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* DETAILS */
+.user-meta{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-meta h4{
+  font-size: 15px;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.user-meta span{
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 110px;
+  height: 36px;
+  padding-inline: 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ACTIVE */
+.status.active{
+  background: rgba(34,197,94,0.10);
+  color: #16a34a;
+  border:1px solid rgba(34,197,94,0.15);
+}
+
+/* INACTIVE */
+.status.inactive{
+  background:rgba(239,68,68,0.10);
+  color: #dc2626;
+  border:1px solid rgba(239,68,68,0.15);
+}
+
+/* =========================
+   ACTION BUTTON
+========================= */
+
+.btn-check{
+  height: 40px;
+  padding-inline: 18px;
+  border: none;
+  border-radius: 12px;
+  background:
+  linear-gradient(
+      135deg,
+      #eff6ff,
+      #dbeafe
+  );
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* HOVER */
+.btn-check:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(37,99,235,0.12);
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination{
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.pagination button {
-  padding: 5px 10px;
-  font-size: 13px;
+/* BUTTON */
+.pagination button{
+  min-width: 42px;
+  height: 42px;
   border: none;
-  background: #e5e7eb;
-  border-radius: 6px;
+  border-radius: 12px;
+  background: white;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow:0 6px 16px rgba(15,23,42,0.04);
 }
 
-.pagination button:hover {
-  background: #d1d5db;
+/* HOVER */
+.pagination button:hover{
+  background: #2563eb;
+  color: white;
 }
 
-.active-page {
-  background: #4f46e5 !important;
-  color: #fff;
+/* ACTIVE */
+.active-page{
+  background: #2563eb !important;
+  color: white !important;
+  box-shadow:0 10px 24px rgba(37,99,235,0.18);
+}
+
+/* DISABLED */
+.pagination button:disabled{
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 
-@media (max-width: 480px) {
+@media (max-width:768px){
 
-  .users-container {
-    padding: 8px;
-  }
+    .users-container{
+      padding: 16px;
+    }
 
-  .user-table-head h2 {
-    font-size: 16px;
-  }
+    .user-table-head h2{
+      font-size: 28px;
+    }
 
-  .users-table {
-    font-size: 11px;
-    min-width: 700px; /* reduce horizontal scroll width */
-  }
+    .users-table{
+      min-width: 950px;
+    }
 
-  .users-table th,
-  .users-table td {
-    padding: 6px;
-  }
-
-  /* reduce spacing */
-  .status {
-    font-size: 10px;
-    padding: 3px 8px;
-  }
-
-  .btn-check {
-    font-size: 10px;
-    padding: 3px 6px;
-  }
-
-  /* pagination tighter */
-  .pagination {
-    gap: 4px;
-  }
-
-  .pagination button {
-    padding: 4px 8px;
-    font-size: 12px;
-  }
+    .users-table td{
+      padding: 18px 16px;
+    }
 }
 
-@media (max-width: 360px) {
-  .admin-content{
-    width: 100%;
-    overflow-x: scroll;
-  }
-  .users-container {
-    padding: 6px;
-  }
+@media (max-width:480px){
 
-  .user-table-head h2 {
-    font-size: 14px;
-  }
+    .users-container{
+      padding: 12px;
+    }
 
-  .users-table {
-    font-size: 10px;
-    min-width: 600px; /* tighter scroll */
-  }
+    .user-table-head h2{
+      font-size: 24px;
+    }
 
-  .users-table th,
-  .users-table td {
-    padding: 5px;
-  }
+    .users-table{
+       min-width: 850px;
+    }
 
-  /* hide less important columns (BIG UX improvement) */
-  .users-table th:nth-child(5),
-  .users-table td:nth-child(5) {
-    display: none; /* hide address */
-  }
+    .user-avatar{
+      width: 46px;
+      height: 46px;
+      font-size: 16px;
+    }
 
-  .users-table th:nth-child(4),
-  .users-table td:nth-child(4) {
-    display: none; /* hide contact */
-  }
+    .btn-check{
+      height: 36px;
+      padding-inline: 14px;
+      font-size: 12px;
+    }
 
-  /* keep only essential info visible */
-
-  .status {
-    font-size: 9px;
-    padding: 2px 6px;
-  }
-
-  .btn-check {
-    font-size: 9px;
-    padding: 2px 5px;
-  }
-
-  .pagination button {
-    padding: 3px 6px;
-    font-size: 10px;
-  }
+    .pagination button{
+      height: 38px;
+      min-width: 38px;
+      font-size: 12px;
+    }
 }
