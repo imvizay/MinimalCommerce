@@ -27,6 +27,7 @@ import UsersList from '@pages/admin_pages/UsersList'
 import AdminProducts from '@pages/admin_pages/Products'
 import Payments from '@pages/admin_pages/Payments'
 import AdminOrderDetail from '@pages/admin_pages/AdminOrderDetail'
+import ProductCreation from './pages/admin_pages/ProductCreation'
 
 
 function App() {
@@ -65,6 +66,9 @@ function App() {
             <Route path='products' element={<AdminProducts/>}/>
             <Route path='order-detail/:id' element={<AdminOrderDetail/>}/>
             <Route path='payments' element={<Payments/>}/>
+
+            {/* CRUD */}
+            <Route path='products/create-products' element={<ProductCreation/>}/>
             
         </Route>
       </Route>

@@ -1,12 +1,16 @@
+
+import "@assets/css/admindashboard/admin_products.css"
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { loadAdminProducts } from '@services/api/admin/admin'
-import "@assets/css/admindashboard/admin_products.css"
+
+import { useNavigate } from "react-router-dom"
 
 function AdminProducts() {
 
   const [page, setPage] = useState(1)
   const limit = 10
+  const navigate = useNavigate()
 
   const { data, isPending, isError } = useQuery({
     queryKey: ['products', page],
@@ -23,7 +27,59 @@ function AdminProducts() {
   return (
     <div className="admin-products">
 
-      <h2 className="section-title">Products</h2>
+      {/* ================= HEADER ================= */}
+
+    <div className="products-header">
+      
+      <div className="header-left">
+        <h1>Products Management</h1>
+      
+        <p>
+          Manage your inventory, create products,
+          update pricing and monitor store listings.
+        </p>
+      </div>
+      
+      <div className="header-actions">
+      
+        <button 
+        onClick={()=>navigate('create-products')}
+        className="create-product-btn">
+          + Add Product
+        </button>
+      
+      </div>
+      
+    </div>
+
+    <div className="products-toolbar">
+
+      <input
+        type="text"
+        placeholder="Search products..."
+        className="search-input"
+      />
+
+    </div>
+
+    <div className="product-stats">
+
+      <div className="stat-card">
+        <h3>{data.count}</h3>
+        <p>Total Products</p>
+      </div>
+
+      <div className="stat-card">
+        <h3>12</h3>
+        <p>Categories</p>
+      </div>
+
+      <div className="stat-card">
+        <h3>4</h3>
+        <p>Out Of Stock</p>
+      </div>
+
+    </div>
 
       {/* ================= GRID ================= */}
     <div className="products-content">
@@ -33,7 +89,7 @@ function AdminProducts() {
           <p>No products found</p>
         ) : (
           products.map(product => {
-            const image = product.image?.[0]?.image
+            const image = product.images?.[0]?.image
 
             return (
               <div key={product.id} className="product-card">
