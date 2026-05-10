@@ -6,3 +6,4 @@ router.register('admin',ProductView)
 router.register('categories',CategoryView)
 router.register('list',ListProducts,basename='user-products')
 
+

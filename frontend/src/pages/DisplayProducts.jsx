@@ -1,5 +1,5 @@
 import "@assets/css/products/product_list.css";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductCard from '@components/cards/ProductDisplayCard';
 import { useQuery } from '@tanstack/react-query';
 import { loadCategories, loadProducts } from '@services/api/products/products';
@@ -19,7 +19,8 @@ function DisplayProducts() {
 
   const { data: categoryList } = useQuery({
     queryKey: ['category'],
-    queryFn: loadCategories
+    queryFn: loadCategories,
+    staleTime: 1000 * 60 * 60 * 24// 1 day cache
   })
 
   const filters = {
@@ -32,8 +33,8 @@ function DisplayProducts() {
     queryFn: () => loadProducts(filters)
   })
 
+
   const handleFilterCategory = (id) => {
-   
     setSearchParams(prev => {
       prev.set("category", id)
       return prev

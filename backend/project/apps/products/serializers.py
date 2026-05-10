@@ -26,38 +26,45 @@ class ProductVariantSerializer(ModelSerializer):
 # Amdin Product Serializer For Performing Crud
 class ProductSerializer(ModelSerializer):
 
-    image = ProductImageSerializer(source="images",many=True)
-    variants = ProductVariantSerializer(many=True)
+    # Write only fields 
+    uploaded_images = serializers.ListField(child=serializers.ImageField(),write_only=True)
+    variants_data = serializers.JSONField(required=False,write_only=True)
 
-    def validate(self, data):
-        return super().validate(data)
+    # read only fields
+    images = ProductImageSerializer(many=True,read_only=True)
+    variants = ProductVariantSerializer(many=True,read_only=True)
+
 
     class Meta:
         model = Product
-        fields = ['id','category','pro_name','pro_price','pro_description','image','variants']
-        extra_kwargs = {
-            'id':{'read_only':True}
-        }
+
+        fields = [
+            # products fields
+            'id','category','pro_name','pro_price','pro_description',
+            # create only fields 
+            'uploaded_images','variants_data',
+            # read only fields
+            'images','variants'
+            ]
 
     def create(self, validated_data):
 
-       images_data = validated_data.pop('images',[])
-       variants_data = validated_data.pop('variants',[])
-
-       # Create Product Ins.
-       product = Product.objects.create(**validated_data)
-
-       # Create Images Ins.    
-       ProductImage.objects.bulk_create(
-           [ProductImage.objects.create(product=product,image=img['image']) for img in images_data]
-       )
-        # Create Variants
-       ProductVariant.objects.bulk_create([
-            ProductVariant(product = product, **variant)
+        images_data = validated_data.pop('uploaded_images',[])
+        variants_data = validated_data.pop('variants_data',[])
+    
+        product = Product.objects.create(**validated_data)
+    
+        ProductImage.objects.bulk_create([
+            ProductImage( product=product, image=img )
+            for img in images_data
+        ])
+    
+        ProductVariant.objects.bulk_create([
+            ProductVariant(product=product,**variant)
             for variant in variants_data
         ])
-       
-       return product
+    
+        return product
        
 
 

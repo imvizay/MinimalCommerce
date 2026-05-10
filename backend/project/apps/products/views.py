@@ -1,6 +1,9 @@
+from copy import deepcopy
+import json
 
-
+from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet,ReadOnlyModelViewSet
+from rest_framework.response import Response
 
 from .paginations import ProductsPagination
 
@@ -23,6 +26,33 @@ class ProductView(ModelViewSet):
     queryset = Product.objects.all().order_by('-id')
     serializer_class = ProductSerializer
     pagination_class = ProductsPagination
+    # permission_classes = [IsAdminOnly] 
+
+    
+
+    @action(detail=False, methods=['post'])
+    def create_product(self, request):
+        data = request.data.copy()
+
+        # real UploadedFile objects
+        data.setlist(
+            'images',
+            request.FILES.getlist('images')
+        )
+
+        serializer = self.get_serializer(
+            data=data
+        )
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response({
+            'message': 'Product Created Successfully'
+        })
+
+        
 
 
 # Read only products for users.
@@ -31,13 +61,11 @@ class ListProducts(ReadOnlyModelViewSet):
     serializer_class = ProductsListSerializer
 
     def get_queryset(self):
-
         qs = super().get_queryset()
         # query filters
         category = self.request.query_params.get('category')
         price = self.request.query_params.get('min_price')
         order = self.request.query_params.get('order')
-
 
         # category filter
         if category:
