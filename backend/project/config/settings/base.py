@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     # libs
     'corsheaders',
     "rest_framework",
+    'cloudinary',
+    'cloudinary_storage',
 
     # project apps
     'apps.products',
@@ -152,6 +154,22 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
+# CLOUDINARY STORAGE
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME':os.getenv("CLOUD_NAME"),
+    "API_KEY":os.getenv('CLOUD_API_KEY'),
+    "API_SECRET":os.getenv("CLOUD_API_SECRET")
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 # RAZORPAY KEYS
 RAZORPAY_PUBLIC_KEY=os.getenv("RAZORPAY_PUBLIC_KEY")
