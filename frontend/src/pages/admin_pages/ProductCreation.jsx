@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { loadCategories } from "@services/api/products/products"
 import { createProductAPI } from "@services/api/admin/products"
+import { createBulkProductAPI } from "../../services/api/admin/products"
 
 function ProductCreation() {
 
@@ -48,6 +49,23 @@ function ProductCreation() {
       console.log(error)
       alert("Something went wrong")
     }
+  })
+
+  // bulk create mutation function
+  const mutateBulkProductCreation = useMutation({
+
+      mutationFn : (payload) => createBulkProductAPI(payload),
+
+      onSuccess: () => {
+        console.log("Bulk Creation Done")
+        setCsvFile(null)
+        setZipFile(null)
+      },
+
+      onError: (err)=>{
+        console.log("bulk creation failed",err)
+      }
+
   })
 
   const handleChange = (e) => {
@@ -117,6 +135,8 @@ function ProductCreation() {
     mutateProductCreation.mutate(data)
   }
 
+
+  // HANDLE BULK CREATION 
   const handleFileChange = (e) => {
     const file = e.target.files[0]
     if(!file){
@@ -132,6 +152,22 @@ function ProductCreation() {
         alert("Only CSV and ZIP files allowed")
     }
   }
+
+ // BULK CREATE SUBMIT 
+
+ const handleBulkSubmit = () => {
+    if(!csvFile) return 
+
+    const payload = new FormData()
+
+    payload.append('csv_file',csvFile)
+    if(zipFile){
+        payload.append('zip_file',zipFile)
+    }
+
+    mutateBulkProductCreation.mutate(payload)
+ }
+
 
   return (
 
@@ -443,8 +479,8 @@ function ProductCreation() {
 
               <div className="bulk-submit-area">
                 <button className="publish-btn bulk-import-btn"
-                // onClick={}
-                disabled={!csvFile} > Import Products   </button>
+                onClick = { handleBulkSubmit }
+                disabled={!csvFile}> Import Products   </button>
               </div>
             </div>
           )}

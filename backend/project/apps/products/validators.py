@@ -41,5 +41,38 @@ def validate_product_creation(data):
     # if valid return validated_data.
     return data
 
-        
+from rest_framework.exceptions import ValidationError
+
+def bulkcreate_product_validation(csv_file, zip_file):
+
+    if not csv_file:
+        raise ValidationError({
+            "csv_file": "CSV file not provided"
+        })
+
+    if not zip_file:
+        raise ValidationError({
+            "zip_file": "ZIP file not provided"
+        })
+
+    if not csv_file.name.endswith(".csv"):
+        raise ValidationError({
+            "csv_file": "Invalid CSV file format"
+        })
+
+    if not zip_file.name.endswith(".zip"):
+        raise ValidationError({
+            "zip_file": "Invalid ZIP file format"
+        })
+    
+    if csv_file.size == 0:
+        raise ValidationError({
+            "csv_file": "CSV file is empty"
+        })
+
+    if zip_file.size == 0:
+        raise ValidationError({
+            "zip_file": "ZIP file is empty"
+        })
+    
 
