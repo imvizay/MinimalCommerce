@@ -250,18 +250,51 @@ Price Filter
   box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
-@keyframes float{
 
-  0%{
-      transform: translateY(0px);
-  }
-  50%{
-      transform: translateY(-8px);
-  }
-  100%{
-        transform: translateY(0px);
-      }
+/* PRODUCT LOADER */
+
+.simple-loader-wrapper{
+    width:100vw;
+    min-height:400px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    gap:18px;
 }
+
+.loader-spinner{
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    border:5px solid #e5e7eb;
+    border-top:5px solid #111827;
+
+    animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+.simple-loader-wrapper h3{
+    font-size:22px;
+    font-weight:700;
+    color:#111827;
+}
+
+.simple-loader-wrapper p{
+    color:#6b7280;
+    font-size:15px;
+}
+
 
 
 

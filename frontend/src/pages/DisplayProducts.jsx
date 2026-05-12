@@ -28,7 +28,7 @@ function DisplayProducts() {
     price: price ?? null
   }
 
-  const { data: productList } = useQuery({
+  const { data: productsList,isLoading:productsLoading } = useQuery({
     queryKey: ['products', filters],
     queryFn: () => loadProducts(filters)
   })
@@ -123,30 +123,45 @@ function DisplayProducts() {
       
           <div className="p-header">
             <h2>All Products </h2>
-            <span className="p-count">{productList?.length || 0}</span>
+            <span className="p-count">{productsList?.length || 0}</span>
           </div>
+          
+
+          {/* PRODUCTS LIST SECTION */}
+          <div
+            className={`products-list ${
+              !productsLoading && productsList?.length === 0  ? "emptyStateActive"  : ""}`}
+          >
+        
+           {productsLoading ? (
             
-          <div className={`products-list ${productList?.length == 0 ? 'emptyStateActive' : ''}`}>
+              <ProductsLoader />
             
-            {productList?.length > 0 ? (
-              productList.map(product => (  
-                  <ProductCard  key={product.id}  product={product} /> 
-                )) 
-             ) : (
-               <div className="emptyState">
-
-                 <span><ShoppingBag/></span>
-
-                 <h3>No Products Found</h3>
-
-                 <p>
-                    Try changing filters or explore
-                    another category.
-                 </p>
-
+            ) : productsList?.length > 0 ? (
+            
+              productsList.map(product => (
+              
+                <ProductCard key={product.id} product={product} />
+              
+              ))
+            
+            ) : (
+            
+              <div className="emptyState">
+              
+                <span> <ShoppingBag /> </span>
+            
+                <h3>No Products Found</h3>
+            
+                <p> Try changing filters or explore another category. </p>
+            
               </div>
-           )}
+
+            )}
+
           </div>
+          
+          
           
         </section>
       </div>
@@ -154,3 +169,24 @@ function DisplayProducts() {
 }
 
 export default DisplayProducts
+
+
+
+const ProductsLoader = () => {
+
+  
+  return (
+
+    <div className="simple-loader-wrapper">
+
+      <div className="loader-spinner"></div>
+
+      <h3>Loading Products...</h3>
+
+      <p>Please wait while we fetch products</p>
+
+    </div>
+
+  )
+
+} 

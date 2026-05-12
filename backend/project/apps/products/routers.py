@@ -1,5 +1,6 @@
 from rest_framework.routers import DefaultRouter
-from .views import ProductView,CategoryView,ListProducts
+from .views import ProductView,CategoryView,ListProducts 
+
 router = DefaultRouter()
 
 router.register('admin',ProductView)

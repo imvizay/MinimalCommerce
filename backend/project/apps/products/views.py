@@ -18,6 +18,7 @@ from rest_framework.response import Response
 
 from .paginations import ProductsPagination
 
+
 # products apps serializers models
 from .serializers import (
                     ProductSerializer ,
@@ -131,16 +132,20 @@ class ProductView(ModelViewSet):
             for root, dirs, files in os.walk(extract_path):
 
                 for file in files:
+                    
+                    full_path = os.path.join(root,file)
+                    relative_path = os.path.relpath(full_path,extract_path)
 
-                    full_path = os.path.join(
-                        root,
-                        file
-                    )
+                    relative_path = relative_path.replace('\\','/')
 
-                    image_lookup[file] = full_path
+                    part_paths = relative_path.split('/')
+
+                    normalized_path = '/'.join(part_paths[-2:]) 
+                    print("NORMALIZED PATH:", normalized_path)
+
+                    image_lookup[normalized_path] = full_path
 
             print("IMAGE LOOKUP CREATED")
-
 
             # =========================
             # CSV PARSE
@@ -196,9 +201,11 @@ class ProductView(ModelViewSet):
                         # HANDLE IMAGES
                         # ====================
 
-                        image_names = ( row['image_names'] .split('|') )
+                        image_names = ( row['image_names'].split('|') )
 
                         for img_name in image_names:
+                           
+                            print("IMAGE NAME IS ",img_name)
 
                             img_name = img_name.strip()
                             image_path = image_lookup.get(img_name)
@@ -280,6 +287,7 @@ class ProductView(ModelViewSet):
 
 
 
+
 # Read only products for users.
 class ListProducts(ReadOnlyModelViewSet):
     queryset = Product.objects.all()
@@ -312,8 +320,9 @@ class ListProducts(ReadOnlyModelViewSet):
             return qs.order_by('-id')
 
         
-        
 
-        
+
+
+
 
 

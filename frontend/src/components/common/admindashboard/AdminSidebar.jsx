@@ -2,10 +2,12 @@ import { NavLink } from "react-router-dom"
 import '@assets/css/admindashboard/admin_sidebar.css'
 
 import { useUserContext } from "@contexts/UserContext"
+import { useNavigate } from "react-router-dom"
 
 
 export default function AdminSidebar({ open, setOpen }) {
   const { user,logoutUser } = useUserContext()
+  const navigate = useNavigate()
   return (
     <>
       {/* overlay */}
@@ -13,7 +15,7 @@ export default function AdminSidebar({ open, setOpen }) {
 
       <div className={`admin-sidebar ${open ? "open" : ""}`}>
 
-        <h2 className="logo">Minimal-Commerce</h2>
+        <h2 className="logo" onClick={ () => navigate('/')}>Minimal-Commerce</h2>
 
         <nav>
           <NavLink  to="/admindashboard"  
