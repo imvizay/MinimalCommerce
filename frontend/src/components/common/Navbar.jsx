@@ -65,7 +65,7 @@ function Navbar() {
                     {user.email.split("@")[0]}
                   </p>
 
-                  <Link to="/userdashboard">Profile</Link>
+                  <Link to={user.is_superuser ? '/admindashboard' : '/userdashboard'}>Dashboard</Link>
                   <Link to="/my-orders">Orders</Link>
                   <Link to="/cart">Cart </Link>
                   <Link to="/notifications">Notifications</Link>

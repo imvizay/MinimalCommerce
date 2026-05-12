@@ -1,6 +1,6 @@
 
 from .models import Category , Product , ProductImage , ProductVariant
-from .validators import validate_product_creation
+from django.db import transaction
 
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
@@ -27,13 +27,12 @@ class ProductVariantSerializer(ModelSerializer):
 class ProductSerializer(ModelSerializer):
 
     # Write only fields 
-    uploaded_images = serializers.ListField(child=serializers.ImageField(),write_only=True)
+    uploaded_images = serializers.ListField(child=serializers.ImageField(),write_only=True,required=False)
     variants_data = serializers.JSONField(required=False,write_only=True)
 
     # read only fields
     images = ProductImageSerializer(many=True,read_only=True)
     variants = ProductVariantSerializer(many=True,read_only=True)
-
 
     class Meta:
         model = Product

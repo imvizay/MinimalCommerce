@@ -1,15 +1,16 @@
 
 import "@assets/css/admindashboard/admin_products.css"
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { loadAdminProducts } from '@services/api/admin/admin'
 
 import { useNavigate } from "react-router-dom"
+import { removeProductAPI } from "../../services/api/admin/products"
 
 function AdminProducts() {
 
   const [page, setPage] = useState(1)
-  const limit = 10
+  const limit = 200
   const navigate = useNavigate()
 
   const { data, isPending, isError } = useQuery({
@@ -18,16 +19,32 @@ function AdminProducts() {
     keepPreviousData: true
   })
 
+  const removeProductMutation = useMutation({
+    mutationFn:(id) => removeProductAPI(id)
+  })
+
   if (isPending) return <p>Loading products...</p>
   if (isError) return <p>Something went wrong</p>
+
 
   const products = data.results
   const totalPages = Math.ceil(data.count / limit)
 
+  // handle edit product and navigate to the create-product route 
+  const handleEdit = (id) => {
+    navigate(`create-products?id=${id}`,)
+  }
+
+  const handleRemove = (id) => {
+      if(!id) return 
+      removeProductMutation.mutate(id)
+  }
+
+
   return (
     <div className="admin-products">
 
-      {/* ================= HEADER ================= */}
+    {/* ================= HEADER ================= */}
 
     <div className="products-header">
       
@@ -113,8 +130,18 @@ function AdminProducts() {
 
                 {/* Actions */}
                 <div className="product-actions">
-                  <button className="btn view">View</button>
-                  <button className="btn edit">Edit</button>
+                  <button className="btn edit"
+                    onClick={()=>handleEdit(product.id)}
+                  >
+                    Edit
+                  </button>
+
+                  <button className="btn remove"
+                    disabled={removeProductMutation.isPending}
+                    onClick={()=>handleRemove(product.id)}
+                  >
+                    Remove
+                  </button>
                 </div>
 
               </div>

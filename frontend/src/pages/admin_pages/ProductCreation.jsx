@@ -1,9 +1,16 @@
 import "@assets/css/admindashboard/product_creation.css"
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@tanstack/react-query"
+import { useSearchParams } from "react-router-dom"
+
 import { loadCategories } from "@services/api/products/products"
-import { createProductAPI } from "@services/api/admin/products"
-import { createBulkProductAPI } from "../../services/api/admin/products"
+
+import {
+  createProductAPI,
+  createBulkProductAPI,
+  singleProductAPI,
+  updateProductAPI
+} from "@services/api/admin/products"
 
 function ProductCreation() {
 
@@ -16,33 +23,67 @@ function ProductCreation() {
     pro_description: "",
   })
 
-  const [images, setImages] = useState([])
-  const [variants, setVariants] = useState([])
-  const [csvFile, setCsvFile] = useState(null)
-  const [zipFile,setZipFile] = useState(null)
+  const [existingImages, setExistingImages] = useState([])
+  const [newImages, setNewImages] = useState([])
 
-  const { data: categories } = useQuery({
-    queryKey: ["category"],
+  const [variants, setVariants] = useState([])
+
+  const [csvFile, setCsvFile] = useState(null)
+  const [zipFile, setZipFile] = useState(null)
+
+  const [searchParams] = useSearchParams()
+
+  const id = searchParams.get("id")
+
+ 
+  // CATEGORY QUERY
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
     queryFn: loadCategories,
     staleTime: 1000 * 60 * 60 * 24
   })
 
+ 
+  // EDIT PRODUCT QUERY
+
+  const { data: editProductData } = useQuery({
+    queryKey: ["edit-product", id],
+    queryFn: () => singleProductAPI(id),
+    enabled: !!id
+  })
+
+ 
+  // PREFILL EDIT DATA
+
+  useEffect(() => {
+
+    if (!editProductData) return
+
+    setFormData({
+      category: editProductData.category || "",
+      pro_name: editProductData.pro_name || "",
+      pro_price: editProductData.pro_price || "",
+      pro_description: editProductData.pro_description || "",
+    })
+
+    setVariants(editProductData.variants || [])
+
+    setExistingImages(editProductData.images || [])
+
+  }, [editProductData])
+
+ 
+  // CREATE PRODUCT
+ 
   const mutateProductCreation = useMutation({
+
     mutationFn: createProductAPI,
 
     onSuccess: () => {
 
       alert("Product Created Successfully")
 
-      setFormData({
-        category: "",
-        pro_name: "",
-        pro_price: "",
-        pro_description: "",
-      })
-
-      setImages([])
-      setVariants([])
+      resetForm()
     },
 
     onError: (error) => {
@@ -51,23 +92,67 @@ function ProductCreation() {
     }
   })
 
-  // bulk create mutation function
-  const mutateBulkProductCreation = useMutation({
+ 
+  // UPDATE PRODUCT
+ 
 
-      mutationFn : (payload) => createBulkProductAPI(payload),
+  const mutateProductUpdate = useMutation({
 
-      onSuccess: () => {
-        console.log("Bulk Creation Done")
-        setCsvFile(null)
-        setZipFile(null)
-      },
+    mutationFn: (data) =>
+      updateProductAPI(id, data),
 
-      onError: (err)=>{
-        console.log("bulk creation failed",err)
-      }
+    onSuccess: () => {
+      alert("Product Updated Successfully")
+    },
 
+    onError: (error) => {
+      console.log(error)
+      alert("Update Failed")
+    }
   })
 
+ 
+  // BULK PRODUCT CREATION
+ 
+
+  const mutateBulkProductCreation = useMutation({
+
+    mutationFn: (payload) =>
+      createBulkProductAPI(payload),
+
+    onSuccess: () => {
+
+      alert("Bulk Product Creation Successful")
+
+      setCsvFile(null)
+      setZipFile(null)
+    },
+
+    onError: (err) => {
+      console.log(err)
+      alert("Bulk Upload Failed")
+    }
+  })
+
+ 
+  // RESET FORM
+  const resetForm = () => {
+
+    setFormData({
+      category: "",
+      pro_name: "",
+      pro_price: "",
+      pro_description: "",
+    })
+
+    setExistingImages([])
+    setNewImages([])
+    setVariants([])
+  }
+
+ 
+  // INPUT CHANGE
+ 
   const handleChange = (e) => {
 
     const { name, value } = e.target
@@ -78,10 +163,42 @@ function ProductCreation() {
     }))
   }
 
+ 
+  // IMAGE CHANGE
+ 
   const handleImageChange = (e) => {
-    setImages(Array.from(e.target.files))
+
+    const files = Array.from(e.target.files)
+
+    if (!files.length) return
+
+    setNewImages(prev => [...prev, ...files])
   }
 
+ 
+  // REMOVE IMAGE
+ 
+  const removeImage = (image, index) => {
+
+    if (image instanceof File) {
+
+      setNewImages(prev =>
+        prev.filter((_, i) =>
+          i !== index - existingImages.length
+        )
+      )
+
+    } else {
+
+      setExistingImages(prev =>
+        prev.filter(img => img.id !== image.id)
+      )
+    }
+  }
+
+ 
+  // VARIANTS
+ 
   const addVariant = () => {
 
     setVariants(prev => [
@@ -101,7 +218,11 @@ function ProductCreation() {
     )
   }
 
-  const handleVariantChange = (index, field, value) => {
+  const handleVariantChange = (
+    index,
+    field,
+    value
+  ) => {
 
     setVariants(prev =>
       prev.map((variant, i) =>
@@ -112,6 +233,9 @@ function ProductCreation() {
     )
   }
 
+ 
+  // SUBMIT
+ 
   const handleSubmit = (e) => {
 
     e.preventDefault()
@@ -119,54 +243,103 @@ function ProductCreation() {
     const data = new FormData()
 
     data.append("category", formData.category)
-    data.append("pro_name", formData.pro_name)
-    data.append("pro_price", formData.pro_price)
-    data.append("pro_description", formData.pro_description)
 
-    images.forEach(image => {
+    data.append("pro_name", formData.pro_name)
+
+    data.append("pro_price", formData.pro_price)
+
+    data.append(
+      "pro_description",
+      formData.pro_description
+    )
+
+    // upload new images only
+
+    newImages.forEach(image => {
       data.append("uploaded_images", image)
     })
+
+    // existing image ids
+
+    data.append(
+      "existing_images",
+      JSON.stringify(
+        existingImages.map(img => img.id)
+      )
+    )
+
+    // variants
 
     data.append(
       "variants_data",
       JSON.stringify(variants)
     )
 
-    mutateProductCreation.mutate(data)
+    // edit mode
+
+    if (id) {
+
+      mutateProductUpdate.mutate(data)
+
+    } else {
+
+      mutateProductCreation.mutate(data)
+    }
   }
 
+ 
+  // FILE CHANGE
+ 
 
-  // HANDLE BULK CREATION 
   const handleFileChange = (e) => {
+
     const file = e.target.files[0]
-    if(!file){
-        return
-    }
-    if(file.name.endsWith('.csv')){
-        setCsvFile(file)
-    }
-    else if(file.name.endsWith('.zip')){
-        setZipFile(file)
-    }
-    else{
-        alert("Only CSV and ZIP files allowed")
+
+    if (!file) return
+
+    if (file.name.endsWith(".csv")) {
+
+      setCsvFile(file)
+
+    } else if (file.name.endsWith(".zip")) {
+
+      setZipFile(file)
+
+    } else {
+
+      alert("Only CSV and ZIP allowed")
     }
   }
 
- // BULK CREATE SUBMIT 
 
- const handleBulkSubmit = () => {
-    if(!csvFile) return 
+  // BULK SUBMIT
+ 
+  const handleBulkSubmit = () => {
+
+    if (!csvFile) return
 
     const payload = new FormData()
 
-    payload.append('csv_file',csvFile)
-    if(zipFile){
-        payload.append('zip_file',zipFile)
+    payload.append("csv_file", csvFile)
+
+    if (zipFile) {
+      payload.append("zip_file", zipFile)
     }
 
     mutateBulkProductCreation.mutate(payload)
- }
+  }
+
+ 
+  // MERGED IMAGES
+
+  const allImages = useMemo(() => {
+
+    return [
+      ...existingImages,
+      ...newImages
+    ]
+
+  }, [existingImages, newImages])
 
 
   return (
@@ -177,7 +350,7 @@ function ProductCreation() {
 
         <div>
 
-          <h1>Create Products</h1>
+          <h1>{id ? "Edit Product" : 'Create Product'}</h1>
           <p>Add products manually or import inventory using CSV.  </p>
 
         </div>
@@ -231,7 +404,7 @@ function ProductCreation() {
 
               <h2>Product Images</h2>
 
-              <span> {images.length} Selected   </span>
+              <span> {newImages.length} Selected   </span>
 
             </div>
 
@@ -248,25 +421,48 @@ function ProductCreation() {
 
             </label>
 
-            {images.length > 0 && (
+             {/* ========================= */}
+        {/* IMAGE PREVIEW */}
+        {/* ========================= */}
 
-              <div className="preview-grid">
+        {allImages.length > 0 && (
 
-                {images.map((image, index) => (
+          <div className="preview-grid">
 
-                  <div key={index} className="preview-image-card"   >
+            {allImages.map((image, index) => {
 
-                    <img src={URL.createObjectURL(image)} alt="preview" />
+              const imageSrc =
+                image instanceof File
+                  ? URL.createObjectURL(image)
+                  : image.image
 
-                    <button type="button" className="remove-image-btn" onClick={() => removeVariant(index)} >   ✕ </button>
+              return (
 
-                  </div>
+                <div
+                  key={index}
+                  className="preview-image-card"
+                >
 
-                ))}
+                  <img
+                    src={imageSrc}
+                    alt="preview"
+                  />
 
-              </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      removeImage(image, index)
+                    }
+                  >
+                    ✕
+                  </button>
 
-            )}
+                </div>
+              )
+            })}
+
+          </div>
+        )}
 
           </div>
 
@@ -329,9 +525,15 @@ function ProductCreation() {
           </div>
 
           <div className="submit-area">
+            {id ? 
+            <button type="submit" className="publish-btn">
+              {mutateProductUpdate.isPending ? "Updating..." : "Update"}
+            </button> : 
+            
             <button type="submit" className="publish-btn" >
               { mutateProductCreation.isPending ? "Creating..." : "Create Product"}
             </button>
+            }
           </div>
 
         </form>

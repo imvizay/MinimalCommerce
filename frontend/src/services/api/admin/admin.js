@@ -26,7 +26,7 @@ export const loadUsers = (page,limit=20) => {
 
 
 // fetch all products
-export const loadAdminProducts = (page=1,limit=10) => {
+export const loadAdminProducts = (page=1,limit=100) => {
   return api.get(`/products/admin/?page=${page}&limit=${limit}`)
 }
 
