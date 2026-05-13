@@ -10,10 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
+import cloudinary
+
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -155,11 +158,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 # CLOUDINARY STORAGE
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME':os.getenv("CLOUD_NAME"),
-    "API_KEY":os.getenv('CLOUD_API_KEY'),
-    "API_SECRET":os.getenv("CLOUD_API_SECRET")
-}
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUD_NAME"),
+    api_key=os.getenv("CLOUD_API_KEY"),
+    api_secret=os.getenv("CLOUD_API_SECRET"),
+    secure=True
+)
+
+print(cloudinary.config().cloud_name)
+print(cloudinary.config().api_key)
 
 STORAGES = {
     "default": {
@@ -174,3 +182,11 @@ STORAGES = {
 # RAZORPAY KEYS
 RAZORPAY_PUBLIC_KEY=os.getenv("RAZORPAY_PUBLIC_KEY")
 RAZORPAY_SECRET_KEY=os.getenv("RAZORPAY_SECRET_KEY")
+
+
+
+# CELERY CONFIG
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"

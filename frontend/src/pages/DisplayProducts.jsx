@@ -86,7 +86,9 @@ function DisplayProducts() {
                 className="fil-box" 
               >
                   <div className="fil-icon">
-                    <span className={`${activeCat == el.id ? "fil-active" : ""}`}>{<categoryData.icon/>}</span>
+                    <span className={`${activeCat == el.id ? "fil-active" : ""}`}>
+                      {<categoryData.icon/>}
+                      </span>
                   </div>
                  <button>
                   {el.slug}

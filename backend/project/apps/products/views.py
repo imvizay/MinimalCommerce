@@ -25,8 +25,11 @@ from .serializers import (
                     CategorySerializer , 
                     ProductsListSerializer )
 # products apps models
-from .models import Product,Category,ProductImage
+from .models import Product,Category,ProductImage , ImportJob
 
+
+# Tasks
+from .tasks import process_bulk_import
 
 
 # Views...
@@ -67,7 +70,7 @@ class ProductView(ModelViewSet):
     @action(detail=False, methods=['post'])
     def bulkcreate(self, request):
 
-        print("REQ REACHED - BULK CREATE VIEW")
+        print("--- BULK CREATE VIEW ---")
 
         csv_file = request.FILES.get('csv_file')
         zip_file = request.FILES.get('zip_file')
@@ -77,215 +80,29 @@ class ProductView(ModelViewSet):
             csv_file, 
             zip_file 
         )
-
-        print('FILES VALIDATION GET SUCCESS')
-
-        temp_dir = tempfile.mkdtemp()
-
-        try:
-            
-            # =========================
-            # SAVE ZIP
-            # =========================
-
-            zip_path = os.path.join(
-                temp_dir,
-                zip_file.name
-            )
-
-            with open(zip_path, 'wb+') as destination:
-
-                for chunk in zip_file.chunks():
-
-                    destination.write(chunk)
-
-            print("ZIP SAVED")
-
-
-            # =========================
-            # EXTRACT ZIP
-            # =========================
-
-            extract_path = os.path.join(
-                temp_dir,
-                "extracted_images"
-            )
-
-            os.makedirs(
-                extract_path,
-                exist_ok=True
-            )
-
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-
-                zip_ref.extractall(extract_path)
-
-            print("ZIP EXTRACTION SUCCESS")
-
-
-            # =========================
-            # IMAGE LOOKUP
-            # =========================
-
-            image_lookup = {}
-
-            for root, dirs, files in os.walk(extract_path):
-
-                for file in files:
-                    
-                    full_path = os.path.join(root,file)
-                    relative_path = os.path.relpath(full_path,extract_path)
-
-                    relative_path = relative_path.replace('\\','/')
-
-                    part_paths = relative_path.split('/')
-
-                    normalized_path = '/'.join(part_paths[-2:]) 
-                    print("NORMALIZED PATH:", normalized_path)
-
-                    image_lookup[normalized_path] = full_path
-
-            print("IMAGE LOOKUP CREATED")
-
-            # =========================
-            # CSV PARSE
-            # =========================
-
-            decoded_file = (
-                csv_file
-                .read()
-                .decode('utf-8-sig')
-                .splitlines()
-            )
-
-            reader = csv.DictReader(decoded_file)
-
-            print("CSV PARSED SUCCESSFULLY")
-
-
-            # =========================
-            # RESULT TRACKERS
-            # =========================
-
-            created_products = []
-            failed_products = []
-
-
-            # =========================
-            # LOOP CSV ROWS
-            # =========================
-
-            for row in reader:
-
-                try:
-
-                    print("CURRENT ROW", row)
-
-                    with transaction.atomic():
-
-                        # ====================
-                        # CREATE PRODUCT
-                        # ====================
-
-                        product = Product.objects.create(
-                            category_id=row['category'],
-                            pro_name=row['pro_name'],
-                            pro_description=row['pro_description'],
-                            pro_price=row['pro_price']
-                        )
-
-                        print("PRODUCT CREATED")
-
-
-                        # ====================
-                        # HANDLE IMAGES
-                        # ====================
-
-                        image_names = ( row['image_names'].split('|') )
-
-                        for img_name in image_names:
-                           
-                            print("IMAGE NAME IS ",img_name)
-
-                            img_name = img_name.strip()
-                            image_path = image_lookup.get(img_name)
-
-                            if not image_path:
-                                print(f"IMAGE NOT FOUND - {img_name}")
-                                continue
-
-
-                            with open(image_path, 'rb') as img:
-
-                                ProductImage.objects.create(
-                                    product=product,
-                                    image=File(
-                                        img,
-                                        name=img_name
-                                    )
-                                )
-
-                        print("IMAGE CREATED")
-
-
-                        # ====================
-                        # TRACK SUCCESS
-                        # ====================
-
-                        created_products.append({
-                            'product': product.pro_name
-                        })
-
-
-                except Exception as row_error:
-
-                    print("ROW ERROR:", row_error)
-
-                    failed_products.append({
-                        "product": row.get('pro_name'),
-                        "error": str(row_error)
-                    })
-
-
-            # =========================
-            # FINAL RESPONSE
-            # =========================
-
-            return Response({
-
-                "message": "Bulk import completed",
-
-                "created_count": len(created_products),
-
-                "failed_count": len(failed_products),
-
-                "created_products": created_products,
-
-                "failed_products": failed_products
-
+        print('-- Import Validation Succedded')
+
+        existing_job = ImportJob.objects.filter(
+            status__in = ['queued','processing']
+        ).exists()
+        
+        if existing_job:
+            return Response({ "error":"Another import already running" }, status=400)
+        
+        job = ImportJob.objects.create(
+                csv_file=csv_file,
+                zip_file=zip_file,
+                status="queued"
+        )
+
+        process_bulk_import.delay(job.id)
+
+        return Response({ 
+            "message":"Import queued successfully", 
+            "job_id": job.id 
             })
 
-
-        except Exception as error:
-
-            print("BULK IMPORT ERROR:", error)
-
-            return Response({"error": str(error)},status=500)
-
-
-        finally:
-
-            # =========================
-            # CLEAN TEMP FILES
-            # =========================
-            shutil.rmtree(
-                temp_dir,
-                ignore_errors=True
-            )
-            print("TEMP FILES CLEANED")
-
-
-
+    
 
 
 # Read only products for users.
